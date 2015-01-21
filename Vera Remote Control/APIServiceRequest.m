@@ -10,7 +10,6 @@
 
 NSString * const CancelAllServerRequestsNotification =	@"CancelAllServerRequestsNotification";
 
-
 @implementation APIServiceRequest
 
 static NSString *defaultUserAgent = nil;
@@ -34,7 +33,7 @@ static NSString *defaultUserAgent = nil;
 	if (self = [super init])
     {
 		self.numberOfTimesToRetryOnTimeout = 0;
-        self.clientTimeout = 20;
+        self.clientTimeout = 90;
         self.cacheStoragePolicy = NSURLRequestReloadIgnoringLocalCacheData;
         self.maxNumberOfTimesToRetry = 0;
         httpResponseStatus = 0;
@@ -231,7 +230,7 @@ static NSString *defaultUserAgent = nil;
         [self completeOperation];
         return;
     }
-    
+
     if(currentAttempt == self.maxNumberOfTimesToRetry)
     {
         if(self.faultCallback != nil)

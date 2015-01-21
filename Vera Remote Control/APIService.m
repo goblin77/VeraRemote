@@ -23,8 +23,6 @@
     return queue;
 }
 
-
-
 +(NSNumber *) generateRequestId
 {
     static NSInteger requestId = 0;
@@ -41,6 +39,7 @@
     
     return [NSNumber numberWithInteger:requestId];
 }
+
 
 
 +(NSNumber *) callHttpRequestWithUrl:(NSString *)url

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeviceManager.h"
 
-@interface LightsAndSwitchesViewController : UIViewController
+
+@interface LightsAndSwitchesViewController : UITableViewController
+
+@property (nonatomic, weak) DeviceManager * deviceManager;
 
 @end

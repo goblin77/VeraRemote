@@ -10,7 +10,8 @@
 
 @implementation VeraDevice
 
-#pragma mark - 
+
+#pragma mark -
 #pragma mark JSONSerializable implementation
 -(void) updateWithDictionary:(NSDictionary *)src
 {

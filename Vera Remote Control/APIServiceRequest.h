@@ -24,6 +24,7 @@ extern NSString * const CancelAllServerRequestsNotification;
 
 @property (nonatomic, strong) NSNumber * requestId;
 @property (nonatomic, strong) NSString * url;
+@property (nonatomic, strong) NSString * altUrl;
 @property (nonatomic, strong) NSDictionary * params;
 @property (nonatomic, assign) NSTimeInterval clientTimeout;
 @property (nonatomic, assign) NSURLRequestCachePolicy cacheStoragePolicy;

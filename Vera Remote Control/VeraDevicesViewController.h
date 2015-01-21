@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeviceManager.h"
 
-@interface HomeDevicesViewController : UIViewController
+@interface VeraDevicesViewController : UITableViewController
+
+@property (nonatomic, weak) DeviceManager * deviceManager;
 
 @end

@@ -173,6 +173,12 @@
     return goColor;
 }
 
+
++(CGFloat) defaultTableCellMargin
+{
+    return 15;
+}
+
 +(void) setUpAppearance
 {
     //[[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont : [UIFont defaultFontWithSize:18]}];

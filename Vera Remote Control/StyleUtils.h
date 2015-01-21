@@ -31,6 +31,6 @@
 +(void) setUpAppearance;
 +(UIColor *) goColor;
 
-
++(CGFloat) defaultTableCellMargin;
 
 @end

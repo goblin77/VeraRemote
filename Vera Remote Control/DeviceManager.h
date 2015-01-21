@@ -9,18 +9,45 @@
 #import <Foundation/Foundation.h>
 #import "VeraDevice.h"
 
+
+// authentication
 extern NSString * const LogoutNotification;
+extern NSString * const AuthenticationSuccessNotification;
+
+
+// Vera Device
+extern NSString * const SetSelectedVeraDeviceNotification;
+
+// network polling
+extern NSString * const StartPollingNotification;
+extern NSString * const RestartPollingNotification;
+
+
 
 @interface DeviceManager : NSObject
 
 +(DeviceManager *) sharedInstance;
 
-@property (nonatomic, strong) VeraDevice * currentDevice;
+@property (nonatomic, strong) NSString * currentDeviceSerialNumber;
+@property (nonatomic, readonly) VeraDevice * currentDevice;
+
+@property (nonatomic, strong) NSArray * availableVeraDevices;
+@property (nonatomic, assign) BOOL availableVeraDevicesLoading;
+@property (nonatomic, assign) BOOL availableVeraDevicesHaveBeenLoaded;
+
+
+@property (nonatomic, strong) NSArray * devices;
+@property (nonatomic, strong) NSArray * rooms;
+@property (nonatomic, strong) NSArray * scenes;
+@property (nonatomic, assign) BOOL deviceNetworkLoading;
+
+
 @property (nonatomic, readonly) NSString * username;
 @property (nonatomic, readonly) NSString * password;
 
 -(void) verifyUsername:(NSString *) username password:(NSString *) password callback:(void (^)(BOOL success, NSError * fault)) callback;
--(void) fetchAllDevicesWithUsername:(NSString *) username callback:(void (^)(NSArray * devices, NSError * fault)) callback;
+
+-(void) fetchAvailableDevicesWithUsername:(NSString *) username callback:(void (^)(NSArray * devices, NSError * fault)) callback;
 
 
 @end

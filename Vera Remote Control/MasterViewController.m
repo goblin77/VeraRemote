@@ -7,17 +7,22 @@
 //
 
 #import "MasterViewController.h"
-#import "HomeDevicesViewController.h"
+#import "VeraDevicesViewController.h"
 #import "LightsAndSwitchesViewController.h"
 #import "CredentialsViewController.h"
 #import "DeviceManager.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
+#import "ObserverUtils.h"
 
 @interface MasterViewController ()
+{
+    BOOL isFirstViewWillAppear;
+}
+
 
 @property (nonatomic, strong) CredentialsViewController * credentialsViewController;
-@property (nonatomic, strong) HomeDevicesViewController * homeDevicesViewController;
+@property (nonatomic, strong) VeraDevicesViewController * homeDevicesViewController;
 @property (nonatomic, strong) LightsAndSwitchesViewController * lightsAndSwitchesViewController;
 
 
@@ -33,6 +38,29 @@
     if(self  = [super init])
     {
         self.didValidateCredentials = NO;
+        
+        
+        self.homeDevicesViewController = [[VeraDevicesViewController alloc] init];
+        UINavigationController * homeDevicesNavController = [[UINavigationController alloc] initWithRootViewController:self.homeDevicesViewController];
+        
+        
+        homeDevicesNavController.tabBarItem.title = @"Home";
+        
+        
+        self.lightsAndSwitchesViewController = [[LightsAndSwitchesViewController alloc] init];
+        self.lightsAndSwitchesViewController.deviceManager = [DeviceManager sharedInstance];
+        UINavigationController * lightsAndSwitchesNavController = [[UINavigationController alloc] initWithRootViewController:self.lightsAndSwitchesViewController];
+        
+        lightsAndSwitchesNavController.tabBarItem.title = @"Switches";
+        
+        
+        self.viewControllers = @[
+                                 homeDevicesNavController,
+                                 lightsAndSwitchesNavController
+                                ];
+        
+        
+        isFirstViewWillAppear = NO;
     }
     
     return self;
@@ -44,29 +72,19 @@
     
     self.tabBar.tintColor = [UIColor blackColor];
     
-    self.homeDevicesViewController = [[HomeDevicesViewController alloc] init];
-    UINavigationController * homeDevicesNavController = [[UINavigationController alloc] initWithRootViewController:self.homeDevicesViewController];
-    
-    
-    homeDevicesNavController.tabBarItem.title = @"Home";
-    
-    
-    self.lightsAndSwitchesViewController = [[LightsAndSwitchesViewController alloc] init];
-    UINavigationController * lightsAndSwitchesNavController = [[UINavigationController alloc] initWithRootViewController:self.lightsAndSwitchesViewController];
-    
-    lightsAndSwitchesNavController.tabBarItem.title = @"Lights/Switches";
-    
-    self.viewControllers = @[
-                             homeDevicesNavController,
-                             lightsAndSwitchesNavController
-    ];
-    
+    [ObserverUtils addObserver:self toObject:[DeviceManager sharedInstance] forKeyPaths:@[@"availableVeraDevicesLoading"]];
 }
 
 
 
 -(void) viewWillAppear:(BOOL)animated
 {
+    if(!isFirstViewWillAppear)
+    {
+        [self.selectedViewController viewWillAppear:animated];
+        isFirstViewWillAppear = NO;
+    }
+    
     if(!self.didValidateCredentials)
     {
         [self performSelector:@selector(validateCredentials) withObject:nil afterDelay:0];
@@ -87,7 +105,6 @@
                             [LargeProgressView hide];
                             if(success)
                             {
-                              
                             }
                             else
                             {
@@ -126,6 +143,23 @@
 }
 
 
+
+#pragma mark -
+#pragma mark KVM
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"availableVeraDevicesLoading"])
+    {
+        if([DeviceManager sharedInstance].availableVeraDevicesLoading)
+        {
+            [LargeProgressView show];
+        }
+        else
+        {
+            [LargeProgressView hide];
+        }
+    }
+}
 
 
 @end

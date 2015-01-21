@@ -32,8 +32,13 @@
 		DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D8E1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m */; };
 		DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D911A6CE39600EB9A6A /* LargeProgressView.m */; };
 		DB8B3D951A6CE73900EB9A6A /* ObserverUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D941A6CE73900EB9A6A /* ObserverUtils.m */; };
-		DB8B3D981A6E1E1700EB9A6A /* HomeDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D971A6E1E1700EB9A6A /* HomeDevicesViewController.m */; };
+		DB8B3D981A6E1E1700EB9A6A /* VeraDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D971A6E1E1700EB9A6A /* VeraDevicesViewController.m */; };
 		DB8B3D9B1A6E200A00EB9A6A /* LightsAndSwitchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D9A1A6E200A00EB9A6A /* LightsAndSwitchesViewController.m */; };
+		DB8B3DA61A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DA51A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m */; };
+		DB8B3DAA1A6EFEA300EB9A6A /* VeraAccessPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DA91A6EFEA300EB9A6A /* VeraAccessPoint.m */; };
+		DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */; };
+		DB8B3DE91A6F349A00EB9A6A /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE81A6F349A00EB9A6A /* Room.m */; };
+		DB8B3DF21A7023A000EB9A6A /* LightsAndSwitchesTableSection.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DF11A7023A000EB9A6A /* LightsAndSwitchesTableSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,10 +104,21 @@
 		DB8B3D911A6CE39600EB9A6A /* LargeProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LargeProgressView.m; sourceTree = "<group>"; };
 		DB8B3D931A6CE73900EB9A6A /* ObserverUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserverUtils.h; sourceTree = "<group>"; };
 		DB8B3D941A6CE73900EB9A6A /* ObserverUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObserverUtils.m; sourceTree = "<group>"; };
-		DB8B3D961A6E1E1700EB9A6A /* HomeDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeDevicesViewController.h; sourceTree = "<group>"; };
-		DB8B3D971A6E1E1700EB9A6A /* HomeDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeDevicesViewController.m; sourceTree = "<group>"; };
+		DB8B3D961A6E1E1700EB9A6A /* VeraDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VeraDevicesViewController.h; sourceTree = "<group>"; };
+		DB8B3D971A6E1E1700EB9A6A /* VeraDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VeraDevicesViewController.m; sourceTree = "<group>"; };
 		DB8B3D991A6E200A00EB9A6A /* LightsAndSwitchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightsAndSwitchesViewController.h; sourceTree = "<group>"; };
 		DB8B3D9A1A6E200A00EB9A6A /* LightsAndSwitchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightsAndSwitchesViewController.m; sourceTree = "<group>"; };
+		DB8B3DA41A6ED24C00EB9A6A /* VeraDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VeraDeviceTableViewCell.h; sourceTree = "<group>"; };
+		DB8B3DA51A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VeraDeviceTableViewCell.m; sourceTree = "<group>"; };
+		DB8B3DA71A6ED80D00EB9A6A /* dispatch_cancelable_block.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dispatch_cancelable_block.h; sourceTree = "<group>"; };
+		DB8B3DA81A6EFEA300EB9A6A /* VeraAccessPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VeraAccessPoint.h; sourceTree = "<group>"; };
+		DB8B3DA91A6EFEA300EB9A6A /* VeraAccessPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VeraAccessPoint.m; sourceTree = "<group>"; };
+		DB8B3DE41A6F344700EB9A6A /* ControlledDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlledDevice.h; sourceTree = "<group>"; };
+		DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlledDevice.m; sourceTree = "<group>"; };
+		DB8B3DE71A6F349A00EB9A6A /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Room.h; sourceTree = "<group>"; };
+		DB8B3DE81A6F349A00EB9A6A /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Room.m; sourceTree = "<group>"; };
+		DB8B3DF01A7023A000EB9A6A /* LightsAndSwitchesTableSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightsAndSwitchesTableSection.h; sourceTree = "<group>"; };
+		DB8B3DF11A7023A000EB9A6A /* LightsAndSwitchesTableSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightsAndSwitchesTableSection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +220,12 @@
 				DB6850D11A6C702800CE4DAA /* VeraDevice.h */,
 				DB6850D21A6C702800CE4DAA /* VeraDevice.m */,
 				DB6850D41A6C715500CE4DAA /* JSONSerializable.h */,
+				DB8B3DA81A6EFEA300EB9A6A /* VeraAccessPoint.h */,
+				DB8B3DA91A6EFEA300EB9A6A /* VeraAccessPoint.m */,
+				DB8B3DE41A6F344700EB9A6A /* ControlledDevice.h */,
+				DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */,
+				DB8B3DE71A6F349A00EB9A6A /* Room.h */,
+				DB8B3DE81A6F349A00EB9A6A /* Room.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -222,13 +244,11 @@
 		DB8B3D5F1A6CA6FF00EB9A6A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DB8B3DED1A701DBB00EB9A6A /* Lights And Switches */,
+				DB8B3D9F1A6EC1C400EB9A6A /* Vera Devices */,
 				DB8B3D831A6CADE700EB9A6A /* Initial Config */,
 				DB8B3D601A6CA71F00EB9A6A /* MasterViewController.h */,
 				DB8B3D611A6CA71F00EB9A6A /* MasterViewController.m */,
-				DB8B3D961A6E1E1700EB9A6A /* HomeDevicesViewController.h */,
-				DB8B3D971A6E1E1700EB9A6A /* HomeDevicesViewController.m */,
-				DB8B3D991A6E200A00EB9A6A /* LightsAndSwitchesViewController.h */,
-				DB8B3D9A1A6E200A00EB9A6A /* LightsAndSwitchesViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -236,6 +256,7 @@
 		DB8B3D661A6CA92000EB9A6A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DB8B3DA71A6ED80D00EB9A6A /* dispatch_cancelable_block.h */,
 				DB8B3D721A6CAC8400EB9A6A /* StyleUtils.h */,
 				DB8B3D731A6CAC8400EB9A6A /* StyleUtils.m */,
 				DB8B3D6F1A6CAC6300EB9A6A /* DefaultTextFieldDelegate.h */,
@@ -288,6 +309,52 @@
 				DB8B3D851A6CAE0700EB9A6A /* CredentialsViewController.m */,
 			);
 			name = "Initial Config";
+			sourceTree = "<group>";
+		};
+		DB8B3D9F1A6EC1C400EB9A6A /* Vera Devices */ = {
+			isa = PBXGroup;
+			children = (
+				DB8B3DA01A6EC1D500EB9A6A /* Views */,
+				DB8B3D961A6E1E1700EB9A6A /* VeraDevicesViewController.h */,
+				DB8B3D971A6E1E1700EB9A6A /* VeraDevicesViewController.m */,
+			);
+			name = "Vera Devices";
+			sourceTree = "<group>";
+		};
+		DB8B3DA01A6EC1D500EB9A6A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB8B3DA41A6ED24C00EB9A6A /* VeraDeviceTableViewCell.h */,
+				DB8B3DA51A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DB8B3DED1A701DBB00EB9A6A /* Lights And Switches */ = {
+			isa = PBXGroup;
+			children = (
+				DB8B3DEF1A70238200EB9A6A /* Helper Classes */,
+				DB8B3DEE1A701DFB00EB9A6A /* Views */,
+				DB8B3D991A6E200A00EB9A6A /* LightsAndSwitchesViewController.h */,
+				DB8B3D9A1A6E200A00EB9A6A /* LightsAndSwitchesViewController.m */,
+			);
+			name = "Lights And Switches";
+			sourceTree = "<group>";
+		};
+		DB8B3DEE1A701DFB00EB9A6A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DB8B3DEF1A70238200EB9A6A /* Helper Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DB8B3DF01A7023A000EB9A6A /* LightsAndSwitchesTableSection.h */,
+				DB8B3DF11A7023A000EB9A6A /* LightsAndSwitchesTableSection.m */,
+			);
+			name = "Helper Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,26 +465,31 @@
 				DB8B3D9B1A6E200A00EB9A6A /* LightsAndSwitchesViewController.m in Sources */,
 				DB8B3D5D1A6C80FB00EB9A6A /* APIService.m in Sources */,
 				DB8B3D7F1A6CAD8100EB9A6A /* TableViewCellWithTextField.m in Sources */,
-				DB8B3D981A6E1E1700EB9A6A /* HomeDevicesViewController.m in Sources */,
+				DB8B3D981A6E1E1700EB9A6A /* VeraDevicesViewController.m in Sources */,
 				DB8B3D891A6CDF4600EB9A6A /* Buttons.m in Sources */,
 				DB8B3D951A6CE73900EB9A6A /* ObserverUtils.m in Sources */,
 				DB8B3D821A6CAD9700EB9A6A /* DefaultKeyboardAccessoryView.m in Sources */,
 				DB8B3D861A6CAE0700EB9A6A /* CredentialsViewController.m in Sources */,
+				DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */,
 				DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */,
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
 				DB8B3D741A6CAC8400EB9A6A /* StyleUtils.m in Sources */,
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
 				DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */,
+				DB8B3DA61A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m in Sources */,
+				DB8B3DAA1A6EFEA300EB9A6A /* VeraAccessPoint.m in Sources */,
 				DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */,
 				DB8B3D711A6CAC6300EB9A6A /* DefaultTextFieldDelegate.m in Sources */,
 				DB6850CE1A6C6F2A00CE4DAA /* DeviceManager.m in Sources */,
 				DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */,
 				DB8B3D691A6CA93C00EB9A6A /* UIColor+Expanded.m in Sources */,
+				DB8B3DE91A6F349A00EB9A6A /* Room.m in Sources */,
 				DB8B3D7C1A6CAD6D00EB9A6A /* AsyncImageView.m in Sources */,
 				DB8B3D771A6CACEA00EB9A6A /* UIFont+DefaultSettings.m in Sources */,
 				DB8B3D8C1A6CDF6200EB9A6A /* ImageUtils.m in Sources */,
 				DB8B3D6E1A6CAC2700EB9A6A /* UIFont_Expanded.m in Sources */,
 				DB6850A31A6C6D1100CE4DAA /* main.m in Sources */,
+				DB8B3DF21A7023A000EB9A6A /* LightsAndSwitchesTableSection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
