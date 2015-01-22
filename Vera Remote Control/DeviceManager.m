@@ -19,13 +19,15 @@ NSString * const SetSelectedVeraDeviceNotification = @"SetSelectedVeraDevice";
 
 NSString * const StartPollingNotification = @"StartPolling";
 NSString * const RestartPollingNotification = @"RestartPolling";
+NSString * const StopPollingNotification  = @"StopPolling";
 
 
 NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
-
+NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 
 
 #define kBinarySwitchControlService   @"urn:upnp-org:serviceId:SwitchPower1"
+#define kDimmableSwitchControlService @"urn:upnp-org:serviceId:Dimming1"
 
 
 
@@ -84,7 +86,11 @@ NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStartPolling:) name:StartPollingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRestartPolling:) name:RestartPollingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStopPolling:) name:StopPollingNotification object:nil];
+        
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetBinarySwitchValue:) name:SetBinarySwitchValueNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetDimmableSwitchValue:) name:SetDimmableSwitchValueNotification object:nil];
     }
     
     return self;
@@ -234,6 +240,13 @@ NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
 
 -(void) poll
 {
+    // make sure only one poll request is scheduled at a time
+    if(lastPollingRequestId != nil)
+    {
+        [APIService cancelRequestWithID:lastPollingRequestId];
+        lastPollingRequestId = nil;
+    }
+    
     VeraAccessPoint * accessPoint = self.currentAccessPoint;
     
     
@@ -490,15 +503,20 @@ NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
 
 -(void) handleStartPolling:(NSNotification *) notification
 {
+    lastPollTimeStamp = 0;
+    dataVersion = 0;
+
     [self startPolling];
+}
+
+-(void) handleStopPolling:(NSNotification *) notification
+{
+    [self stopPolling];
 }
 
 
 -(void) handleRestartPolling:(NSNotification *) notification
 {
-    [self stopPolling];
-    lastPollTimeStamp = 0;
-    dataVersion = 0;
     [self startPolling];
 }
 
@@ -533,6 +551,38 @@ NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
                                   }
                               }];
     
+}
+
+
+-(void) handleSetDimmableSwitchValue:(NSNotification *) notification
+{
+    DimmableSwitch * device = notification.object;
+    NSUInteger value = [notification.userInfo[@"value"] integerValue];
+    
+    VeraAccessPoint * accessPoint = self.currentAccessPoint;
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"DeviceNum" : [NSString stringWithFormat:@"%ld", device.deviceId],
+                              @"serviceId" : kDimmableSwitchControlService,
+                              @"action"    : @"SetLoadLevelTarget",
+                              @"newLoadlevelTarget" : [NSString stringWithFormat:@"%ld", value]
+                             };
+    
+    
+    device.manualValue = value;
+    device.manualOverride = YES;
+    
+    [APIService callHttpRequestWithUrl:accessPoint.primaryUrl
+                                params:params
+                      maxRetryAttempts:0
+                              callback:^(NSData *data, NSError *fault) {
+                                  // the polling will pick up the result
+                                  // if there is no fault
+                                  if(fault != nil)
+                                  {
+                                      device.manualOverride = NO;
+                                  }
+                              }];
 }
 
 @end

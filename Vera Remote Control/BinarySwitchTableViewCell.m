@@ -112,7 +112,7 @@
         BOOL value = self.device.manualOverride ? self.device.manualValue : self.device.value;
         BOOL busy = self.device.manualOverride || self.device.state == DeviceStateBusy;
         
-        [self.switchView setOn:value animated:YES];
+        self.switchView.on = value;
         self.deviceNameLabel.text = self.device.name;
         if(busy)
         {

@@ -12,6 +12,7 @@
 #import "ControlledDevice.h"
 #import "LightsAndSwitchesTableSection.h"
 #import "BinarySwitchTableViewCell.h"
+#import "DimmableSwitchTableViewCell.h"
 
 
 @interface LightsAndSwitchesViewController ()
@@ -204,6 +205,26 @@
         
         return res;
     }
+    else if ([device isKindOfClass:[DimmableSwitch class]])
+    {
+        static NSString * CellId = @"DimmableSwitchCell";
+        
+        DimmableSwitchTableViewCell * res = (DimmableSwitchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellId];
+        if(res == nil)
+        {
+            res = [[DimmableSwitchTableViewCell alloc]  initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellId];
+            res.didSetValue = ^(DimmableSwitchTableViewCell * cell)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:SetDimmableSwitchValueNotification
+                                                                    object:cell.device
+                                                                  userInfo:@{@"value" : [NSNumber numberWithFloat:cell.levelSliderView.value]}];
+            };
+        }
+        
+        res.device = (DimmableSwitch *)device;
+        
+        return res;
+    }
         
     
     
@@ -217,7 +238,11 @@
     
     if([device isKindOfClass:[BinarySwitch class]])
     {
-        return 50;
+        return 60;
+    }
+    else if([device isKindOfClass:[DimmableSwitch class]])
+    {
+        return 90;
     }
     
     return 50;

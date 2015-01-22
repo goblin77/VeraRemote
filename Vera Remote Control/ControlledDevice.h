@@ -52,7 +52,8 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
 
 @interface DimmableSwitch : ControlledDevice
 
-@property (nonatomic, assign) NSUInteger level;
+@property (nonatomic, assign) NSUInteger value;
+@property (nonatomic, assign) NSUInteger manualValue;
 
 @end
 

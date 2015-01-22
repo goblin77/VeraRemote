@@ -58,7 +58,7 @@
 -(void) updateWithDictionary:(NSDictionary *)src
 {
     [super updateWithDictionary:src];
-    self.level = [src[@"level"] integerValue];
+    self.value = [src[@"level"] integerValue];
 }
 
 @end

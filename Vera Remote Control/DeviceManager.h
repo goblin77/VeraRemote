@@ -21,9 +21,11 @@ extern NSString * const SetSelectedVeraDeviceNotification;
 // network polling
 extern NSString * const StartPollingNotification;
 extern NSString * const RestartPollingNotification;
+extern NSString * const StopPollingNotification;
 
 // Device control
 extern NSString * const SetBinarySwitchValueNotification;
+extern NSString * const SetDimmableSwitchValueNotification;
 
 
 

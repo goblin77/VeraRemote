@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */; };
 		DB6850A31A6C6D1100CE4DAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A21A6C6D1100CE4DAA /* main.m */; };
 		DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A51A6C6D1100CE4DAA /* AppDelegate.m */; };
 		DB6850AE1A6C6D1100CE4DAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB6850AD1A6C6D1100CE4DAA /* Images.xcassets */; };
@@ -54,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
+		DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchTableViewCell.m; sourceTree = "<group>"; };
 		DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vera Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6850A11A6C6D1100CE4DAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB6850A21A6C6D1100CE4DAA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -354,6 +357,8 @@
 				DB8B3DFB1A70A29A00EB9A6A /* CircularShapeView.m */,
 				DB8B3DFD1A70A5B900EB9A6A /* BinarySwitchTableViewCell.h */,
 				DB8B3DFE1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m */,
+				DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */,
+				DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -485,6 +490,7 @@
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
 				DB8B3D741A6CAC8400EB9A6A /* StyleUtils.m in Sources */,
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
+				DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */,
 				DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */,
 				DB8B3DA61A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m in Sources */,
 				DB8B3DAA1A6EFEA300EB9A6A /* VeraAccessPoint.m in Sources */,
