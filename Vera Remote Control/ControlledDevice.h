@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
     DeviceCategorySwitch=3
 };
 
+
 @interface ControlledDevice : NSObject <JSONSerializable>
 
 @property (nonatomic, assign) NSInteger deviceId;
@@ -32,12 +33,19 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
 @property (nonatomic, assign) DeviceState state;
 @property (nonatomic, readonly) NSString * service;
 
+
+//transient vars
+@property (nonatomic, assign) BOOL manualOverride;
+
 @end
 
 
 @interface BinarySwitch : ControlledDevice
 
-@property (nonatomic, assign) BOOL on;
+@property (nonatomic, assign) BOOL value;
+
+// transient variables
+@property (nonatomic, assign) BOOL manualValue;
 
 @end
 

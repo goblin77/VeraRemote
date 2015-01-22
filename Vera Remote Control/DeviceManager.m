@@ -20,6 +20,15 @@ NSString * const SetSelectedVeraDeviceNotification = @"SetSelectedVeraDevice";
 NSString * const StartPollingNotification = @"StartPolling";
 NSString * const RestartPollingNotification = @"RestartPolling";
 
+
+NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
+
+
+
+#define kBinarySwitchControlService   @"urn:upnp-org:serviceId:SwitchPower1"
+
+
+
 @interface DeviceManager ()
 {
     NSUInteger dataVersion;
@@ -75,7 +84,7 @@ NSString * const RestartPollingNotification = @"RestartPolling";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStartPolling:) name:StartPollingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRestartPolling:) name:RestartPollingNotification object:nil];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetBinarySwitchValue:) name:SetBinarySwitchValueNotification object:nil];
     }
     
     return self;
@@ -324,6 +333,10 @@ NSString * const RestartPollingNotification = @"RestartPolling";
         if(d != nil)
         {
             [d updateWithDictionary:src];
+            if(d.manualOverride && (d.state == DeviceStateSuccess || d.state == DeviceStateError))
+            {
+                d.manualOverride = NO;
+            }
         }
     }
     
@@ -487,6 +500,39 @@ NSString * const RestartPollingNotification = @"RestartPolling";
     lastPollTimeStamp = 0;
     dataVersion = 0;
     [self startPolling];
+}
+
+
+-(void) handleSetBinarySwitchValue:(NSNotification *) notification
+{
+    BinarySwitch * device = notification.object;
+    BOOL value = [notification.userInfo[@"value"] boolValue];
+    
+    VeraAccessPoint * accessPoint = self.currentAccessPoint;
+    NSDictionary * params = @{
+                                @"id" : @"lu_action",
+                                @"DeviceNum" : [NSString stringWithFormat:@"%ld", device.deviceId],
+                                @"serviceId" : kBinarySwitchControlService,
+                                @"action"    : @"SetTarget",
+                                @"newTargetValue" : value ? @"1" : @"0"
+                            };
+    
+    
+    device.manualValue = value;
+    device.manualOverride = YES;
+    
+    [APIService callHttpRequestWithUrl:accessPoint.primaryUrl
+                                params:params
+                      maxRetryAttempts:0
+                              callback:^(NSData *data, NSError *fault) {
+                                  // the polling will pick up the result
+                                  // if there is no fault
+                                  if(fault != nil)
+                                  {
+                                      device.manualOverride = NO;
+                                  }
+                              }];
+    
 }
 
 @end

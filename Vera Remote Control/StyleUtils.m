@@ -179,6 +179,18 @@
     return 15;
 }
 
++(UIColor *) activeColor
+{
+    static UIColor * activeColor = nil;
+    if(activeColor == nil)
+    {
+        activeColor = [UIColor colorWithRGBHex:0x85d866];
+    }
+    
+    return activeColor;
+}
+
+
 +(void) setUpAppearance
 {
     //[[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont : [UIFont defaultFontWithSize:18]}];

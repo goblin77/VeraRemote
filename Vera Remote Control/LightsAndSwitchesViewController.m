@@ -11,6 +11,7 @@
 #import "ObserverUtils.h"
 #import "ControlledDevice.h"
 #import "LightsAndSwitchesTableSection.h"
+#import "BinarySwitchTableViewCell.h"
 
 
 @interface LightsAndSwitchesViewController ()
@@ -180,7 +181,46 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    LightsAndSwitchesTableSection * section = self.sections[indexPath.section];
+    ControlledDevice * device = section.items[indexPath.row];
+    
+    if([device isKindOfClass:[BinarySwitch class]])
+    {
+        static NSString * CellId = @"BinarySwitchCell";
+        
+        BinarySwitchTableViewCell * res = (BinarySwitchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellId];
+        if(res == nil)
+        {
+            res = [[BinarySwitchTableViewCell alloc]  initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellId];
+            res.didTurnSwitchOnOrOff = ^(BinarySwitchTableViewCell * cell)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:SetBinarySwitchValueNotification
+                                                                    object:cell.device
+                                                                  userInfo:@{@"value" : @(cell.switchView.on) }];
+            };
+        }
+        
+        res.device = (BinarySwitch *)device;
+        
+        return res;
+    }
+        
+    
+    
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LightsAndSwitchesTableSection * section = self.sections[indexPath.section];
+    ControlledDevice * device = section.items[indexPath.row];
+    
+    if([device isKindOfClass:[BinarySwitch class]])
+    {
+        return 50;
+    }
+    
+    return 50;
 }
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

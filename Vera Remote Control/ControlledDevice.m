@@ -47,7 +47,7 @@
 -(void) updateWithDictionary:(NSDictionary *)src
 {
     [super updateWithDictionary:src];
-    self.on = [src[@"status"] integerValue] == 1;
+    self.value = [src[@"status"] integerValue] == 1;
 }
 
 @end

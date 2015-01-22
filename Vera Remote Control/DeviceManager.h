@@ -22,6 +22,9 @@ extern NSString * const SetSelectedVeraDeviceNotification;
 extern NSString * const StartPollingNotification;
 extern NSString * const RestartPollingNotification;
 
+// Device control
+extern NSString * const SetBinarySwitchValueNotification;
+
 
 
 @interface DeviceManager : NSObject

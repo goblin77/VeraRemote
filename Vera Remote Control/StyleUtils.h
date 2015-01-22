@@ -32,5 +32,7 @@
 +(UIColor *) goColor;
 
 +(CGFloat) defaultTableCellMargin;
++(UIColor *) activeColor;
+
 
 @end
