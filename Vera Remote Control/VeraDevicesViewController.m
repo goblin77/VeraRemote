@@ -54,8 +54,6 @@ static CGFloat HomeDevicesRowHeight = 50;
     
     self.deviceManager = [DeviceManager sharedInstance];
     
-    self.tableView.bounces = NO;
-    
     self.navigationItem.title = @"Vera Devices";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:nil action:nil];
     self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:nil action:nil];

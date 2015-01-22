@@ -71,7 +71,7 @@
     
     
     label.font = [UIFont defaultFontWithSize:16];
-    label.textColor   = [UIColor grayColor];
+    label.textColor   = [UIColor darkGrayColor];
     
 }
 

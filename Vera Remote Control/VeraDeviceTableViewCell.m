@@ -30,14 +30,12 @@
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [StyleUtils applyDefaultStyleOnLabel:self.nameLabel];
-        self.nameLabel.textColor = [UIColor blackColor];
+        [StyleUtils applyDefaultStyleOnTableTitleLabel:self.nameLabel];
         [self.contentView addSubview:self.nameLabel];
         
         
         self.serialNumberLabel  = [[UILabel alloc] initWithFrame:CGRectZero];
-        [StyleUtils applyDefaultStyleOnLabel:self.serialNumberLabel];
-        self.serialNumberLabel.textColor = [UIColor blackColor];
+        [StyleUtils applyDefaultStyleOnTableTitleLabel:self.serialNumberLabel];
         
         [self.contentView addSubview:self.serialNumberLabel];
         
