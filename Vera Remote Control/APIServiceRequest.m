@@ -265,7 +265,6 @@ static NSString *defaultUserAgent = nil;
         
         return;
     }
-    
     currentAttempt = 0;
     
     [self willChangeValueForKey:@"isFinished"];

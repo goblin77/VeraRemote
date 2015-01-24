@@ -61,10 +61,12 @@
         
     };
     
+    __weak APIServiceRequest * weakRequest = request;
     request.faultCallback  = ^(NSError * fault)
     {
         // make sure that we dispatch this on the main queue
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^
+        {
             callback(nil, fault);
         });
         
@@ -90,7 +92,9 @@
                                                     if(fault != nil)
                                                     {
                                                         callback(nil, fault);
+                                                        return;
                                                     }
+                                                    
                                                     [APIService processAPIResponseData:data callback:^(NSObject *data, NSError *fault)
                                                      {
                                                          callback(data, fault);

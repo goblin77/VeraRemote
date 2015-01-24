@@ -40,15 +40,16 @@
 
 -(void) applicationWillEnterForeground:(UIApplication *)application
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:RestartPollingNotification object:nil];
+    if([DeviceManager sharedInstance].currentDevice != nil)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RestartPollingNotification object:nil];
+    }
 }
+
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    if([DeviceManager sharedInstance].currentDevice != nil)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

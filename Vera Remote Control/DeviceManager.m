@@ -111,6 +111,9 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetBinarySwitchValue:) name:SetBinarySwitchValueNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetDimmableSwitchValue:) name:SetDimmableSwitchValueNotification object:nil];
+        
+        
+        
     }
     
     return self;
@@ -254,6 +257,13 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
                                                 {
                                                     if(fault != nil)
                                                     {
+                                                        if([fault.domain isEqualToString:NSURLErrorDomain])
+                                                        {
+                                                            if(self.currentAccessPoint.localMode)
+                                                            {
+                                                                self.currentAccessPoint.localMode = NO;
+                                                            }
+                                                        }
                                                         [thisObject performSelector:@selector(poll) withObject:nil afterDelay:1];
                                                     }
                                                     else
@@ -622,6 +632,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 
 -(void) handleRestartPolling:(NSNotification *) notification
 {
+    self.currentAccessPoint.localMode = YES;
     [self startPolling];
 }
 
