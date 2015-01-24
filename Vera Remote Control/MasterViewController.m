@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "VeraDevicesViewController.h"
 #import "LightsAndSwitchesViewController.h"
+#import "ScenesViewController.h"
 #import "CredentialsViewController.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
@@ -20,10 +21,9 @@
     BOOL shouldBootstrap;
 }
 
-
-@property (nonatomic, strong) CredentialsViewController * credentialsViewController;
 @property (nonatomic, strong) VeraDevicesViewController * homeDevicesViewController;
 @property (nonatomic, strong) LightsAndSwitchesViewController * lightsAndSwitchesViewController;
+@property (nonatomic, strong) ScenesViewController      * scenesViewController;
 
 @end
 
@@ -48,9 +48,14 @@
         lightsAndSwitchesNavController.tabBarItem.title = @"Switches";
         
         
+        self.scenesViewController = [[ScenesViewController alloc] init];
+        UINavigationController * scenesNavController = [[UINavigationController alloc] initWithRootViewController:self.scenesViewController];
+        scenesNavController.tabBarItem.title = @"Scenes";
+        
         self.viewControllers = @[
                                  homeDevicesNavController,
-                                 lightsAndSwitchesNavController
+                                 lightsAndSwitchesNavController,
+                                 scenesNavController
                                 ];
         
         
@@ -110,8 +115,21 @@
 -(void) setDeviceManager:(DeviceManager *)value
 {
     deviceManager = value;
-    self.lightsAndSwitchesViewController.deviceManager = deviceManager;
-    self.homeDevicesViewController.deviceManager = deviceManager;
+    
+    UIViewController * c = nil;
+    for(UIViewController * vc in self.viewControllers)
+    {
+        c = vc;
+        if([c isKindOfClass:[UINavigationController class]])
+        {
+            c = [(UINavigationController *)vc topViewController];
+        }
+        
+        if([c respondsToSelector:@selector(setDeviceManager:)])
+        {
+            [c performSelector:@selector(setDeviceManager:) withObject:deviceManager];
+        }
+    }
 }
 
 

@@ -59,6 +59,14 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
 
 
 
+@interface Scene : ControlledDevice
+
+@property (nonatomic, assign) BOOL active;
+
+@end
+
+
+
 
 
 

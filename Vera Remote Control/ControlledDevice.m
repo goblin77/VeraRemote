@@ -32,6 +32,11 @@
     {
         self.name =  name;
     }
+    
+    if(self.manualOverride && (self.state == DeviceStateSuccess || self.state == DeviceStateError))
+    {
+        self.manualOverride = NO;
+    }
 }
 
 -(NSString *) service
@@ -59,6 +64,16 @@
 {
     [super updateWithDictionary:src];
     self.value = [src[@"level"] integerValue];
+}
+
+@end
+
+@implementation Scene
+
+-(void) updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    self.active = [src[@"active"] boolValue];
 }
 
 @end

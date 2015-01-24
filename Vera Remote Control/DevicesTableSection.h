@@ -9,17 +9,24 @@
 #import <Foundation/Foundation.h>
 #import "Room.h"
 
-@interface LightsAndSwitchesTableSection : NSObject
+@interface DevicesTableSection : NSObject
 
 @property (nonatomic, strong) NSArray * items;
 @property (nonatomic, readonly) NSString * title;
 
 @end
 
-@interface RoomTableSection : LightsAndSwitchesTableSection
+@interface RoomTableSection : DevicesTableSection
 
 @property (nonatomic, strong) Room * room;
 
+
++(NSArray *) createRoomSectionsWithDevices:(NSArray *) devices rooms:(NSArray *) rooms;
+
 @end
+
+
+
+
 
 

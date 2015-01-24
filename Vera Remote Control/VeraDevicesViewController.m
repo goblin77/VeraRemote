@@ -22,7 +22,7 @@
 @end
 
 
-static CGFloat HomeDevicesRowHeight = 50;
+static CGFloat HomeDevicesRowHeight = 60;
 
 @implementation VeraDevicesViewController
 

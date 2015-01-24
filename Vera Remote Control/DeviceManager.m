@@ -35,11 +35,12 @@ NSString * const StopPollingNotification  = @"StopPolling";
 
 NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
 NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
+NSString * const RunSceneNotification   = @"RunScene";
 
 
 #define kBinarySwitchControlService   @"urn:upnp-org:serviceId:SwitchPower1"
 #define kDimmableSwitchControlService @"urn:upnp-org:serviceId:Dimming1"
-
+#define kSceneControlService          @"urn:micasaverde-com:serviceId:HomeAutomationGateway1"
 
 #define kAccessConfigGroupId @"group.com.goblin77.AccessConfig"
 
@@ -111,7 +112,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetBinarySwitchValue:) name:SetBinarySwitchValueNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetDimmableSwitchValue:) name:SetDimmableSwitchValueNotification object:nil];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRunScene:) name:RunSceneNotification object:nil];
         
         
     }
@@ -257,14 +258,16 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
                                                 {
                                                     if(fault != nil)
                                                     {
+                                                        NSTimeInterval delay = 2;
                                                         if([fault.domain isEqualToString:NSURLErrorDomain])
                                                         {
                                                             if(self.currentAccessPoint.localMode)
                                                             {
                                                                 self.currentAccessPoint.localMode = NO;
+                                                                delay = 1;
                                                             }
                                                         }
-                                                        [thisObject performSelector:@selector(poll) withObject:nil afterDelay:1];
+                                                        [thisObject performSelector:@selector(poll) withObject:nil afterDelay:delay];
                                                     }
                                                     else
                                                     {
@@ -303,7 +306,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     
     if(isPolling)
     {
-        [self poll];
+        [self performSelector:@selector(poll) withObject:nil afterDelay:self.currentAccessPoint.localMode ? 0.5 : 1];
     }
 }
 
@@ -340,13 +343,24 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
         if(d != nil)
         {
             [d updateWithDictionary:src];
-            if(d.manualOverride && (d.state == DeviceStateSuccess || d.state == DeviceStateError))
-            {
-                d.manualOverride = NO;
-            }
         }
     }
     
+    NSMutableDictionary * sceneLookup = [[NSMutableDictionary alloc] initWithCapacity:10];
+    for(Scene * s in self.scenes)
+    {
+        sceneLookup[@(s.deviceId)] = s;
+    }
+    
+    for(NSDictionary * src in data[@"scenes"])
+    {
+        NSNumber * num = [NSNumber numberWithLong:[src[@"id"] integerValue]];
+        Scene * s = sceneLookup[num];
+        if(s != nil)
+        {
+            [s updateWithDictionary:src];
+        }
+    }
     
 }
 
@@ -388,8 +402,19 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
         [devices addObject:device];
     }
     
+    NSArray * scenesSrc = data[@"scenes"];
+    NSMutableArray * scenes = [[NSMutableArray alloc] initWithCapacity:scenesSrc.count];
+    for(NSDictionary * src in scenesSrc)
+    {
+        Scene * s = [[Scene alloc] init];
+        [s updateWithDictionary:src];
+        [scenes addObject:s];
+    }
+    
+    
     self.rooms   = rooms;
     self.devices = devices;
+    self.scenes  = scenes;
 }
 
 
@@ -701,6 +726,36 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
                                       device.manualOverride = NO;
                                   }
                               }];
+}
+
+
+-(void) handleRunScene:(NSNotification *) notification
+{
+    Scene * scene = notification.object;
+    
+    scene.manualOverride = YES;
+    
+    NSString * url = self.currentAccessPoint.localMode ? self.currentAccessPoint.localUrl : self.currentAccessPoint.remoteUrl;
+    
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"serviceId" : kSceneControlService,
+                              @"action" : @"RunScene",
+                              @"SceneNum": [NSString stringWithFormat:@"%ld", scene.deviceId],
+                              @"output_format" : @"json"
+                            };
+    
+    
+    [APIService callHttpRequestWithUrl:url
+                                params:params
+                      maxRetryAttempts:0
+                              callback:^(NSData *data, NSError *fault) {
+                                 if(fault != nil)
+                                 {
+                                     scene.manualOverride = NO;
+                                 }
+                              }];
+                                                                                             
 }
 
 @end

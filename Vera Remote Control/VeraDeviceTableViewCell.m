@@ -31,6 +31,7 @@
     {
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [StyleUtils applyDefaultStyleOnTableTitleLabel:self.nameLabel];
+        self.nameLabel.font = [UIFont defaultBoldFontWithSize:16];
         [self.contentView addSubview:self.nameLabel];
         
         

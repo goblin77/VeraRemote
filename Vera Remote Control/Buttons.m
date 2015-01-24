@@ -52,9 +52,8 @@
     [res sizeToFit];
     
     res.layer.cornerRadius = cornerRadius;
-    res.layer.shadowOffset = CGSizeMake(0, 1);
-    res.layer.shadowRadius = 2;
-    res.layer.shadowOpacity= 0.5;
+    res.layer.borderWidth  = 1;
+    res.layer.borderColor  = [UIColor darkGrayColor].CGColor;
     
     return res;
 }

@@ -31,6 +31,7 @@ extern NSString * const StopPollingNotification;
 // Device control
 extern NSString * const SetBinarySwitchValueNotification;
 extern NSString * const SetDimmableSwitchValueNotification;
+extern NSString * const RunSceneNotification;
 
 
 

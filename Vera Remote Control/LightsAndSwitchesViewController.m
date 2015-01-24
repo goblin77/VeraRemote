@@ -10,7 +10,7 @@
 #import "dispatch_cancelable_block.h"
 #import "ObserverUtils.h"
 #import "ControlledDevice.h"
-#import "LightsAndSwitchesTableSection.h"
+#import "DevicesTableSection.h"
 #import "BinarySwitchTableViewCell.h"
 #import "DimmableSwitchTableViewCell.h"
 
@@ -92,46 +92,6 @@
     return paths;
 }
 
--(NSArray *) createSectionsForDevices:(NSArray *) devices rooms:(NSArray *) rooms
-{
-    Room * noRoom = [[Room alloc] init];
-    noRoom.roomId = 0;
-    noRoom.name = @"No Room";
-    NSArray * allRooms = [@[noRoom] arrayByAddingObjectsFromArray:rooms];
-    NSMutableDictionary * sectionLookup = [[NSMutableDictionary alloc] initWithCapacity:allRooms.count];
-    
-    
-    for(Room * r in allRooms)
-    {
-        RoomTableSection * section  = [[RoomTableSection alloc] init];
-        section.room = r;
-        sectionLookup[@(r.roomId)] = section;
-    }
-    
-    
-    for(ControlledDevice * device in devices)
-    {
-        RoomTableSection * section = sectionLookup[@(device.roomId)];
-        if(section == nil)
-        {
-            continue;
-        }
-        
-        if(section.items == nil)
-        {
-            section.items = [[NSMutableArray alloc] init];
-        }
-        
-        [(NSMutableArray *)section.items addObject:device];
-    }
-    
-    
-    NSArray * res = [[sectionLookup allValues] sortedArrayUsingComparator:^NSComparisonResult(RoomTableSection * s1, RoomTableSection * s2) {
-        return [s1.title compare:s2.title];
-    }];
-    
-    return res;
-};
 
 
 #pragma mark -
@@ -159,7 +119,7 @@
 
 -(void) commitProperties
 {
-    self.sections = [self createSectionsForDevices:self.deviceManager.devices rooms:self.deviceManager.rooms];
+    self.sections = [RoomTableSection createRoomSectionsWithDevices:self.deviceManager.devices rooms:self.deviceManager.rooms];
     [self.tableView reloadData];
 }
 
@@ -176,13 +136,13 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    LightsAndSwitchesTableSection * s = self.sections[section];
+    DevicesTableSection * s = self.sections[section];
     return s.items.count;
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LightsAndSwitchesTableSection * section = self.sections[indexPath.section];
+    DevicesTableSection * section = self.sections[indexPath.section];
     ControlledDevice * device = section.items[indexPath.row];
     
     if([device isKindOfClass:[BinarySwitch class]])
@@ -233,7 +193,7 @@
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LightsAndSwitchesTableSection * section = self.sections[indexPath.section];
+    DevicesTableSection * section = self.sections[indexPath.section];
     ControlledDevice * device = section.items[indexPath.row];
     
     if([device isKindOfClass:[BinarySwitch class]])
@@ -250,7 +210,7 @@
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    LightsAndSwitchesTableSection * s = self.sections[section];
+    DevicesTableSection * s = self.sections[section];
     return s.title;
 }
 
