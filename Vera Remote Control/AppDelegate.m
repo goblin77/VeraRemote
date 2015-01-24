@@ -11,24 +11,21 @@
 
 #import "DeviceManager.h"
 
-@interface AppDelegate ()
-
-@end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // init the managers
+    [DeviceManager sharedInstance];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor colorWithRGBHex:0xf0f0f0];
     [self.window makeKeyAndVisible];
     
     self.window.rootViewController = [[MasterViewController alloc] init];
-    
-    
-    // init the managers
-    [DeviceManager sharedInstance];
+    ((MasterViewController *)self.window.rootViewController).deviceManager = [DeviceManager sharedInstance];
     
     
     return YES;

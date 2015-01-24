@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */; };
+		DB50DC021A72F1360053110E /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
+		DB50DC081A72FC240053110E /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
 		DB6850A31A6C6D1100CE4DAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A21A6C6D1100CE4DAA /* main.m */; };
 		DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A51A6C6D1100CE4DAA /* AppDelegate.m */; };
 		DB6850AE1A6C6D1100CE4DAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB6850AD1A6C6D1100CE4DAA /* Images.xcassets */; };
@@ -57,6 +59,10 @@
 /* Begin PBXFileReference section */
 		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchTableViewCell.m; sourceTree = "<group>"; };
+		DB50DC001A72F1360053110E /* AccessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessConfig.h; sourceTree = "<group>"; };
+		DB50DC011A72F1360053110E /* AccessConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessConfig.m; sourceTree = "<group>"; };
+		DB50DC061A72FC240053110E /* FaultUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaultUtils.h; sourceTree = "<group>"; };
+		DB50DC071A72FC240053110E /* FaultUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaultUtils.m; sourceTree = "<group>"; };
 		DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vera Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6850A11A6C6D1100CE4DAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB6850A21A6C6D1100CE4DAA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -235,6 +241,8 @@
 				DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */,
 				DB8B3DE71A6F349A00EB9A6A /* Room.h */,
 				DB8B3DE81A6F349A00EB9A6A /* Room.m */,
+				DB50DC001A72F1360053110E /* AccessConfig.h */,
+				DB50DC011A72F1360053110E /* AccessConfig.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -266,6 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				DB8B3DA71A6ED80D00EB9A6A /* dispatch_cancelable_block.h */,
+				DB50DC061A72FC240053110E /* FaultUtils.h */,
+				DB50DC071A72FC240053110E /* FaultUtils.m */,
 				DB8B3D721A6CAC8400EB9A6A /* StyleUtils.h */,
 				DB8B3D731A6CAC8400EB9A6A /* StyleUtils.m */,
 				DB8B3D6F1A6CAC6300EB9A6A /* DefaultTextFieldDelegate.h */,
@@ -494,12 +504,14 @@
 				DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */,
 				DB8B3DA61A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m in Sources */,
 				DB8B3DAA1A6EFEA300EB9A6A /* VeraAccessPoint.m in Sources */,
+				DB50DC021A72F1360053110E /* AccessConfig.m in Sources */,
 				DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */,
 				DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */,
 				DB8B3D711A6CAC6300EB9A6A /* DefaultTextFieldDelegate.m in Sources */,
 				DB6850CE1A6C6F2A00CE4DAA /* DeviceManager.m in Sources */,
 				DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */,
 				DB8B3D691A6CA93C00EB9A6A /* UIColor+Expanded.m in Sources */,
+				DB50DC081A72FC240053110E /* FaultUtils.m in Sources */,
 				DB8B3DE91A6F349A00EB9A6A /* Room.m in Sources */,
 				DB8B3DFC1A70A29A00EB9A6A /* CircularShapeView.m in Sources */,
 				DB8B3D7C1A6CAD6D00EB9A6A /* AsyncImageView.m in Sources */,
@@ -641,7 +653,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Vera Remote Control/Vera Remote Control.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VeraRemoteControl-Prefix.pch";

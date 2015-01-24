@@ -8,14 +8,25 @@
 
 #import "DeviceManager.h"
 #import "APIService.h"
+#import "AccessConfig.h"
 #import "VeraAccessPoint.h"
 #import "Room.h"
 #import "ControlledDevice.h"
+#import "UIAlertViewWithCallbacks.h"
+#import "FaultUtils.h"
 
-NSString * const LogoutNotification = @"Logout";
+
+NSString * const BootstrapNotification = @"Bootstrap";
+
+NSString * const AuthenticateUserNotification      = @"AuthUser";
 NSString * const AuthenticationSuccessNotification = @"AuthSuccess";
+NSString * const AuthenticationFailedNotification  = @"AuthFailed";
+NSString * const LogoutNotification = @"Logout";
 
+
+NSString * const LoadVeraDevicesNotification       = @"LoadVeraDevices";
 NSString * const SetSelectedVeraDeviceNotification = @"SetSelectedVeraDevice";
+
 
 NSString * const StartPollingNotification = @"StartPolling";
 NSString * const RestartPollingNotification = @"RestartPolling";
@@ -30,6 +41,8 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 #define kDimmableSwitchControlService @"urn:upnp-org:serviceId:Dimming1"
 
 
+#define kAccessConfigGroupId @"group.com.goblin77.AccessConfig"
+
 
 @interface DeviceManager ()
 {
@@ -41,6 +54,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 
 @property (nonatomic, strong) VeraAccessPoint * currentAccessPoint;
 
+-(void) setCurrentDevice:(VeraDevice *) value;
 
 @end
 
@@ -50,7 +64,6 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 @synthesize username;
 @synthesize password;
 @synthesize currentDevice;
-@synthesize currentDeviceSerialNumber;
 @synthesize currentAccessPoint;
 
 
@@ -77,11 +90,18 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
         dataVersion = 0;
         lastPollTimeStamp = 0;
         
+        self.initializing = NO;
+        self.authenticating = NO;
+        self.currentAccessPoint = [[VeraAccessPoint alloc] init];
         
-        [self retrievePersistedData];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBootstrap:) name:BootstrapNotification object:nil];
         
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAuthenticate:) name:AuthenticateUserNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLogout:) name:LogoutNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAuthenticationSuccess:) name:AuthenticationSuccessNotification object:nil];
+        
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLoadVeraDevices:) name:LoadVeraDevicesNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetSelectedVeraDevice:) name:SetSelectedVeraDeviceNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStartPolling:) name:StartPollingNotification object:nil];
@@ -97,64 +117,59 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 }
 
 
-#pragma mark -
-#pragma mark properties
--(VeraDevice *) currentDevice
-{
-    if(self.currentDeviceSerialNumber.length == 0)
-    {
-        return nil;
-    }
-    
-    for(VeraDevice * device in self.availableVeraDevices)
-    {
-        if([device.serialNumber isEqualToString:self.currentDeviceSerialNumber])
-        {
-            return device;
-        }
-    }
-    
-    return nil;
-}
-
-
--(void) setCurrentDeviceSerialNumber:(NSString *)value
-{
-    if(![currentDeviceSerialNumber isEqualToString:value])
-    {
-        currentDeviceSerialNumber = value;
-        currentAccessPoint = nil;
-    }
-}
-
--(VeraAccessPoint *) currentAccessPoint
-{
-    if(currentAccessPoint == nil)
-    {
-        VeraDevice * d = self.currentDevice;
-        currentAccessPoint = [[VeraAccessPoint alloc] init];
-        if(d != nil)
-        {
-            if(d.ipAddress.length > 0)
-            {
-                currentAccessPoint.primaryUrl = [NSString stringWithFormat:@"http://%@:3480/data_request",d.ipAddress];
-                currentAccessPoint.alternativeUrls = nil;
-            }
-            else
-            {
-                currentAccessPoint.primaryUrl = [NSString stringWithFormat:@"https://%@/%@/%@/%@/data_request",d.proxyServer, self.username, self.password, d.serialNumber];
-                currentAccessPoint.alternativeUrls = nil;
-            }
-        }
-    }
-    
-    return currentAccessPoint;
-}
 
 #pragma mark -
 #pragma mark misc functions
+-(void) setCurrentDevice:(VeraDevice *)value
+{
+    currentDevice = value;
+    [self didChangeValueForKey:@"currentDevice"];
+}
 
--(void) verifyUsername:(NSString *)uname password:(NSString *)pass callback:(void (^)(BOOL, NSError *))callback
+-(AccessConfig *) loadAccessConfig
+{
+    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAccessConfigGroupId];
+    AccessConfig * accessConfig = [[AccessConfig alloc] init];
+    [accessConfig populateFromUserDefaults:userDefaults];
+    return accessConfig;
+}
+
+
+-(void) persistCurrentAuthConfig
+{
+    AccessConfig * ac = [[AccessConfig alloc] init];
+    ac.username = self.username;
+    ac.password = self.password;
+    ac.device   = self.currentDevice;
+    
+    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAccessConfigGroupId];
+    [ac writeToUserDefaults:userDefaults synch:YES];
+}
+
+-(void) updateCurrentAccessPoint
+{
+    currentAccessPoint.localUrl = nil;
+    currentAccessPoint.remoteUrl= nil;
+    
+    if(currentDevice.ipAddress.length != 0)
+    {
+        currentAccessPoint.localUrl = [NSString stringWithFormat:@"http://%@:3480/data_request",self.currentDevice.ipAddress];
+    }
+    if(currentDevice.forwardServer.length != 0 && currentDevice.serialNumber.length >0 && self.username.length > 0 && self.password.length > 0)
+    {
+        currentAccessPoint.remoteUrl = [NSString stringWithFormat:@"https://%@/%@/%@/%@/data_request",
+                                        self.currentDevice.forwardServer,
+                                        self.username,
+                                        self.password,
+                                        self.currentDevice.serialNumber];
+    }
+    
+    
+    currentAccessPoint.localMode = currentAccessPoint.localUrl.length > 0;
+}
+
+
+-(void) verifyUserName:(NSString *) uname password:(NSString *) pass callback:(void (^)(BOOL success, NSError * fault)) callback
 {
     static NSString * url = @"https://sta1.mios.com/VerifyUser.php";
     
@@ -165,57 +180,26 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
                                 params:@{@"reg_username" : uname,
                                          @"reg_password" : pass}
                       maxRetryAttempts:0
-                              callback:^(NSData *data, NSError *fault) {
-                                  if(fault != nil)
-                                  {
-                                      callback(NO, fault);
-                                  }
-                                  
-                                  NSString *responseString =  [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSISOLatin1StringEncoding];
-                                  if([responseString isEqualToString:@"OK"])
-                                  {
-                                      [thisObject persistUsername:uname password:pass];
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationSuccessNotification object:nil];
-                                      callback(YES, nil);
-                                  }
-                                  else
-                                  {
-                                      callback(NO, nil);
-                                  }
-                                  
-                              }];
-}
-
--(void) fetchAvailableDevicesWithUsername:(NSString *)uname callback:(void (^)(NSArray *, NSError *))callback
-{
-    static NSString * url = @"http://sta1.mios.com/locator_json.php";
-    
-    __weak DeviceManager * thisObject = self;
-    
-    [APIService callApiWithUrl:url params:@{@"username": uname}
-              maxRetryAttempts:0
-                      callback:^(NSObject *data, NSError *fault) {
-                          if(fault != nil)
-                          {
-                              callback(nil, fault);
-                          }
-                          else
-                          {
-                              NSArray * homeDeviceListSrc = [(NSDictionary *)data objectForKey:@"units"];
-                              NSMutableArray * homeDevices = [[NSMutableArray alloc] initWithCapacity:homeDeviceListSrc.count];
-                              for(NSDictionary * src in homeDeviceListSrc)
-                              {
-                                  VeraDevice * device = [[VeraDevice alloc] init];
-                                  [device updateWithDictionary:src];
-                                  [homeDevices addObject:device];
-                              }
-                              
-                              
-                              thisObject.availableVeraDevices = homeDevices;
-                              callback(thisObject.availableVeraDevices, nil);
-                          }
-                      }];
-    
+                              callback:^(NSData *data, NSError *fault)
+     {
+         if(fault != nil)
+         {
+             [thisObject defaultFaultHandler:fault];
+             [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+             return;
+         }
+         
+         NSString *responseString =  [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSISOLatin1StringEncoding];
+         if([responseString isEqualToString:@"OK"])
+         {
+             callback(YES, nil);
+         }
+         else
+         {
+             callback(NO, nil);
+         }
+         
+     }];
 }
 
 -(void) startPolling
@@ -250,7 +234,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     VeraAccessPoint * accessPoint = self.currentAccessPoint;
     
     
-    NSString * apiCall = accessPoint.primaryUrl;
+    NSString * apiCall = accessPoint.localMode ? accessPoint.localUrl : accessPoint.remoteUrl;
     NSDictionary * params = @{
                               @"id" : @"lu_sdata",
                               @"dataversion" : [NSString stringWithFormat:@"%ld", dataVersion],
@@ -270,7 +254,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
                                                 {
                                                     if(fault != nil)
                                                     {
-                                                        [thisObject poll];
+                                                        [thisObject performSelector:@selector(poll) withObject:nil afterDelay:1];
                                                     }
                                                     else
                                                     {
@@ -404,7 +388,7 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     VeraAccessPoint * accessPoint = self.currentAccessPoint;
     
     
-    NSString * apiCall = accessPoint.primaryUrl;
+    NSString * apiCall = accessPoint.localMode ? accessPoint.localUrl : accessPoint.remoteUrl;
     NSDictionary * params = @{
                               @"id" : @"lu_sdata",
                               @"output_format" : @"json"
@@ -422,81 +406,202 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 }
 
 
--(void) retrievePersistedData
+
+-(void) defaultFaultHandler:(NSError *) fault
 {
-    NSUserDefaults * defaults = [DeviceManager sharedUserDefaults];
-    username = [defaults objectForKey:@"username"];
-    password = [defaults objectForKey:@"password"];
-    
+    UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
+                                                                               message:@"Oops! Looks like there was an error processing your operation."
+                                                                     cancelButtonTitle:@"Close"
+                                                                     otherButtonTitles:nil];
+    [alert show];
 }
-
-+(NSUserDefaults *) sharedUserDefaults
-{
-    static NSUserDefaults * sharedDefaults = nil;
-    
-    if(sharedDefaults == nil)
-    {
-        sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.goblin77.VeraRemoteShared"];
-    }
-    
-    return sharedDefaults;
-}
-
-
--(void) persistUsername:(NSString *) usernameValue password:(NSString *) passwordValue
-{
-    NSUserDefaults * defaults = [DeviceManager sharedUserDefaults];
-    if(usernameValue.length > 0)
-    {
-        [defaults setObject:usernameValue forKey:@"username"];
-    }
-    else
-    {
-        [defaults removeObjectForKey:@"username"];
-    }
-    
-    if(passwordValue.length > 0)
-    {
-        [defaults setObject:passwordValue forKey:@"password"];
-    }
-    else
-    {
-        [defaults removeObjectForKey:@"password"];
-    }
-    
-    [defaults synchronize];
-}
-
 
 
 
 #pragma mark -
 #pragma mark notification handlers
--(void) handleAuthenticationSuccess:(NSNotification *) notification
+
+//########################## BOOTSTRAP ##########################
+-(void) handleBootstrap:(NSNotification *) notification
 {
-    self.availableVeraDevicesLoading = YES;
-    [self fetchAvailableDevicesWithUsername:self.username callback:^(NSArray *devices, NSError *fault) {
-        self.availableVeraDevicesLoading = NO;
-        if(fault != nil)
-        {
-            self.availableVeraDevicesHaveBeenLoaded = YES;
-        }
-    }];
+    self.initializing = YES;
+    AccessConfig * accessConfig = [self loadAccessConfig];
+    
+    username      = accessConfig.username;
+    password      = accessConfig.password;
+    self.currentDevice = accessConfig.device;
+    
+    if(self.currentDevice != nil)
+    {
+        self.availableVeraDevices = @[self.currentDevice];
+        self.availableVeraDevicesHaveBeenLoaded = YES;
+    }
+    
+    if(self.username.length > 0 && self.password.length > 0)
+    {
+        // verify the user
+        __weak DeviceManager * thisObject = self;
+        [thisObject verifyUserName:self.username
+                          password:self.password
+                          callback:^(BOOL success, NSError *fault) {
+                              if(success)
+                              {
+                                  [thisObject updateCurrentAccessPoint];
+                                  if(!thisObject.availableVeraDevicesHaveBeenLoaded)
+                                  {
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:LoadVeraDevicesNotification object:nil];
+                                  }
+                                  
+                                  if(thisObject.currentDevice != nil)
+                                  {
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
+                                  }
+                              }
+                              else
+                              {
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+                              }
+                              
+                              thisObject.initializing = NO;
+                          }];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+        self.initializing = NO;
+    }
 }
+
+
+//########################## AUTH ##########################
+
+-(void) handleAuthenticate:(NSNotification *) notification
+{
+    NSString * uname = notification.userInfo[@"username"];
+    NSString * pass  = notification.userInfo[@"password"];
+    
+    __weak DeviceManager * thisObject = self;
+    
+    
+    self.authenticating = YES;
+    [self verifyUserName:uname
+                password:pass
+                callback:^(BOOL success, NSError *fault)
+                {
+                    thisObject.authenticating = NO;
+                    thisObject.initializing   = NO;
+                    if(success)
+                    {
+                        username = uname;
+                        password = pass;
+                        
+                        [thisObject persistCurrentAuthConfig];
+                        
+                        if(!self.availableVeraDevicesHaveBeenLoaded)
+                        {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:LoadVeraDevicesNotification object:nil];
+                        }
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationSuccessNotification object:nil];
+                    }
+                    else
+                    {
+                        if(fault != nil)
+                        {
+                            [thisObject defaultFaultHandler:fault];
+                        }
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+                    }
+                }];
+}
+
+
 
 
 -(void) handleLogout:(NSNotification *) notification
 {
-    [self persistUsername:self.username password:nil];
+    
 }
 
 
+//########################## Vera Devices ########################## Vera
+-(void) handleLoadVeraDevices:(NSNotification *) notification
+{
+    static NSString * url = @"http://sta1.mios.com/locator_json.php";
+    
+    __weak DeviceManager * thisObject = self;
+    
+    self.availableVeraDevicesLoading = YES;
+    
+    
+    [APIService callApiWithUrl:url params:@{@"username": self.username}
+              maxRetryAttempts:1
+                      callback:^(NSObject *data, NSError *fault) {
+                          if(fault != nil)
+                          {
+                              [thisObject defaultFaultHandler:fault];
+                          }
+                          else
+                          {
+                              NSMutableDictionary * deviceLookup = [[NSMutableDictionary alloc] init];
+                              NSMutableArray * devices = [[NSMutableArray alloc] initWithArray:thisObject.availableVeraDevices];
+                              for(VeraDevice * device in devices)
+                              {
+                                  deviceLookup[device.serialNumber] = device;
+                              }
+                              
+                              
+                              NSArray * homeDeviceListSrc = [(NSDictionary *)data objectForKey:@"units"];
+                              for(NSDictionary * deviceSrc in homeDeviceListSrc)
+                              {
+                                  VeraDevice * d = nil;
+                                  NSString * serialNum = deviceSrc[@"serialNumber"];
+                                  if(serialNum.length > 0)
+                                  {
+                                      d = deviceLookup[serialNum];
+                                  }
+                                  
+                                  if(d == nil)
+                                  {
+                                      d = [[VeraDevice alloc] init];
+                                      [devices addObject:d];
+                                  }
+                                  
+                                  
+                                  [d updateWithDictionary:deviceSrc];
+                                  if([d.serialNumber isEqualToString:thisObject.currentDevice.serialNumber])
+                                  {
+                                      [thisObject.currentDevice updateWithDictionary:deviceSrc];
+                                      [thisObject persistCurrentAuthConfig];
+                                      [thisObject updateCurrentAccessPoint];
+                                  }
+                                  
+                                  
+                                  thisObject.availableVeraDevices = devices;
+                                  thisObject.availableVeraDevicesHaveBeenLoaded = YES;
+                              }
+                              
+                              thisObject.availableVeraDevicesLoading = NO;
+                          }
+                      }];
+    
+    
+}
+
 -(void) handleSetSelectedVeraDevice:(NSNotification *) notification
 {
-    NSString * selectedDeviceSerialNumber = [(VeraDevice *) notification.object serialNumber];
-    if(![self.currentDeviceSerialNumber isEqualToString:selectedDeviceSerialNumber])
+    VeraDevice * device = notification.object;
+    if(![device.serialNumber isEqualToString:self.currentDevice.serialNumber])
     {
-        self.currentDeviceSerialNumber = selectedDeviceSerialNumber;
+        [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
+        
+        self.currentDevice = device;
+        
+        [self persistCurrentAuthConfig];
+        [self updateCurrentAccessPoint];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
     }
 }
 
@@ -526,7 +631,6 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     BinarySwitch * device = notification.object;
     BOOL value = [notification.userInfo[@"value"] boolValue];
     
-    VeraAccessPoint * accessPoint = self.currentAccessPoint;
     NSDictionary * params = @{
                                 @"id" : @"lu_action",
                                 @"DeviceNum" : [NSString stringWithFormat:@"%ld", device.deviceId],
@@ -539,7 +643,9 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     device.manualValue = value;
     device.manualOverride = YES;
     
-    [APIService callHttpRequestWithUrl:accessPoint.primaryUrl
+    NSString * url = self.currentAccessPoint.localMode ? self.currentAccessPoint.localUrl : self.currentAccessPoint.remoteUrl;
+    
+    [APIService callHttpRequestWithUrl:url
                                 params:params
                       maxRetryAttempts:0
                               callback:^(NSData *data, NSError *fault) {
@@ -559,7 +665,6 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     DimmableSwitch * device = notification.object;
     NSUInteger value = [notification.userInfo[@"value"] integerValue];
     
-    VeraAccessPoint * accessPoint = self.currentAccessPoint;
     NSDictionary * params = @{
                               @"id" : @"lu_action",
                               @"DeviceNum" : [NSString stringWithFormat:@"%ld", device.deviceId],
@@ -572,7 +677,9 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
     device.manualValue = value;
     device.manualOverride = YES;
     
-    [APIService callHttpRequestWithUrl:accessPoint.primaryUrl
+    NSString * url = self.currentAccessPoint.localMode ? self.currentAccessPoint.localUrl : self.currentAccessPoint.remoteUrl;
+    
+    [APIService callHttpRequestWithUrl:url
                                 params:params
                       maxRetryAttempts:0
                               callback:^(NSData *data, NSError *fault) {
@@ -586,3 +693,8 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 }
 
 @end
+
+
+
+
+

@@ -19,8 +19,54 @@
     self.serialNumber = src[@"serialNumber"];
     self.firmwareVersion = src[@"FirmwareVersion"];
     self.ipAddress = src[@"ipAddress"];
-    self.proxyServer = src[@"active_server"];
+    self.forwardServer = src[@"active_server"];
 }
+
+#pragma mark -
+#pragma NSCoding implementation
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    if(self = [super init])
+    {
+        NSString * value = nil;
+        for(NSString * key in [self keys])
+        {
+            value = [aDecoder decodeObjectForKey:key];
+            if(value != nil)
+            {
+                [self setValue:value forKey:key];
+            }
+        }
+    }
+    
+    return self;
+}
+
+
+-(void) encodeWithCoder:(NSCoder *)aCoder
+{
+    NSString * value = nil;
+    for(NSString * key in [self keys])
+    {
+        value = [self valueForKey:key];
+        if(value != nil)
+        {
+            [aCoder encodeObject:value forKey:key];
+        }
+    }
+}
+
+-(NSArray *) keys
+{
+    static NSArray * keys = nil;
+    if(keys == nil)
+    {
+        keys = @[@"name",@"serialNumber",@"firmwareVersion",@"ipAddress",@"forwardServer"];
+    }
+    
+    return keys;
+}
+
 
 
 @end

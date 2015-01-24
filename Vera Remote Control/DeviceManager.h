@@ -10,12 +10,17 @@
 #import "VeraDevice.h"
 
 
-// authentication
-extern NSString * const LogoutNotification;
-extern NSString * const AuthenticationSuccessNotification;
+// initialization
+extern NSString * const BootstrapNotification;
 
+// authentication
+extern NSString * const AuthenticateUserNotification;
+extern NSString * const AuthenticationSuccessNotification;
+extern NSString * const AuthenticationFailedNotification;
+extern NSString * const LogoutNotification;
 
 // Vera Device
+extern NSString * const LoadVeraDevicesNotification;
 extern NSString * const SetSelectedVeraDeviceNotification;
 
 // network polling
@@ -33,7 +38,9 @@ extern NSString * const SetDimmableSwitchValueNotification;
 
 +(DeviceManager *) sharedInstance;
 
-@property (nonatomic, strong) NSString * currentDeviceSerialNumber;
+
+@property (nonatomic, assign) BOOL initializing;
+
 @property (nonatomic, readonly) VeraDevice * currentDevice;
 
 @property (nonatomic, strong) NSArray * availableVeraDevices;
@@ -47,12 +54,10 @@ extern NSString * const SetDimmableSwitchValueNotification;
 @property (nonatomic, assign) BOOL deviceNetworkLoading;
 
 
+@property (nonatomic, assign)   BOOL authenticating;
 @property (nonatomic, readonly) NSString * username;
 @property (nonatomic, readonly) NSString * password;
 
--(void) verifyUsername:(NSString *) username password:(NSString *) password callback:(void (^)(BOOL success, NSError * fault)) callback;
-
--(void) fetchAvailableDevicesWithUsername:(NSString *) username callback:(void (^)(NSArray * devices, NSError * fault)) callback;
 
 
 @end

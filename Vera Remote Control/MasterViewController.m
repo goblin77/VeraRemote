@@ -10,7 +10,6 @@
 #import "VeraDevicesViewController.h"
 #import "LightsAndSwitchesViewController.h"
 #import "CredentialsViewController.h"
-#import "DeviceManager.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
 #import "ObserverUtils.h"
@@ -18,6 +17,7 @@
 @interface MasterViewController ()
 {
     BOOL isFirstViewWillAppear;
+    BOOL shouldBootstrap;
 }
 
 
@@ -25,21 +25,16 @@
 @property (nonatomic, strong) VeraDevicesViewController * homeDevicesViewController;
 @property (nonatomic, strong) LightsAndSwitchesViewController * lightsAndSwitchesViewController;
 
-
-@property (nonatomic, assign) BOOL didValidateCredentials;
-
 @end
 
 @implementation MasterViewController
 
+@synthesize deviceManager;
 
 -(id) init
 {
     if(self  = [super init])
     {
-        self.didValidateCredentials = NO;
-        
-        
         self.homeDevicesViewController = [[VeraDevicesViewController alloc] init];
         UINavigationController * homeDevicesNavController = [[UINavigationController alloc] initWithRootViewController:self.homeDevicesViewController];
         
@@ -48,7 +43,6 @@
         
         
         self.lightsAndSwitchesViewController = [[LightsAndSwitchesViewController alloc] init];
-        self.lightsAndSwitchesViewController.deviceManager = [DeviceManager sharedInstance];
         UINavigationController * lightsAndSwitchesNavController = [[UINavigationController alloc] initWithRootViewController:self.lightsAndSwitchesViewController];
         
         lightsAndSwitchesNavController.tabBarItem.title = @"Switches";
@@ -61,9 +55,16 @@
         
         
         isFirstViewWillAppear = NO;
+        shouldBootstrap = YES;
     }
     
     return self;
+}
+
+
+-(void) dealloc
+{
+    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:@[@"initializing"]];
 }
 
 - (void)viewDidLoad
@@ -72,7 +73,17 @@
     
     self.tabBar.tintColor = [UIColor blackColor];
     
-    [ObserverUtils addObserver:self toObject:[DeviceManager sharedInstance] forKeyPaths:@[@"availableVeraDevicesLoading"]];
+    
+    
+    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"initializing"]];
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleAuthenticationFailed:)
+                                                 name:AuthenticationFailedNotification
+                                               object:nil];
+    
+    
+    
 }
 
 
@@ -83,74 +94,53 @@
     {
         [self.selectedViewController viewWillAppear:animated];
         isFirstViewWillAppear = NO;
-    }
-    
-    if(!self.didValidateCredentials)
-    {
-        [self performSelector:@selector(validateCredentials) withObject:nil afterDelay:0];
-        self.didValidateCredentials = YES;
-    }
+    }    
 }
 
-
--(void) validateCredentials
+-(void) viewDidAppear:(BOOL)animated
 {
-    DeviceManager * manager = [DeviceManager sharedInstance];
-    if(manager.username.length > 0 && manager.password.length > 0)
+    if(shouldBootstrap)
     {
-        [LargeProgressView show];
-        [manager verifyUsername:manager.username
-                       password:manager.password
-                       callback:^(BOOL success, NSError *fault) {
-                            [LargeProgressView hide];
-                            if(success)
-                            {
-                            }
-                            else
-                            {
-                                if(fault == nil)
-                                {
-                                  UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
-                                                                                                             message:@"Invalid credentials"
-                                                                                                   cancelButtonTitle:@"Dissmiss"
-                                                                                                   otherButtonTitles:nil];
-                                  
-                                  
-                                  __weak MasterViewController * thisObject = self;
-                                  
-                                  alert.alertViewClickedButtonAtIndex = ^(UIAlertView * av, NSUInteger buttonIndex)
-                                  {
-                                      [thisObject showLogin];
-                                  };
-                                  
-                                  [alert show];
-                                }
-                            }
-                       }];
-    }
-    else
-    {
-        [self showLogin];
+        shouldBootstrap = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:BootstrapNotification object:nil];
     }
 }
 
+
+-(void) setDeviceManager:(DeviceManager *)value
+{
+    deviceManager = value;
+    self.lightsAndSwitchesViewController.deviceManager = deviceManager;
+    self.homeDevicesViewController.deviceManager = deviceManager;
+}
 
 
 -(void) showLogin
 {
     CredentialsViewController * vc = [[CredentialsViewController alloc] init];
+    vc.deviceManager = self.deviceManager;
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
 }
 
+
+
+
+
+#pragma mark -
+#pragma mark events / notifications
+-(void) handleAuthenticationFailed:(NSNotification *) notification
+{
+    [self showLogin];
+}
 
 
 #pragma mark -
 #pragma mark KVM
 -(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if([keyPath isEqualToString:@"availableVeraDevicesLoading"])
+    if([@"initializing" isEqualToString:keyPath])
     {
-        if([DeviceManager sharedInstance].availableVeraDevicesLoading)
+        if(self.deviceManager.initializing)
         {
             [LargeProgressView show];
         }

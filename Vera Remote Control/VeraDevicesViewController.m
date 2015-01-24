@@ -62,12 +62,12 @@ static CGFloat HomeDevicesRowHeight = 50;
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDeviceSerialNumber"] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDevice"] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:@[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDeviceSerialNumber"]];
+    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:@[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDevice"]];
 }
 
 
@@ -120,7 +120,7 @@ static CGFloat HomeDevicesRowHeight = 50;
     VeraDevice * veraDevice = self.deviceManager.availableVeraDevices[indexPath.row];
     
     res.veraDevice = veraDevice;
-    res.accessoryType = [veraDevice.serialNumber isEqualToString:self.deviceManager.currentDeviceSerialNumber] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    res.accessoryType = [veraDevice.serialNumber isEqualToString:self.deviceManager.currentDevice.serialNumber] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
     return res;
 }
@@ -137,7 +137,6 @@ static CGFloat HomeDevicesRowHeight = 50;
     
     VeraDevice * device = self.deviceManager.availableVeraDevices[indexPath.row];
     [[NSNotificationCenter defaultCenter] postNotificationName:SetSelectedVeraDeviceNotification object:device];
-    [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
 }
 
 #pragma mark -

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeviceManager.h"
 
 @interface CredentialsViewController : UITableViewController
 
-@property (nonatomic, strong) NSString * username;
-@property (nonatomic, strong) NSString * password;
+@property (nonatomic, strong) DeviceManager * deviceManager;
 
 @end

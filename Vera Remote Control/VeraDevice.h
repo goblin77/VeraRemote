@@ -9,14 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "JSONSerializable.h"
 
-@interface VeraDevice : NSObject <JSONSerializable>
+@interface VeraDevice : NSObject <JSONSerializable, NSCoding>
 
 @property (nonatomic, strong) NSString * serialNumber;
 @property (nonatomic, strong) NSString * name;
-@property (nonatomic, strong) NSString * ipAddress;
 @property (nonatomic, strong) NSString * firmwareVersion;
-@property (nonatomic, strong) NSString * proxyServer;
-@property (nonatomic, strong) NSString * alternativeProxyServer;
+@property (nonatomic, strong) NSString * ipAddress;
+@property (nonatomic, strong) NSString * forwardServer;
 
 
 @end

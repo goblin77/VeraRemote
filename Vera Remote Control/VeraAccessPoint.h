@@ -10,7 +10,10 @@
 
 @interface VeraAccessPoint : NSObject
 
-@property (nonatomic, strong) NSString * primaryUrl;
-@property (nonatomic, strong) NSArray  * alternativeUrls;
+
+@property (nonatomic, strong) NSString * localUrl;
+@property (nonatomic, strong) NSString * remoteUrl;
+@property (nonatomic, assign) BOOL localMode;
+
 
 @end

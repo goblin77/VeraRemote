@@ -5,6 +5,7 @@
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.com.goblin77.VeraRemoteShared</string>
+		<string>group.com.goblin77.AccessConfig</string>
 	</array>
 </dict>
 </plist>

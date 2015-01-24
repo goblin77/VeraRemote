@@ -7,14 +7,18 @@
 //
 
 #import "CredentialsViewController.h"
-#import "DeviceManager.h"
 #import "TableViewCellWithTextField.h"
 #import "DefaultTextFieldDelegate.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
+#import "ObserverUtils.h"
 
 
 @interface CredentialsViewController ()
+
+@property (nonatomic, strong) NSString * username;
+@property (nonatomic, strong) NSString * password;
+
 
 @property (nonatomic, strong) DefaultTextFieldDelegate * loginDelegate;
 @property (nonatomic, strong) DefaultTextFieldDelegate * passwordDelegate;
@@ -37,15 +41,31 @@
 }
 
 
+
 -(void) viewDidLoad
 {
     [super viewDidLoad];
-    self.username = [DeviceManager sharedInstance].username;
-    self.password = [DeviceManager sharedInstance].password;
+    self.username = self.deviceManager.username;
+    self.password = self.deviceManager.password;
     
     
     self.navigationItem.title = @"Login";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAuthenticationSuccess:) name:AuthenticationSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAuthenticationFailed:) name:AuthenticationFailedNotification object:nil];
 }
+
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"authenticating"]];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"authenticating"]];
+}
+
 
 
 -(void) viewDidAppear:(BOOL)animated
@@ -223,44 +243,57 @@
         return;
     }
     
-
     
-    DeviceManager * manager = [DeviceManager sharedInstance];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticateUserNotification
+                                                        object:nil
+                                                      userInfo:@{@"username" : self.username,
+                                                                 @"password" : self.password}];
     
-    [LargeProgressView show];
-    [manager verifyUsername:self.username
-                   password:self.password
-                   callback:^(BOOL success, NSError *fault)
-                    {
-                        [LargeProgressView hide];
-                        if(!success)
-                        {
-                            
-                            
-                            UIAlertViewWithCallbacks * alertView = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
-                                                                                                           message:@"Login/password is invalid."
-                                                                                                 cancelButtonTitle:@"Ok"
-                                                                                                 otherButtonTitles:nil];
-                            
-                            
-                            alertView.alertViewClickedButtonAtIndex = ^(UIAlertView * av, NSUInteger buttonIndex)
-                            {
-                                thisObject.password = nil;
-                                [thisObject.tableView reloadData];
-                                [thisObject tableView:thisObject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                            };
-                            
-                            [alertView show];
-                        }
-                        else
-                        {
-                            [thisObject dismissViewControllerAnimated:YES completion:nil];
-                        }
-                    }];
     
     
 }
 
+
+#pragma mark -
+#pragma mark notifications
+-(void) handleAuthenticationSuccess:(NSNotification *) notification
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+-(void) handleAuthenticationFailed:(NSNotification *) notification
+{
+    __weak CredentialsViewController * thisObject = self;
+    UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
+                                                                               message:@"Invalid username/password"
+                                                                     cancelButtonTitle:@"Close"
+                                                                     otherButtonTitles:nil];
+    alert.alertViewClickedButtonAtIndex = ^(UIAlertView * alertView, NSUInteger buttonIndex)
+    {
+        thisObject.password = nil;
+        [thisObject.tableView reloadData];
+        [thisObject tableView:thisObject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    };
+    
+    [alert show];
+}
+
+
+
+#pragma mark -
+#pragma mark KVO
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if(self.deviceManager.authenticating)
+    {
+        [LargeProgressView show];
+    }
+    else
+    {
+        [LargeProgressView hide];
+    }
+}
 
 
 

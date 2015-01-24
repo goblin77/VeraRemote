@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeviceManager.h"
 
 @interface MasterViewController : UITabBarController
 
+@property (nonatomic, strong) DeviceManager * deviceManager;
 
 @end
