@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "VeraDevice.h"
 
+extern NSString * const AccessConfigGroupId;
+
 
 @interface AccessConfig : NSObject 
 

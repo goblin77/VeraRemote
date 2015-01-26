@@ -12,6 +12,7 @@
 
 @interface SpinnerLayer : CALayer
 
+@property (nonatomic, assign) CGFloat angle;
 @property (nonatomic, strong) UIColor * spinnerColor;
 @property (nonatomic, assign) CGFloat spinnerStopAlpha;
 @property (nonatomic, assign) CGFloat spinnerRadius;
@@ -23,7 +24,9 @@
 @interface SpinningCursorView ()
 {
     SpinnerLayer * spinningLayer;
+    
     NSTimeInterval startAnimationTime;
+    BOOL dataChanged;
 }
 
 
@@ -65,7 +68,7 @@
 -(void) layoutSubviews
 {
     [super layoutSubviews];
-    
+
     spinningLayer.frame = self.bounds;
 }
 
@@ -90,6 +93,7 @@
         return;
     }
     
+    animating = NO;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(animate) object:nil];
 }
 
@@ -100,13 +104,13 @@
     {
         return;
     }
+    
     NSTimeInterval animationTime = [NSDate date].timeIntervalSince1970  - startAnimationTime;
     
     CGFloat intervalForFullRotation = 1.0 / self.speed;
     double rotationProgress = animationTime / intervalForFullRotation;
     CGFloat angle = rotationProgress * 2*M_PI;
-    
-    self.transform = CGAffineTransformRotate(CGAffineTransformIdentity, angle);
+    spinningLayer.angle = angle;
     
     [self performSelector:@selector(animate) withObject:nil afterDelay:0.05];
 }
@@ -136,11 +140,23 @@
         self.spinnerStopAlpha = 0.2;
         self.spinnerGap = 1;
         self.backgroundColor = [UIColor clearColor].CGColor;
-        [self setNeedsDisplay];
+        self.angle = 0;
+        
+        [self addObserver:self forKeyPath:@"angle"
+                  options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+                  context:NULL];
     }
     
     return self;
 }
+
+
+-(void) dealloc
+{
+    [self removeObserver:self forKeyPath:@"angle"];
+}
+
+
 
 
 -(void) display
@@ -159,7 +175,7 @@
     
     
     CGFloat dAngle = 2*M_PI / numCircles;
-    CGFloat angle = 0;
+    CGFloat angle = self.angle;
     
     CGFloat dAlpha = (CGFloat)(1-self.spinnerStopAlpha) / (CGFloat)numCircles;
     CGFloat alpha = 1;
@@ -189,6 +205,12 @@
     self.contents = (id)UIGraphicsGetImageFromCurrentImageContext().CGImage;
     UIGraphicsEndImageContext();
     
+}
+
+
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [self setNeedsDisplay];
 }
 
 

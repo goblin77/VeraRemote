@@ -61,7 +61,6 @@
         
     };
     
-    __weak APIServiceRequest * weakRequest = request;
     request.faultCallback  = ^(NSError * fault)
     {
         // make sure that we dispatch this on the main queue

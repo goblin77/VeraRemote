@@ -8,6 +8,9 @@
 
 #import "AccessConfig.h"
 
+
+NSString * const AccessConfigGroupId = @"group.com.goblin77.AccessConfig";
+
 @implementation AccessConfig
 
 -(void) populateFromUserDefaults:(NSUserDefaults *)userDefaults

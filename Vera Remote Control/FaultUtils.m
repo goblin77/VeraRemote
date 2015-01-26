@@ -11,6 +11,8 @@
 
 @implementation FaultUtils
 
+#ifndef IS_EXTENSION
+
 +(void) genericFaultHandler:(NSError *) fault
 {
     NSString * message = [fault.userInfo objectForKey:@"description"];
@@ -111,6 +113,14 @@
     };
     
     [alertView show];
+}
+
+#endif
+
+
++(BOOL) unaccessableUrlFault:(NSError *)fault
+{
+    return [fault.domain isEqualToString:NSURLErrorDomain];
 }
 
 

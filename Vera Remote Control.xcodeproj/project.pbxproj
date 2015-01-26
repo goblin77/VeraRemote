@@ -11,6 +11,7 @@
 		DB50DC021A72F1360053110E /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB50DC081A72FC240053110E /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
 		DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC0D1A733CB60053110E /* ScenesViewController.m */; };
+		DB55ADAC1A7615D7004175CF /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D681A6CA93C00EB9A6A /* UIColor+Expanded.m */; };
 		DB6850A31A6C6D1100CE4DAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A21A6C6D1100CE4DAA /* main.m */; };
 		DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A51A6C6D1100CE4DAA /* AppDelegate.m */; };
 		DB6850AE1A6C6D1100CE4DAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB6850AD1A6C6D1100CE4DAA /* Images.xcassets */; };
@@ -21,6 +22,30 @@
 		DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850D21A6C702800CE4DAA /* VeraDevice.m */; };
 		DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */; };
 		DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5191A75C64300DBD7AC /* SpinningCursorView.m */; };
+		DB6DE5221A75C6A300DBD7AC /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */; };
+		DB6DE52A1A75C6A300DBD7AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6DE5291A75C6A300DBD7AC /* MainInterface.storyboard */; };
+		DB6DE52D1A75C6A300DBD7AC /* Scenes.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DB6DE53A1A75C76C00DBD7AC /* ScenesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5381A75C76400DBD7AC /* ScenesViewController.m */; };
+		DB6DE53B1A75C78800DBD7AC /* VeraAccessPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DA91A6EFEA300EB9A6A /* VeraAccessPoint.m */; };
+		DB6DE53C1A75C78C00DBD7AC /* ControlledDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */; };
+		DB6DE53D1A75C78F00DBD7AC /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
+		DB6DE53E1A75C79200DBD7AC /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE81A6F349A00EB9A6A /* Room.m */; };
+		DB6DE5421A75C85D00DBD7AC /* SceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5411A75C85D00DBD7AC /* SceneManager.m */; };
+		DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */; };
+		DB6DE5461A75D85600DBD7AC /* ConfigUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */; };
+		DB6DE5471A75D85E00DBD7AC /* VeraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850D21A6C702800CE4DAA /* VeraDevice.m */; };
+		DB6DE5481A75D86200DBD7AC /* ObserverUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D941A6CE73900EB9A6A /* ObserverUtils.m */; };
+		DB6DE5491A75D88C00DBD7AC /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
+		DB6DE54D1A75DB7A00DBD7AC /* SceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5411A75C85D00DBD7AC /* SceneManager.m */; };
+		DB6DE54E1A75DB9E00DBD7AC /* APIService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */; };
+		DB6DE54F1A75DBA400DBD7AC /* APIServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5C1A6C80FB00EB9A6A /* APIServiceRequest.m */; };
+		DB6DE5531A75F8F200DBD7AC /* ScenesView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5521A75F8F200DBD7AC /* ScenesView.m */; };
+		DB6DE5541A75F92700DBD7AC /* SpinningCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5191A75C64300DBD7AC /* SpinningCursorView.m */; };
+		DB6DE5571A75F93D00DBD7AC /* SceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5561A75F93D00DBD7AC /* SceneView.m */; };
+		DB6DE5581A75F9C700DBD7AC /* CircularShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DFB1A70A29A00EB9A6A /* CircularShapeView.m */; };
+		DB6DE5591A75FD0D00DBD7AC /* SceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5561A75F93D00DBD7AC /* SceneView.m */; };
+		DB6DE55A1A75FD1000DBD7AC /* ScenesView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5521A75F8F200DBD7AC /* ScenesView.m */; };
+		DB6DE55B1A76048D00DBD7AC /* UIFont_Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D6D1A6CAC2700EB9A6A /* UIFont_Expanded.m */; };
 		DB8B3D5D1A6C80FB00EB9A6A /* APIService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */; };
 		DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5C1A6C80FB00EB9A6A /* APIServiceRequest.m */; };
 		DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D611A6CA71F00EB9A6A /* MasterViewController.m */; };
@@ -57,7 +82,28 @@
 			remoteGlobalIDString = DB68509C1A6C6D1100CE4DAA;
 			remoteInfo = "Vera Remote Control";
 		};
+		DB6DE52B1A75C6A300DBD7AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB6850951A6C6D1100CE4DAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB6DE51E1A75C6A300DBD7AC;
+			remoteInfo = Scenes;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DB6DE5311A75C6A300DBD7AC /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DB6DE52D1A75C6A300DBD7AC /* Scenes.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
@@ -89,6 +135,21 @@
 		DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneTableViewCell.m; sourceTree = "<group>"; };
 		DB6DE5181A75C64300DBD7AC /* SpinningCursorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinningCursorView.h; sourceTree = "<group>"; };
 		DB6DE5191A75C64300DBD7AC /* SpinningCursorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpinningCursorView.m; sourceTree = "<group>"; };
+		DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Scenes.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		DB6DE5251A75C6A300DBD7AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB6DE5291A75C6A300DBD7AC /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		DB6DE5321A75C6AD00DBD7AC /* Scenes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Scenes.entitlements; sourceTree = "<group>"; };
+		DB6DE5371A75C76400DBD7AC /* ScenesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenesViewController.h; sourceTree = "<group>"; };
+		DB6DE5381A75C76400DBD7AC /* ScenesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenesViewController.m; sourceTree = "<group>"; };
+		DB6DE5401A75C85D00DBD7AC /* SceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneManager.h; sourceTree = "<group>"; };
+		DB6DE5411A75C85D00DBD7AC /* SceneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneManager.m; sourceTree = "<group>"; };
+		DB6DE5431A75CC2100DBD7AC /* ConfigUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigUtils.h; sourceTree = "<group>"; };
+		DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigUtils.m; sourceTree = "<group>"; };
+		DB6DE5511A75F8F200DBD7AC /* ScenesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenesView.h; sourceTree = "<group>"; };
+		DB6DE5521A75F8F200DBD7AC /* ScenesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenesView.m; sourceTree = "<group>"; };
+		DB6DE5551A75F93D00DBD7AC /* SceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneView.h; sourceTree = "<group>"; };
+		DB6DE5561A75F93D00DBD7AC /* SceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneView.m; sourceTree = "<group>"; };
 		DB8B3D591A6C80FB00EB9A6A /* APIService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIService.h; sourceTree = "<group>"; };
 		DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIService.m; sourceTree = "<group>"; };
 		DB8B3D5B1A6C80FB00EB9A6A /* APIServiceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServiceRequest.h; sourceTree = "<group>"; };
@@ -161,6 +222,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DB6DE51C1A75C6A300DBD7AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB6DE5221A75C6A300DBD7AC /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -170,6 +239,8 @@
 				DB6850CF1A6C6F8800CE4DAA /* Security.framework */,
 				DB68509F1A6C6D1100CE4DAA /* Vera Remote Control */,
 				DB6850B91A6C6D1100CE4DAA /* Vera Remote ControlTests */,
+				DB6DE5231A75C6A300DBD7AC /* Scenes Extension */,
+				DB6DE5201A75C6A300DBD7AC /* Frameworks */,
 				DB68509E1A6C6D1100CE4DAA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -179,6 +250,7 @@
 			children = (
 				DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */,
 				DB6850B61A6C6D1100CE4DAA /* Vera Remote ControlTests.xctest */,
+				DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,6 +339,65 @@
 			name = Service;
 			sourceTree = "<group>";
 		};
+		DB6DE5201A75C6A300DBD7AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB6DE5231A75C6A300DBD7AC /* Scenes Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DB6DE53F1A75C84300DBD7AC /* Manager */,
+				DB6DE5361A75C72F00DBD7AC /* View Controllers */,
+				DB6DE5321A75C6AD00DBD7AC /* Scenes.entitlements */,
+				DB6DE5291A75C6A300DBD7AC /* MainInterface.storyboard */,
+				DB6DE5241A75C6A300DBD7AC /* Supporting Files */,
+			);
+			name = "Scenes Extension";
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		DB6DE5241A75C6A300DBD7AC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB6DE5251A75C6A300DBD7AC /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB6DE5361A75C72F00DBD7AC /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DB6DE5501A75F8E400DBD7AC /* Views */,
+				DB6DE5371A75C76400DBD7AC /* ScenesViewController.h */,
+				DB6DE5381A75C76400DBD7AC /* ScenesViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DB6DE53F1A75C84300DBD7AC /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				DB6DE5401A75C85D00DBD7AC /* SceneManager.h */,
+				DB6DE5411A75C85D00DBD7AC /* SceneManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		DB6DE5501A75F8E400DBD7AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB6DE5511A75F8F200DBD7AC /* ScenesView.h */,
+				DB6DE5521A75F8F200DBD7AC /* ScenesView.m */,
+				DB6DE5551A75F93D00DBD7AC /* SceneView.h */,
+				DB6DE5561A75F93D00DBD7AC /* SceneView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		DB8B3D5F1A6CA6FF00EB9A6A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +430,8 @@
 				DB8B3D8B1A6CDF6200EB9A6A /* ImageUtils.m */,
 				DB8B3D931A6CE73900EB9A6A /* ObserverUtils.h */,
 				DB8B3D941A6CE73900EB9A6A /* ObserverUtils.m */,
+				DB6DE5431A75CC2100DBD7AC /* ConfigUtils.h */,
+				DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -407,10 +540,12 @@
 				DB6850991A6C6D1100CE4DAA /* Sources */,
 				DB68509A1A6C6D1100CE4DAA /* Frameworks */,
 				DB68509B1A6C6D1100CE4DAA /* Resources */,
+				DB6DE5311A75C6A300DBD7AC /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DB6DE52C1A75C6A300DBD7AC /* PBXTargetDependency */,
 			);
 			name = "Vera Remote Control";
 			productName = "Vera Remote Control";
@@ -435,6 +570,23 @@
 			productReference = DB6850B61A6C6D1100CE4DAA /* Vera Remote ControlTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DB6DE51E1A75C6A300DBD7AC /* Scenes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB6DE52E1A75C6A300DBD7AC /* Build configuration list for PBXNativeTarget "Scenes" */;
+			buildPhases = (
+				DB6DE51B1A75C6A300DBD7AC /* Sources */,
+				DB6DE51C1A75C6A300DBD7AC /* Frameworks */,
+				DB6DE51D1A75C6A300DBD7AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Scenes;
+			productName = Scenes;
+			productReference = DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -457,6 +609,15 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = DB68509C1A6C6D1100CE4DAA;
 					};
+					DB6DE51E1A75C6A300DBD7AC = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 8X8RX9P5TW;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = DB6850981A6C6D1100CE4DAA /* Build configuration list for PBXProject "Vera Remote Control" */;
@@ -474,6 +635,7 @@
 			targets = (
 				DB68509C1A6C6D1100CE4DAA /* Vera Remote Control */,
 				DB6850B51A6C6D1100CE4DAA /* Vera Remote ControlTests */,
+				DB6DE51E1A75C6A300DBD7AC /* Scenes */,
 			);
 		};
 /* End PBXProject section */
@@ -495,6 +657,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DB6DE51D1A75C6A300DBD7AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB6DE52A1A75C6A300DBD7AC /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -510,17 +680,20 @@
 				DB8B3D951A6CE73900EB9A6A /* ObserverUtils.m in Sources */,
 				DB8B3D821A6CAD9700EB9A6A /* DefaultKeyboardAccessoryView.m in Sources */,
 				DB8B3D861A6CAE0700EB9A6A /* CredentialsViewController.m in Sources */,
+				DB6DE5531A75F8F200DBD7AC /* ScenesView.m in Sources */,
 				DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */,
 				DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */,
 				DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */,
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
 				DB8B3D741A6CAC8400EB9A6A /* StyleUtils.m in Sources */,
+				DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */,
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
 				DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */,
 				DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */,
 				DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */,
 				DB8B3DA61A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m in Sources */,
 				DB8B3DAA1A6EFEA300EB9A6A /* VeraAccessPoint.m in Sources */,
+				DB6DE5421A75C85D00DBD7AC /* SceneManager.m in Sources */,
 				DB50DC021A72F1360053110E /* AccessConfig.m in Sources */,
 				DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */,
 				DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */,
@@ -538,6 +711,7 @@
 				DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */,
 				DB6850A31A6C6D1100CE4DAA /* main.m in Sources */,
 				DB8B3DF21A7023A000EB9A6A /* DevicesTableSection.m in Sources */,
+				DB6DE5571A75F93D00DBD7AC /* SceneView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +723,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DB6DE51B1A75C6A300DBD7AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB55ADAC1A7615D7004175CF /* UIColor+Expanded.m in Sources */,
+				DB6DE5541A75F92700DBD7AC /* SpinningCursorView.m in Sources */,
+				DB6DE5491A75D88C00DBD7AC /* FaultUtils.m in Sources */,
+				DB6DE53E1A75C79200DBD7AC /* Room.m in Sources */,
+				DB6DE55B1A76048D00DBD7AC /* UIFont_Expanded.m in Sources */,
+				DB6DE55A1A75FD1000DBD7AC /* ScenesView.m in Sources */,
+				DB6DE54F1A75DBA400DBD7AC /* APIServiceRequest.m in Sources */,
+				DB6DE54E1A75DB9E00DBD7AC /* APIService.m in Sources */,
+				DB6DE53D1A75C78F00DBD7AC /* AccessConfig.m in Sources */,
+				DB6DE53B1A75C78800DBD7AC /* VeraAccessPoint.m in Sources */,
+				DB6DE5481A75D86200DBD7AC /* ObserverUtils.m in Sources */,
+				DB6DE53A1A75C76C00DBD7AC /* ScenesViewController.m in Sources */,
+				DB6DE5581A75F9C700DBD7AC /* CircularShapeView.m in Sources */,
+				DB6DE53C1A75C78C00DBD7AC /* ControlledDevice.m in Sources */,
+				DB6DE5471A75D85E00DBD7AC /* VeraDevice.m in Sources */,
+				DB6DE54D1A75DB7A00DBD7AC /* SceneManager.m in Sources */,
+				DB6DE5461A75D85600DBD7AC /* ConfigUtils.m in Sources */,
+				DB6DE5591A75FD0D00DBD7AC /* SceneView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -556,6 +755,11 @@
 			isa = PBXTargetDependency;
 			target = DB68509C1A6C6D1100CE4DAA /* Vera Remote Control */;
 			targetProxy = DB6850B71A6C6D1100CE4DAA /* PBXContainerItemProxy */;
+		};
+		DB6DE52C1A75C6A300DBD7AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB6DE51E1A75C6A300DBD7AC /* Scenes */;
+			targetProxy = DB6DE52B1A75C6A300DBD7AC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -716,6 +920,42 @@
 			};
 			name = Release;
 		};
+		DB6DE52F1A75C6A300DBD7AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Scenes/Scenes.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"IS_EXTENSION=1",
+				);
+				INFOPLIST_FILE = Scenes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DB6DE5301A75C6A300DBD7AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Scenes/Scenes.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "IS_EXTENSION=1";
+				INFOPLIST_FILE = Scenes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -742,6 +982,15 @@
 			buildConfigurations = (
 				DB6850C41A6C6D1100CE4DAA /* Debug */,
 				DB6850C51A6C6D1100CE4DAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB6DE52E1A75C6A300DBD7AC /* Build configuration list for PBXNativeTarget "Scenes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB6DE52F1A75C6A300DBD7AC /* Debug */,
+				DB6DE5301A75C6A300DBD7AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

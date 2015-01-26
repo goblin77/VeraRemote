@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Scenes.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>Vera Remote Control.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>DB6850B51A6C6D1100CE4DAA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB6DE51E1A75C6A300DBD7AC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

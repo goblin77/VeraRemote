@@ -7,6 +7,7 @@
 //
 
 #import "UIFont_Expanded.h"
+#import <UIKit/UIKit.h>
 
 @implementation UIFont (Expanded)
 

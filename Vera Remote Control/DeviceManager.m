@@ -14,6 +14,7 @@
 #import "ControlledDevice.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "FaultUtils.h"
+#import "ConfigUtils.h"
 
 
 NSString * const BootstrapNotification = @"Bootstrap";
@@ -42,7 +43,6 @@ NSString * const RunSceneNotification   = @"RunScene";
 #define kDimmableSwitchControlService @"urn:upnp-org:serviceId:Dimming1"
 #define kSceneControlService          @"urn:micasaverde-com:serviceId:HomeAutomationGateway1"
 
-#define kAccessConfigGroupId @"group.com.goblin77.AccessConfig"
 
 
 @interface DeviceManager ()
@@ -132,9 +132,11 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(AccessConfig *) loadAccessConfig
 {
-    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAccessConfigGroupId];
+    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] initWithSuiteName:AccessConfigGroupId];
     AccessConfig * accessConfig = [[AccessConfig alloc] init];
     [accessConfig populateFromUserDefaults:userDefaults];
+    
+    
     return accessConfig;
 }
 
@@ -146,31 +148,10 @@ NSString * const RunSceneNotification   = @"RunScene";
     ac.password = self.password;
     ac.device   = self.currentDevice;
     
-    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAccessConfigGroupId];
+    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] initWithSuiteName:AccessConfigGroupId];
     [ac writeToUserDefaults:userDefaults synch:YES];
 }
 
--(void) updateCurrentAccessPoint
-{
-    currentAccessPoint.localUrl = nil;
-    currentAccessPoint.remoteUrl= nil;
-    
-    if(currentDevice.ipAddress.length != 0)
-    {
-        currentAccessPoint.localUrl = [NSString stringWithFormat:@"http://%@:3480/data_request",self.currentDevice.ipAddress];
-    }
-    if(currentDevice.forwardServer.length != 0 && currentDevice.serialNumber.length >0 && self.username.length > 0 && self.password.length > 0)
-    {
-        currentAccessPoint.remoteUrl = [NSString stringWithFormat:@"https://%@/%@/%@/%@/data_request",
-                                        self.currentDevice.forwardServer,
-                                        self.username,
-                                        self.password,
-                                        self.currentDevice.serialNumber];
-    }
-    
-    
-    currentAccessPoint.localMode = currentAccessPoint.localUrl.length > 0;
-}
 
 
 -(void) verifyUserName:(NSString *) uname password:(NSString *) pass callback:(void (^)(BOOL success, NSError * fault)) callback
@@ -259,7 +240,7 @@ NSString * const RunSceneNotification   = @"RunScene";
                                                     if(fault != nil)
                                                     {
                                                         NSTimeInterval delay = 2;
-                                                        if([fault.domain isEqualToString:NSURLErrorDomain])
+                                                        if([FaultUtils unaccessableUrlFault:fault])
                                                         {
                                                             if(self.currentAccessPoint.localMode)
                                                             {
@@ -466,10 +447,17 @@ NSString * const RunSceneNotification   = @"RunScene";
     password      = accessConfig.password;
     self.currentDevice = accessConfig.device;
     
+    
     if(self.currentDevice != nil)
     {
         self.availableVeraDevices = @[self.currentDevice];
         self.availableVeraDevicesHaveBeenLoaded = YES;
+        
+        
+        [ConfigUtils updateVeraAccessPoint:self.currentAccessPoint
+                                veraDevice:self.currentDevice
+                                  username:self.username
+                                  password:self.password];
     }
     
     if(self.username.length > 0 && self.password.length > 0)
@@ -481,7 +469,10 @@ NSString * const RunSceneNotification   = @"RunScene";
                           callback:^(BOOL success, NSError *fault) {
                               if(success)
                               {
-                                  [thisObject updateCurrentAccessPoint];
+                                  [ConfigUtils updateVeraAccessPoint:thisObject.currentAccessPoint
+                                                          veraDevice:thisObject.currentDevice
+                                                            username:thisObject.username
+                                                            password:thisObject.password];
                                   if(!thisObject.availableVeraDevicesHaveBeenLoaded)
                                   {
                                       [[NSNotificationCenter defaultCenter] postNotificationName:LoadVeraDevicesNotification object:nil];
@@ -609,7 +600,10 @@ NSString * const RunSceneNotification   = @"RunScene";
                                   {
                                       [thisObject.currentDevice updateWithDictionary:deviceSrc];
                                       [thisObject persistCurrentAuthConfig];
-                                      [thisObject updateCurrentAccessPoint];
+                                      [ConfigUtils updateVeraAccessPoint:thisObject.currentAccessPoint
+                                                              veraDevice:thisObject.currentDevice
+                                                                username:thisObject.username
+                                                                password:thisObject.password];
                                   }
                                   
                                   
@@ -634,7 +628,10 @@ NSString * const RunSceneNotification   = @"RunScene";
         self.currentDevice = device;
         
         [self persistCurrentAuthConfig];
-        [self updateCurrentAccessPoint];
+        [ConfigUtils updateVeraAccessPoint:self.currentAccessPoint
+                                veraDevice:self.currentDevice
+                                  username:self.username
+                                  password:self.password];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
     }
