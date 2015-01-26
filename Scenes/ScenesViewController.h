@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <NotificationCenter/NotificationCenter.h>
 
-@interface ScenesViewController : UIViewController
+@interface ScenesViewController : UIViewController <NCWidgetProviding>
 
 @end

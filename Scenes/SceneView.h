@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SpinningCursorView.h"
+#import "ControlledDevice.h"
 
-@interface SceneView : NSObject
+@interface SceneView : UIView
+
+@property (nonatomic, strong) Scene * scene;
 
 @end

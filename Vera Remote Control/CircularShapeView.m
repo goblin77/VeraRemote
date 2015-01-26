@@ -7,11 +7,14 @@
 //
 
 #import "CircularShapeView.h"
+#import "CircularShapeView.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 
 @implementation CircularShapeView
 
-@synthesize fillColor, strokeColor;
+@synthesize fillColor, strokeColor, strokeWidth;
 
 
 -(id) initWithFrame:(CGRect)frame
@@ -19,6 +22,7 @@
     if(self = [super initWithFrame:frame])
     {
         self.backgroundColor = [UIColor clearColor];
+        strokeWidth = 0.5;
     }
     
     return self;
@@ -37,31 +41,37 @@
 }
 
 
+-(void) setStrokeWidth:(CGFloat)value
+{
+    strokeWidth = value;
+    [self setNeedsDisplay];
+}
+
+
 -(void) drawRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat diameter = MIN(self.bounds.size.width, self.bounds.size.height);
-    CGFloat strokeLineWidth = 0.5;
-    if(self.strokeColor != nil)
-    {
-        CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
-        CGContextSetLineWidth(ctx, strokeLineWidth);
-    }
-    
-    
-    
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
-    
     CGRect circleRect = CGRectMake((self.bounds.size.width - diameter) / 2,
                                    (self.bounds.size.height - diameter)/2,
                                    diameter,
                                    diameter);
+    circleRect = CGRectInset(circleRect, 0.5, 0.5);
     
-    CGContextFillEllipseInRect(ctx, circleRect);
+
+    
     
     if(self.strokeColor != nil)
     {
-        CGContextStrokeEllipseInRect(ctx, CGRectInset(circleRect, 2*strokeLineWidth, 2*strokeLineWidth));
+        CGContextSetFillColorWithColor(ctx, self.strokeColor.CGColor);
+        CGContextFillEllipseInRect(ctx, circleRect);
+        CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
+        CGContextFillEllipseInRect(ctx, CGRectInset(circleRect, self.strokeWidth, self.strokeWidth));
+    }
+    else
+    {
+        CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
+        CGContextFillEllipseInRect(ctx, circleRect);
     }
 }
 

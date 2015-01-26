@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface ScenesView : NSObject
+static CGFloat SceneViewWidth = 80;
+static CGFloat SceneViewHeight= 80;
+
+
+
+@interface ScenesView : UIView
+
+@property (nonatomic, strong) NSArray * scenes;
 
 @end

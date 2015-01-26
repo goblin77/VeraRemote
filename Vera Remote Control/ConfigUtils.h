@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VeraAccessPoint.h"
+#import "AccessConfig.h"
+#import "VeraDevice.h"
 
 @interface ConfigUtils : NSObject
+
++(void)  updateVeraAccessPoint:(VeraAccessPoint *) accessPoint
+                    veraDevice:(VeraDevice *) veraDevice
+                      username:(NSString *) username
+                      password:(NSString *) password;
 
 @end
