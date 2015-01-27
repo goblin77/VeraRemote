@@ -83,6 +83,14 @@
                     callback:(void (^)(NSObject * data, NSError * fault)) callback
 {
     
+    // if we don't have a URL it's unreacheable
+    // so, we just simulate that immdeately
+    if(url == nil)
+    {
+        callback(nil, [NSError errorWithDomain:NSURLErrorDomain code:-1004 userInfo:nil]);
+        return @(-1);
+    }
+    
     NSNumber * res = [APIService callHttpRequestWithUrl:url
                                                  params:params
                                        maxRetryAttempts:maxRetryAttempts

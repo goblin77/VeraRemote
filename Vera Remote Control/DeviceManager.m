@@ -222,7 +222,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     NSString * apiCall = accessPoint.localMode ? accessPoint.localUrl : accessPoint.remoteUrl;
     NSDictionary * params = @{
                               @"id" : @"lu_sdata",
-                              @"dataversion" : [NSString stringWithFormat:@"%ld", dataVersion],
+                              @"dataversion" : [NSString stringWithFormat:@"%ld", (unsigned long)dataVersion],
                               @"loadtime" : [NSString stringWithFormat:@"%.0f", lastPollTimeStamp],
                               @"minimumdelay" : @"2",
                               @"timeout" : @"60",
@@ -666,7 +666,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     
     NSDictionary * params = @{
                                 @"id" : @"lu_action",
-                                @"DeviceNum" : [NSString stringWithFormat:@"%ld", device.deviceId],
+                                @"DeviceNum" : [NSString stringWithFormat:@"%ld", (long)device.deviceId],
                                 @"serviceId" : kBinarySwitchControlService,
                                 @"action"    : @"SetTarget",
                                 @"newTargetValue" : value ? @"1" : @"0"
@@ -700,10 +700,10 @@ NSString * const RunSceneNotification   = @"RunScene";
     
     NSDictionary * params = @{
                               @"id" : @"lu_action",
-                              @"DeviceNum" : [NSString stringWithFormat:@"%ld", device.deviceId],
+                              @"DeviceNum" : [NSString stringWithFormat:@"%ld", (long)device.deviceId],
                               @"serviceId" : kDimmableSwitchControlService,
                               @"action"    : @"SetLoadLevelTarget",
-                              @"newLoadlevelTarget" : [NSString stringWithFormat:@"%ld", value]
+                              @"newLoadlevelTarget" : [NSString stringWithFormat:@"%ld", (unsigned long)value]
                              };
     
     
@@ -738,7 +738,7 @@ NSString * const RunSceneNotification   = @"RunScene";
                               @"id" : @"lu_action",
                               @"serviceId" : kSceneControlService,
                               @"action" : @"RunScene",
-                              @"SceneNum": [NSString stringWithFormat:@"%ld", scene.deviceId],
+                              @"SceneNum": [NSString stringWithFormat:@"%ld", (long)scene.deviceId],
                               @"output_format" : @"json"
                             };
     
