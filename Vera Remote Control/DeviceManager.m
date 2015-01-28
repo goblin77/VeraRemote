@@ -16,6 +16,8 @@
 #import "FaultUtils.h"
 #import "ConfigUtils.h"
 
+#define kPollTimeout    120
+
 
 NSString * const BootstrapNotification = @"Bootstrap";
 
@@ -39,9 +41,6 @@ NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 NSString * const RunSceneNotification   = @"RunScene";
 
 
-#define kBinarySwitchControlService   @"urn:upnp-org:serviceId:SwitchPower1"
-#define kDimmableSwitchControlService @"urn:upnp-org:serviceId:Dimming1"
-#define kSceneControlService          @"urn:micasaverde-com:serviceId:HomeAutomationGateway1"
 
 
 
@@ -164,27 +163,27 @@ NSString * const RunSceneNotification   = @"RunScene";
     [APIService callHttpRequestWithUrl:url
                                 params:@{@"reg_username" : uname,
                                          @"reg_password" : pass}
-                      maxRetryAttempts:0
-                              callback:^(NSData *data, NSError *fault)
-     {
-         if(fault != nil)
-         {
-             [thisObject defaultFaultHandler:fault];
-             [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
-             return;
-         }
-         
-         NSString *responseString =  [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSISOLatin1StringEncoding];
-         if([responseString isEqualToString:@"OK"])
-         {
-             callback(YES, nil);
-         }
-         else
-         {
-             callback(NO, nil);
-         }
-         
-     }];
+                               timeout:kAPIServiceDefaultTimeout
+                              callback:^(NSData * data, NSError * fault)
+                                {
+                                  if(fault != nil)
+                                  {
+                                      [thisObject defaultFaultHandler:fault];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+                                      return;
+                                  }
+                                  
+                                  NSString *responseString =  [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSISOLatin1StringEncoding];
+                                  if([responseString isEqualToString:@"OK"])
+                                  {
+                                      callback(YES, nil);
+                                  }
+                                  else
+                                  {
+                                      callback(NO, nil);
+                                  }
+
+                              }];
 }
 
 -(void) startPolling
@@ -216,10 +215,6 @@ NSString * const RunSceneNotification   = @"RunScene";
         lastPollingRequestId = nil;
     }
     
-    VeraAccessPoint * accessPoint = self.currentAccessPoint;
-    
-    
-    NSString * apiCall = accessPoint.localMode ? accessPoint.localUrl : accessPoint.remoteUrl;
     NSDictionary * params = @{
                               @"id" : @"lu_sdata",
                               @"dataversion" : [NSString stringWithFormat:@"%ld", (unsigned long)dataVersion],
@@ -232,22 +227,14 @@ NSString * const RunSceneNotification   = @"RunScene";
     __weak DeviceManager * thisObject = self;
     
     
-    lastPollingRequestId = [APIService callApiWithUrl:apiCall
-                                               params:params
-                                     maxRetryAttempts:0
+    lastPollingRequestId = [APIService callApiWithAccessPoint:self.currentAccessPoint
+                                                       params:params
+                                                      timeout:kPollTimeout
                                              callback:^(NSObject *data, NSError *fault)
                                                 {
                                                     if(fault != nil)
                                                     {
                                                         NSTimeInterval delay = 2;
-                                                        if([FaultUtils unaccessableUrlFault:fault])
-                                                        {
-                                                            if(self.currentAccessPoint.localMode)
-                                                            {
-                                                                self.currentAccessPoint.localMode = NO;
-                                                                delay = 1;
-                                                            }
-                                                        }
                                                         [thisObject performSelector:@selector(poll) withObject:nil afterDelay:delay];
                                                     }
                                                     else
@@ -399,29 +386,6 @@ NSString * const RunSceneNotification   = @"RunScene";
 }
 
 
--(void) fetchNetworkForVeraDevice:(VeraDevice *)veraDevice username:(NSString *)username password:(NSString *)password callback:(void (^)(NSObject *, NSError *))callback
-{
-    VeraAccessPoint * accessPoint = self.currentAccessPoint;
-    
-    
-    NSString * apiCall = accessPoint.localMode ? accessPoint.localUrl : accessPoint.remoteUrl;
-    NSDictionary * params = @{
-                              @"id" : @"lu_sdata",
-                              @"output_format" : @"json"
-                             };
-    
-    [APIService callApiWithUrl:apiCall
-                        params:params
-              maxRetryAttempts:0
-                      callback:^(NSObject *data, NSError *fault)
-    {
-        
-    }];
-    
-    
-}
-
-
 
 -(void) defaultFaultHandler:(NSError *) fault
 {
@@ -561,9 +525,11 @@ NSString * const RunSceneNotification   = @"RunScene";
     self.availableVeraDevicesLoading = YES;
     
     
-    [APIService callApiWithUrl:url params:@{@"username": self.username}
-              maxRetryAttempts:1
-                      callback:^(NSObject *data, NSError *fault) {
+    [APIService callApiWithUrl:url
+                        params:@{@"username": self.username}
+                       timeout:kAPIServiceDefaultTimeout
+                      callback:^(NSObject * data, NSError *fault)
+                        {
                           if(fault != nil)
                           {
                               [thisObject defaultFaultHandler:fault];
@@ -667,7 +633,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     NSDictionary * params = @{
                                 @"id" : @"lu_action",
                                 @"DeviceNum" : [NSString stringWithFormat:@"%ld", (long)device.deviceId],
-                                @"serviceId" : kBinarySwitchControlService,
+                                @"serviceId" : BinarySwitchControlService,
                                 @"action"    : @"SetTarget",
                                 @"newTargetValue" : value ? @"1" : @"0"
                             };
@@ -676,11 +642,9 @@ NSString * const RunSceneNotification   = @"RunScene";
     device.manualValue = value;
     device.manualOverride = YES;
     
-    NSString * url = self.currentAccessPoint.localMode ? self.currentAccessPoint.localUrl : self.currentAccessPoint.remoteUrl;
-    
-    [APIService callHttpRequestWithUrl:url
+    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
                                 params:params
-                      maxRetryAttempts:0
+                                timeout:kAPIServiceDefaultTimeout
                               callback:^(NSData *data, NSError *fault) {
                                   // the polling will pick up the result
                                   // if there is no fault
@@ -701,7 +665,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     NSDictionary * params = @{
                               @"id" : @"lu_action",
                               @"DeviceNum" : [NSString stringWithFormat:@"%ld", (long)device.deviceId],
-                              @"serviceId" : kDimmableSwitchControlService,
+                              @"serviceId" : DimmableSwitchControlService,
                               @"action"    : @"SetLoadLevelTarget",
                               @"newLoadlevelTarget" : [NSString stringWithFormat:@"%ld", (unsigned long)value]
                              };
@@ -710,11 +674,9 @@ NSString * const RunSceneNotification   = @"RunScene";
     device.manualValue = value;
     device.manualOverride = YES;
     
-    NSString * url = self.currentAccessPoint.localMode ? self.currentAccessPoint.localUrl : self.currentAccessPoint.remoteUrl;
-    
-    [APIService callHttpRequestWithUrl:url
+    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
                                 params:params
-                      maxRetryAttempts:0
+                                timeout:kAPIServiceDefaultTimeout
                               callback:^(NSData *data, NSError *fault) {
                                   // the polling will pick up the result
                                   // if there is no fault
@@ -732,26 +694,25 @@ NSString * const RunSceneNotification   = @"RunScene";
     
     scene.manualOverride = YES;
     
-    NSString * url = self.currentAccessPoint.localMode ? self.currentAccessPoint.localUrl : self.currentAccessPoint.remoteUrl;
-    
     NSDictionary * params = @{
                               @"id" : @"lu_action",
-                              @"serviceId" : kSceneControlService,
+                              @"serviceId" : SceneControlService,
                               @"action" : @"RunScene",
                               @"SceneNum": [NSString stringWithFormat:@"%ld", (long)scene.deviceId],
                               @"output_format" : @"json"
                             };
     
     
-    [APIService callHttpRequestWithUrl:url
+    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
                                 params:params
-                      maxRetryAttempts:0
-                              callback:^(NSData *data, NSError *fault) {
-                                 if(fault != nil)
-                                 {
-                                     scene.manualOverride = NO;
-                                 }
-                              }];
+                                       timeout:kAPIServiceDefaultTimeout
+                              callback:^(NSData *data, NSError *fault)
+                                {
+                                     if(fault != nil)
+                                     {
+                                         scene.manualOverride = NO;
+                                     }
+                                }];
                                                                                              
 }
 

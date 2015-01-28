@@ -25,6 +25,12 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
 };
 
 
+
+// Services
+extern NSString * BinarySwitchControlService;
+extern NSString * DimmableSwitchControlService;
+extern NSString * SceneControlService;
+
 @interface ControlledDevice : NSObject <JSONSerializable>
 
 @property (nonatomic, assign) NSInteger deviceId;

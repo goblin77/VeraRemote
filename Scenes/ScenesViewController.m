@@ -51,7 +51,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.scenesView = [[ScenesView alloc] initWithFrame:self.view.bounds];
+    self.scenesView.didSelectScene = ^(Scene * scene)
+    {
+        
+    };
+    
+    
     [self.view addSubview:self.scenesView];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ReloadScenesNotification object:nil];

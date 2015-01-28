@@ -8,6 +8,12 @@
 
 #import "ControlledDevice.h"
 
+
+NSString * BinarySwitchControlService = @"urn:upnp-org:serviceId:SwitchPower1";
+NSString * DimmableSwitchControlService = @"urn:upnp-org:serviceId:Dimming1";
+NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationGateway1";
+
+
 @implementation ControlledDevice
 
 -(id) init

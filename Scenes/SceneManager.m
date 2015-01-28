@@ -71,20 +71,22 @@ NSString * const ReloadScenesNotification = @"ReloadScenes";
                               @"output_format" : @"json"
                              };
     
-    [APIService callApiWithUrl:accessPoint.localMode ? accessPoint.localUrl : accessPoint.remoteUrl
-                        params:params
-              maxRetryAttempts:0
-                      callback:^(NSObject *data, NSError *fault)
-                        {
-                            if(fault != nil)
-                            {
-                                callback(nil, fault);
-                            }
-                            else
-                            {
-                                callback([(NSDictionary *) data objectForKey:@"scenes"], nil);
-                            }
-                        }];
+    
+    [APIService callApiWithAccessPoint:accessPoint
+                                params:params
+                               timeout:kAPIServiceDefaultTimeout
+                              callback:^(NSObject *data, NSError * fault)
+                                {
+                                  if(fault != nil)
+                                  {
+                                      callback(nil, fault);
+                                  }
+                                  else
+                                  {
+                                      callback([(NSDictionary *) data objectForKey:@"scenes"], nil);
+                                  }
+                                }];
+    
 }
 
 

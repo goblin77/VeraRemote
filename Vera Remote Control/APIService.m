@@ -42,16 +42,139 @@
 
 
 
++(NSNumber *) callApiWithAccessPoint:(VeraAccessPoint *)accessPoint
+                              params:(NSDictionary *)params
+                             timeout:(NSTimeInterval)timeout
+                            callback:(void (^)(NSObject * result, NSError * fault))callback
+{
+    NSNumber * res = [APIService callHttpRequestWithAccessPoint:accessPoint
+                                                         params:params
+                                                        timeout:timeout
+                                                       callback:^(NSData *data, NSError *fault)
+                                                        {
+                                                           if(fault != nil)
+                                                           {
+                                                               callback(nil, fault);
+                                                               return;
+                                                           }
+                                                           
+                                                           [APIService processAPIResponseData:data callback:^(NSObject *data, NSError *fault)
+                                                            {
+                                                                callback(data, fault);
+                                                            }];
+ 
+                                                        }];
+    return res;
+}
+
++(NSNumber *) callHttpRequestWithAccessPoint:(VeraAccessPoint *)accessPoint
+                                      params:(NSDictionary *)params
+                                     timeout:(NSTimeInterval)timeout
+                                    callback:(void (^)(NSData *, NSError *))callback
+{
+    BOOL isLocal = accessPoint.localMode;
+    
+    
+    // 1-st attempt
+    NSNumber * requestId = [APIService generateRequestId];
+    
+    
+    [APIService callHttpRequestWithUrl:isLocal ? accessPoint.localUrl : accessPoint.remoteUrl
+                                                    requestId:requestId
+                                                    params:params
+                                                   timeout:timeout
+                                                  callback:^(NSData * data, NSError * fault)
+                                                    {
+                                                        if(fault == nil)
+                                                        {
+                                                            callback(data, fault);
+                                                        }
+                                                        else
+                                                        {
+                                                            if(isLocal &&
+                                                               [fault.domain isEqualToString:NSURLErrorDomain] &&
+                                                               accessPoint.remoteUrl != nil)
+                                                            {
+                                                                accessPoint.localMode = NO;
+                                                                [APIService callHttpRequestWithUrl:accessPoint.remoteUrl
+                                                                                         requestId:requestId
+                                                                                            params:params
+                                                                                           timeout:timeout
+                                                                                          callback:callback];
+                                                            }
+                                                            else
+                                                            {
+                                                                callback(data, fault);
+                                                            }
+                                                        }
+                                                    }];
+    
+    
+    return requestId;
+}
+
+
++(NSNumber *) callApiWithUrl:(NSString *)url
+                      params:(NSDictionary *)params
+                     timeout:(NSTimeInterval)timeout
+                    callback:(void (^)(NSObject * result, NSError *))callback
+{
+    return [APIService callHttpRequestWithUrl:url
+                                       params:params
+                                      timeout:timeout
+                                     callback:^(NSData * data, NSError * fault)
+                                        {
+                                            if(fault != nil)
+                                            {
+                                                callback(nil, fault);
+                                                return;
+                                            }
+                                            
+                                            [APIService processAPIResponseData:data
+                                                                      callback:^(NSObject *result, NSError *fault)
+                                             {
+                                                 callback(result, fault);
+                                             }];
+                                        }];
+}
+
+
 +(NSNumber *) callHttpRequestWithUrl:(NSString *)url
                               params:(NSDictionary *)params
-                    maxRetryAttempts:(int)maxRetryAttempts
+                             timeout:(NSTimeInterval) timeout
                             callback:(void (^)(NSData *, NSError *))callback
 {
+    return [APIService callHttpRequestWithUrl:url
+                                    requestId:nil
+                                       params:params
+                                      timeout:timeout
+                                     callback:callback];
+}
+
+
++(NSNumber *) callHttpRequestWithUrl:(NSString *)url
+                           requestId:(NSNumber *) requestId
+                              params:(NSDictionary *)params
+                             timeout:(NSTimeInterval) timeout
+                            callback:(void (^)(NSData *, NSError *))callback
+{
+    // if URL is empty, simulate an error right away
+    if(url.length == 0)
+    {
+        callback(nil, [NSError errorWithDomain:NSURLErrorDomain code:-1004 userInfo:nil]);
+        return @(-1);
+    }
+    
+    
     APIServiceRequest * request = [[APIServiceRequest alloc] init];
-    request.requestId = [APIService generateRequestId];
+    
+    if(requestId != nil)
+    {
+        request.requestId = requestId;
+    }
     request.url = url;
     request.params = params;
-    request.maxNumberOfTimesToRetry = maxRetryAttempts;
+    request.clientTimeout = timeout;
     request.resultCallback = ^(NSData * responseData)
     {
         // make sure that we dispatch this on the main queue
@@ -77,41 +200,6 @@
     return request.requestId;
 }
 
-+(NSNumber*)  callApiWithUrl:(NSString *) url
-					  params:(NSDictionary *) params
-            maxRetryAttempts:(int) maxRetryAttempts
-                    callback:(void (^)(NSObject * data, NSError * fault)) callback
-{
-    
-    // if we don't have a URL it's unreacheable
-    // so, we just simulate that immdeately
-    if(url == nil)
-    {
-        callback(nil, [NSError errorWithDomain:NSURLErrorDomain code:-1004 userInfo:nil]);
-        return @(-1);
-    }
-    
-    NSNumber * res = [APIService callHttpRequestWithUrl:url
-                                                 params:params
-                                       maxRetryAttempts:maxRetryAttempts
-                                               callback:^(NSData *data, NSError *fault)
-                                                {
-                                                    if(fault != nil)
-                                                    {
-                                                        callback(nil, fault);
-                                                        return;
-                                                    }
-                                                    
-                                                    [APIService processAPIResponseData:data callback:^(NSObject *data, NSError *fault)
-                                                     {
-                                                         callback(data, fault);
-                                                     }];
-                                                }];
-    
-    
-    
-    return res;
-}
 
 
 
@@ -188,7 +276,6 @@
                 if([sr.requestId isEqual:requestID])
                 {
                     [op cancel];
-                    break;
                 }
             }
             

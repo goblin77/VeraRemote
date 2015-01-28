@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VeraAccessPoint.h"
 
+
+
+#define kAPIServiceDefaultTimeout       20
 #define kAPISERVICE_MAX_ATTEMPTS		5
 
 #define kAPIServiceRequestErrorDomainServerMaintenance	@"ServerMaintenance"
@@ -17,7 +21,30 @@
 @interface APIService : NSObject 
 
 
-+(NSNumber*) callApiWithUrl:(NSString *) url
++(NSNumber *) callHttpRequestWithUrl:(NSString *)url
+                              params:(NSDictionary *)params
+                             timeout:(NSTimeInterval) timeout
+                            callback:(void (^)(NSData *, NSError *))callback;
+
+
++(NSNumber *) callApiWithUrl:(NSString *)url
+                      params:(NSDictionary *)params
+                     timeout:(NSTimeInterval) timeout
+                    callback:(void (^)(NSObject * result, NSError * fault))callback;
+
++(NSNumber *) callHttpRequestWithAccessPoint:(VeraAccessPoint *) accessPoint
+                                      params:(NSDictionary *) params
+                                     timeout:(NSTimeInterval) timeout
+                                    callback:(void (^)(NSData * data, NSError * error)) callback;
+
+
++(NSNumber *) callApiWithAccessPoint:(VeraAccessPoint *)accessPoint
+                                     params:(NSDictionary *)params
+                                    timeout:(NSTimeInterval)timeout
+                                   callback:(void (^)(NSObject * data, NSError *))callback;
+
+
+/*+(NSNumber*) callApiWithUrl:(NSString *) url
                      params:(NSDictionary *) params
            maxRetryAttempts:(int) maxRetryAttempts
                    callback:(void (^)(NSObject * data, NSError * fault)) callback;
@@ -27,7 +54,7 @@
 +(NSNumber*) callHttpRequestWithUrl:(NSString *) url
                              params:(NSDictionary *) params
                    maxRetryAttempts:(int) maxRetryAttempts
-                           callback:(void (^)(NSData * data, NSError * fault)) callback;
+                           callback:(void (^)(NSData * data, NSError * fault)) callback;*/
 
 
 

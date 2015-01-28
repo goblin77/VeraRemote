@@ -13,5 +13,6 @@
 @interface SceneView : UIView
 
 @property (nonatomic, strong) Scene * scene;
+@property (nonatomic, copy)   void (^didSelectScene)(SceneView * sceneView);
 
 @end

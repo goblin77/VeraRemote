@@ -35,8 +35,19 @@
         
         
         
-        for(ScenesView * sceneView in self.sceneViews)
+        
+        __weak ScenesView * thisObject = self;
+        
+        for(SceneView * sceneView in self.sceneViews)
         {
+            sceneView.didSelectScene = ^(SceneView * sv)
+            {
+                if(thisObject.didSelectScene != nil)
+                {
+                    thisObject.didSelectScene(sv.scene);
+                };
+            };
+            
             [self addSubview:sceneView];
         }
         

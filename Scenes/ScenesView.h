@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "ControlledDevice.h"
 
 static CGFloat SceneViewWidth = 80;
 static CGFloat SceneViewHeight= 80;
@@ -17,5 +18,6 @@ static CGFloat SceneViewHeight= 80;
 @interface ScenesView : UIView
 
 @property (nonatomic, strong) NSArray * scenes;
+@property (nonatomic, copy)   void (^didSelectScene)(Scene * scene);
 
 @end

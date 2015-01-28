@@ -37,15 +37,15 @@
     if(self = [super initWithFrame:frame])
     {
         self.stateView = [[CircularShapeView alloc] initWithFrame:CGRectZero];
-        self.stateView.strokeColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.7];
-        self.stateView.strokeWidth = 2;
+        self.stateView.strokeColor = [UIColor whiteColor];
+        self.stateView.strokeWidth = 2.5;
         
         [self addSubview:self.stateView];
         
         
         self.tapFeedbackView = [[CircularShapeView alloc] initWithFrame:CGRectZero];
         self.tapFeedbackView.strokeWidth = 0;
-        self.tapFeedbackView.fillColor   = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        self.tapFeedbackView.fillColor   = [[UIColor blackColor] colorWithAlphaComponent:0.2];
         [self addSubview:self.tapFeedbackView];
         
         self.progressView = [[SpinningCursorView alloc] initWithFrame:CGRectZero];
@@ -59,6 +59,7 @@
         self.nameLabel.font = [UIFont defaultFontWithSize:12];
         self.nameLabel.textAlignment = NSTextAlignmentCenter;
         self.nameLabel.numberOfLines = 2;
+        self.nameLabel.contentMode = UIViewContentModeTop;
         [self addSubview:self.nameLabel];
         
         self.stateView.userInteractionEnabled = YES;
@@ -88,7 +89,6 @@
         
         CGFloat textHeight = self.nameLabel.font.lineHeightPx * 2;
         
-        
         self.stateView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - textHeight);
         self.tapFeedbackView.frame = CGRectInset(self.stateView.frame, self.stateView.strokeWidth, self.stateView.strokeWidth);
         self.progressView.frame = CGRectInset(self.stateView.frame, 5, 5);
@@ -97,7 +97,7 @@
         self.nameLabel.frame = CGRectMake(0, self.bounds.size.height - textHeight, self.bounds.size.width, textHeight);
     }
     
-    self.stateView.alpha = isTapDown ? 0.8 : 1.0;
+    self.stateView.alpha = isTapDown ? 0.7 : 1.0;
     
     
     if(dataChanged)
@@ -140,14 +140,10 @@
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if(isTapDown)
-    {
-        self.scene.manualOverride = YES;
-    }
-    
     isTapDown = NO;
     [self setNeedsLayout];
-    
+
+    self.didSelectScene(self);
 }
 
 
