@@ -25,7 +25,6 @@
 		DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */; };
 		DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5191A75C64300DBD7AC /* SpinningCursorView.m */; };
 		DB6DE5221A75C6A300DBD7AC /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */; };
-		DB6DE52A1A75C6A300DBD7AC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6DE5291A75C6A300DBD7AC /* MainInterface.storyboard */; };
 		DB6DE52D1A75C6A300DBD7AC /* Scenes.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DB6DE53A1A75C76C00DBD7AC /* ScenesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5381A75C76400DBD7AC /* ScenesViewController.m */; };
 		DB6DE53B1A75C78800DBD7AC /* VeraAccessPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DA91A6EFEA300EB9A6A /* VeraAccessPoint.m */; };
@@ -141,7 +140,6 @@
 		DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Scenes.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		DB6DE5251A75C6A300DBD7AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB6DE5291A75C6A300DBD7AC /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		DB6DE5321A75C6AD00DBD7AC /* Scenes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Scenes.entitlements; sourceTree = "<group>"; };
 		DB6DE5371A75C76400DBD7AC /* ScenesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenesViewController.h; sourceTree = "<group>"; };
 		DB6DE5381A75C76400DBD7AC /* ScenesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenesViewController.m; sourceTree = "<group>"; };
@@ -356,7 +354,6 @@
 				DB6DE53F1A75C84300DBD7AC /* Manager */,
 				DB6DE5361A75C72F00DBD7AC /* View Controllers */,
 				DB6DE5321A75C6AD00DBD7AC /* Scenes.entitlements */,
-				DB6DE5291A75C6A300DBD7AC /* MainInterface.storyboard */,
 				DB6DE5241A75C6A300DBD7AC /* Supporting Files */,
 			);
 			name = "Scenes Extension";
@@ -666,7 +663,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB6DE52A1A75C6A300DBD7AC /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
