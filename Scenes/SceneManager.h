@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const ReloadScenesNotification;
+extern NSString * const StartPollingNotification;
+extern NSString * const StopPollingNotification;
+extern NSString * const RunSceneNotification;
 
 @interface SceneManager : NSObject
 

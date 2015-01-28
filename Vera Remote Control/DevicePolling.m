@@ -102,8 +102,21 @@
                             {
                                 if(fault != nil)
                                 {
-                                    NSTimeInterval delay = 2;
-                                    [thisObject performSelector:@selector(poll) withObject:nil afterDelay:delay];
+                                    BOOL shouldPoll = YES;
+                                    if(thisObject.shouldResumePollingOnError != nil)
+                                    {
+                                        shouldPoll = thisObject.shouldResumePollingOnError(fault);
+                                    }
+                                    
+                                    if(shouldPoll)
+                                    {
+                                        NSTimeInterval delay = 2;
+                                        [thisObject performSelector:@selector(poll) withObject:nil afterDelay:delay];
+                                    }
+                                    else
+                                    {
+                                        [thisObject stopPolling];
+                                    }
                                 }
                                 else
                                 {

@@ -55,27 +55,27 @@
     self.scenesView = [[ScenesView alloc] initWithFrame:self.view.bounds];
     self.scenesView.didSelectScene = ^(Scene * scene)
     {
-        
+        if(!scene.manualOverride)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RunSceneNotification object:scene];
+        }
     };
-    
     
     [self.view addSubview:self.scenesView];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:ReloadScenesNotification object:nil];
-    [self invalidateProperties];
-}
 
-
-
--(void) viewWillAppear:(BOOL)animated
-{
+    [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
     [ObserverUtils addObserver:self toObject:self.sceneManager forKeyPaths:[self observerPaths] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+
 }
+
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-    [ObserverUtils removeObserver:self fromObject:self.sceneManager forKeyPaths:[self observerPaths]];
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
 }
+
 
 
 -(void) viewDidLayoutSubviews

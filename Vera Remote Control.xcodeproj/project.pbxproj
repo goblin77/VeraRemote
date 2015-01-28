@@ -32,7 +32,6 @@
 		DB6DE53C1A75C78C00DBD7AC /* ControlledDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */; };
 		DB6DE53D1A75C78F00DBD7AC /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB6DE53E1A75C79200DBD7AC /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE81A6F349A00EB9A6A /* Room.m */; };
-		DB6DE5421A75C85D00DBD7AC /* SceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5411A75C85D00DBD7AC /* SceneManager.m */; };
 		DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */; };
 		DB6DE5461A75D85600DBD7AC /* ConfigUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */; };
 		DB6DE5471A75D85E00DBD7AC /* VeraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850D21A6C702800CE4DAA /* VeraDevice.m */; };
@@ -700,7 +699,6 @@
 				DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */,
 				DB8B3DA61A6ED24C00EB9A6A /* VeraDeviceTableViewCell.m in Sources */,
 				DB8B3DAA1A6EFEA300EB9A6A /* VeraAccessPoint.m in Sources */,
-				DB6DE5421A75C85D00DBD7AC /* SceneManager.m in Sources */,
 				DB50DC021A72F1360053110E /* AccessConfig.m in Sources */,
 				DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */,
 				DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */,
