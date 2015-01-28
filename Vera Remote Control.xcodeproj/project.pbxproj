@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
+		DB1D01431A78A581005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
 		DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */; };
 		DB50DC021A72F1360053110E /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB50DC081A72FC240053110E /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
@@ -106,6 +108,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB1D01401A78A3CF005EB05F /* DevicePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePolling.h; sourceTree = "<group>"; };
+		DB1D01411A78A3CF005EB05F /* DevicePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePolling.m; sourceTree = "<group>"; };
 		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchTableViewCell.m; sourceTree = "<group>"; };
 		DB50DC001A72F1360053110E /* AccessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessConfig.h; sourceTree = "<group>"; };
@@ -432,6 +436,8 @@
 				DB8B3D941A6CE73900EB9A6A /* ObserverUtils.m */,
 				DB6DE5431A75CC2100DBD7AC /* ConfigUtils.h */,
 				DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */,
+				DB1D01401A78A3CF005EB05F /* DevicePolling.h */,
+				DB1D01411A78A3CF005EB05F /* DevicePolling.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -684,6 +690,7 @@
 				DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */,
 				DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */,
 				DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */,
+				DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */,
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
 				DB8B3D741A6CAC8400EB9A6A /* StyleUtils.m in Sources */,
 				DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */,
@@ -731,6 +738,7 @@
 				DB6DE5541A75F92700DBD7AC /* SpinningCursorView.m in Sources */,
 				DB6DE5491A75D88C00DBD7AC /* FaultUtils.m in Sources */,
 				DB6DE53E1A75C79200DBD7AC /* Room.m in Sources */,
+				DB1D01431A78A581005EB05F /* DevicePolling.m in Sources */,
 				DB6DE55B1A76048D00DBD7AC /* UIFont_Expanded.m in Sources */,
 				DB6DE55A1A75FD1000DBD7AC /* ScenesView.m in Sources */,
 				DB6DE54F1A75DBA400DBD7AC /* APIServiceRequest.m in Sources */,

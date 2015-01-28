@@ -13,11 +13,9 @@
 #import "Room.h"
 #import "ControlledDevice.h"
 #import "UIAlertViewWithCallbacks.h"
+#import "DevicePolling.h"
 #import "FaultUtils.h"
 #import "ConfigUtils.h"
-
-#define kPollTimeout    120
-
 
 NSString * const BootstrapNotification = @"Bootstrap";
 
@@ -45,13 +43,8 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 
 @interface DeviceManager ()
-{
-    NSUInteger dataVersion;
-    NSTimeInterval lastPollTimeStamp;
-    NSNumber * lastPollingRequestId;
-    BOOL isPolling;
-}
 
+@property (nonatomic, strong) DevicePolling * devicePolling;
 @property (nonatomic, strong) VeraAccessPoint * currentAccessPoint;
 
 -(void) setCurrentDevice:(VeraDevice *) value;
@@ -86,13 +79,30 @@ NSString * const RunSceneNotification   = @"RunScene";
 {
     if(self = [super init])
     {
-        isPolling = NO;
-        dataVersion = 0;
-        lastPollTimeStamp = 0;
-        
         self.initializing = NO;
         self.authenticating = NO;
         self.currentAccessPoint = [[VeraAccessPoint alloc] init];
+        self.devicePolling = [[DevicePolling alloc] init];
+        
+        
+        __weak DeviceManager * thisObject = self;
+        self.devicePolling.accessPoint = ^VeraAccessPoint *
+        {
+            return thisObject.currentAccessPoint;
+        };
+        
+        self.devicePolling.createNetwork = ^(NSDictionary * data)
+        {
+            [thisObject createNewNetworkData:data];
+        };
+        
+        self.devicePolling.updateNetwork = ^(NSDictionary * data)
+        {
+            [thisObject mergeNetworkData:data];
+        };
+        
+        
+        // =============   notifications   =============
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBootstrap:) name:BootstrapNotification object:nil];
         
@@ -128,6 +138,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     currentDevice = value;
     [self didChangeValueForKey:@"currentDevice"];
 }
+
 
 -(AccessConfig *) loadAccessConfig
 {
@@ -186,97 +197,6 @@ NSString * const RunSceneNotification   = @"RunScene";
                               }];
 }
 
--(void) startPolling
-{
-    if(!isPolling)
-    {
-        isPolling = YES;
-        [self poll];
-    }
-
-}
-
--(void) stopPolling
-{
-    if(isPolling)
-    {
-        isPolling = NO;
-        [APIService cancelRequestWithID:lastPollingRequestId];
-    }
-}
-
-
--(void) poll
-{
-    // make sure only one poll request is scheduled at a time
-    if(lastPollingRequestId != nil)
-    {
-        [APIService cancelRequestWithID:lastPollingRequestId];
-        lastPollingRequestId = nil;
-    }
-    
-    NSDictionary * params = @{
-                              @"id" : @"lu_sdata",
-                              @"dataversion" : [NSString stringWithFormat:@"%ld", (unsigned long)dataVersion],
-                              @"loadtime" : [NSString stringWithFormat:@"%.0f", lastPollTimeStamp],
-                              @"minimumdelay" : @"2",
-                              @"timeout" : @"60",
-                              @"output_format" : @"json"
-                             };
-    
-    __weak DeviceManager * thisObject = self;
-    
-    
-    lastPollingRequestId = [APIService callApiWithAccessPoint:self.currentAccessPoint
-                                                       params:params
-                                                      timeout:kPollTimeout
-                                             callback:^(NSObject *data, NSError *fault)
-                                                {
-                                                    if(fault != nil)
-                                                    {
-                                                        NSTimeInterval delay = 2;
-                                                        [thisObject performSelector:@selector(poll) withObject:nil afterDelay:delay];
-                                                    }
-                                                    else
-                                                    {
-                                                        [thisObject completePolling:(NSDictionary *) data];
-                                                    }
-                                                }];
-}
-
-
--(void) completePolling:(NSDictionary *) data
-{
-    BOOL isFull = [data[@"full"] boolValue];
-    
-    if(isFull)
-    {
-        [self createNewNetworkData:data];
-    }
-    else
-    {
-        [self mergeNetworkData:data];
-    }
-    
-    
-    NSNumber * dataVersionNum = data[@"dataversion"];
-    NSNumber * loadTimeNum    = data[@"loadtime"];
-    
-    if(dataVersionNum.integerValue != 0)
-    {
-        dataVersion = dataVersionNum.integerValue;
-    }
-    
-    if(loadTimeNum.doubleValue != 0)
-    {
-        lastPollTimeStamp = loadTimeNum.doubleValue;
-    }
-    
-    if(isPolling)
-    {
-        [self performSelector:@selector(poll) withObject:nil afterDelay:self.currentAccessPoint.localMode ? 0.5 : 1];
-    }
-}
 
 
 -(void) mergeNetworkData:(NSDictionary *) data
@@ -606,22 +526,20 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(void) handleStartPolling:(NSNotification *) notification
 {
-    lastPollTimeStamp = 0;
-    dataVersion = 0;
-
-    [self startPolling];
+    self.currentAccessPoint.localMode = YES;
+    [self.devicePolling startPolling];
 }
 
 -(void) handleStopPolling:(NSNotification *) notification
 {
-    [self stopPolling];
+    [self.devicePolling stopPolling];
 }
 
 
 -(void) handleRestartPolling:(NSNotification *) notification
 {
     self.currentAccessPoint.localMode = YES;
-    [self startPolling];
+    [self.devicePolling resumePolling];
 }
 
 
