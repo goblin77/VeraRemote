@@ -344,6 +344,11 @@ NSString * const RunSceneNotification   = @"RunScene";
                                   password:self.password];
     }
     
+    if(self.username.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LoadVeraDevicesNotification object:nil];
+    }
+    
     if(self.username.length > 0 && self.password.length > 0)
     {
         // verify the user
@@ -357,10 +362,6 @@ NSString * const RunSceneNotification   = @"RunScene";
                                                           veraDevice:thisObject.currentDevice
                                                             username:thisObject.username
                                                             password:thisObject.password];
-                                  if(!thisObject.availableVeraDevicesHaveBeenLoaded)
-                                  {
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:LoadVeraDevicesNotification object:nil];
-                                  }
                                   
                                   if(thisObject.currentDevice != nil)
                                   {

@@ -75,7 +75,7 @@ static CGFloat HomeDevicesRowHeight = 60;
 #pragma mark UITableViewDataSource and UITableViewDelegate
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(self.deviceManager.availableVeraDevicesLoading)
+    if(self.deviceManager.availableVeraDevicesLoading && self.deviceManager.availableVeraDevices.count == 0)
     {
         return 0;
     }
