@@ -25,22 +25,24 @@ extern NSString * const SetSelectedVeraDeviceNotification;
 
 // network polling
 extern NSString * const StartPollingNotification;
-extern NSString * const RestartPollingNotification;
+extern NSString * const ResumePollingNotification;
 extern NSString * const StopPollingNotification;
 
 // Device control
 extern NSString * const SetBinarySwitchValueNotification;
 extern NSString * const SetDimmableSwitchValueNotification;
+extern NSString * const SetMotionSensorStatusNotification;
 extern NSString * const RunSceneNotification;
-
 
 
 @interface DeviceManager : NSObject
 
 +(DeviceManager *) sharedInstance;
 
+@property (nonatomic, strong) NSString * temperatureUnit;
 
 @property (nonatomic, assign) BOOL initializing;
+@property (nonatomic, assign) BOOL devicesHaveBeenLoaded;
 
 @property (nonatomic, readonly) VeraDevice * currentDevice;
 

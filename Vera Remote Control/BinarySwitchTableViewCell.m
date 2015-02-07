@@ -104,7 +104,7 @@
         y = (self.contentView.bounds.size.height - self.switchView.bounds.size.height)/2;
         self.switchView.frame = CGRectOffset(self.switchView.bounds, x, y);
         
-        oldSize = self.bounds.size;
+        oldSize = self.contentView.bounds.size;
     }
     
     if(dataChanged)

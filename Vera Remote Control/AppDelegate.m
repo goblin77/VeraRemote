@@ -42,7 +42,7 @@
 {
     if([DeviceManager sharedInstance].currentDevice != nil)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:RestartPollingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ResumePollingNotification object:nil];
     }
 }
 

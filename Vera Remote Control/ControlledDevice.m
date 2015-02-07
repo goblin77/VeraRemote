@@ -12,6 +12,7 @@
 NSString * BinarySwitchControlService = @"urn:upnp-org:serviceId:SwitchPower1";
 NSString * DimmableSwitchControlService = @"urn:upnp-org:serviceId:Dimming1";
 NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationGateway1";
+NSString * SecuritySensorControlService = @"urn:micasaverde-com:serviceId:SecuritySensor1";
 
 
 @implementation ControlledDevice
@@ -30,6 +31,7 @@ NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationG
 -(void) updateWithDictionary:(NSDictionary *)src
 {
     self.deviceId = [src[@"id"] integerValue];
+    self.parentDeviceId = [src[@"parent"] integerValue];
     self.roomId = [src[@"room"] integerValue];
     self.state = [src[@"state"] integerValue];
     
@@ -45,10 +47,6 @@ NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationG
     }
 }
 
--(NSString *) service
-{
-    return nil;
-}
 
 @end
 
@@ -80,6 +78,70 @@ NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationG
 {
     [super updateWithDictionary:src];
     self.active = [src[@"active"] boolValue];
+}
+
+@end
+
+
+@implementation MotionSensor
+
+-(void) updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    self.armed   = [src[@"armed"] boolValue];
+    self.tripped = [src[@"tripped"] boolValue];
+    NSString * lastTrippedStr = src[@"lasttrip"];
+    if(lastTrippedStr.length > 0)
+    {
+        self.lastTripped = [NSDate dateWithTimeIntervalSince1970:[lastTrippedStr doubleValue]];
+    }
+    
+    NSString * batteryLevelStr = src[@"batterylevel"];
+    if(batteryLevelStr.length > 0)
+    {
+        self.batteryLevel = [src[@"batterylevel"] intValue];
+    }
+    else
+    {
+        self.batteryLevel = -1; // no battery
+    }
+    
+    self.manualArmed = self.armed;
+}
+
+
+@end
+
+
+
+@implementation HumiditySensor
+
+-(void) updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    self.humidity = [src[@"humidity"] intValue];
+}
+
+@end
+
+
+@implementation TemperatureSensor
+
+-(void) updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    self.temperature = [src[@"temperature"] intValue];
+}
+
+@end
+
+
+@implementation LightSensor
+
+-(void) updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    self.light = [src[@"light"] intValue];
 }
 
 @end

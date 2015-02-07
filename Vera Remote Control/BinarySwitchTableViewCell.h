@@ -20,7 +20,6 @@
 
 @property (nonatomic, strong) BinarySwitch * device;
 
-
 @property (nonatomic, copy) void (^didTurnSwitchOnOrOff)(BinarySwitchTableViewCell * cell);
 
 @end

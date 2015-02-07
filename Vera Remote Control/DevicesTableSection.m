@@ -56,6 +56,8 @@
     }
     
     
+    
+    
     NSArray * allRoomSections = [[sectionLookup allValues] sortedArrayUsingComparator:^NSComparisonResult(RoomTableSection * s1, RoomTableSection * s2) {
         return [s1.title compare:s2.title];
     }];
@@ -65,6 +67,19 @@
     {
         if(section.items.count > 0)
         {
+            section.items = [section.items sortedArrayUsingComparator:^NSComparisonResult(ControlledDevice * d1, ControlledDevice * d2)
+            {
+                if(d1.parentDeviceId < d2.parentDeviceId)
+                {
+                    return NSOrderedAscending;
+                }
+                else if (d1.parentDeviceId > d1.parentDeviceId)
+                {
+                    return NSOrderedDescending;
+                }
+                
+                return d1.deviceId < d2.deviceId ? NSOrderedAscending : NSOrderedDescending;
+            }];
             [res addObject:section];
         }
     }

@@ -128,7 +128,7 @@
                                                 self.onOffSwitchView.bounds.size.height);
         
         
-        oldSize = self.bounds.size;
+        oldSize = self.contentView.bounds.size;
     }
     
     if(dataChanged)

@@ -30,13 +30,16 @@ NSString * const SetSelectedVeraDeviceNotification = @"SetSelectedVeraDevice";
 
 
 NSString * const StartPollingNotification = @"StartPolling";
-NSString * const RestartPollingNotification = @"RestartPolling";
+NSString * const ResumePollingNotification = @"ResumePolling";
 NSString * const StopPollingNotification  = @"StopPolling";
 
 
 NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
 NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
+NSString * const SetMotionSensorStatusNotification  = @"SetMotionSensorStatus";
 NSString * const RunSceneNotification   = @"RunScene";
+
+
 
 
 
@@ -79,8 +82,11 @@ NSString * const RunSceneNotification   = @"RunScene";
 {
     if(self = [super init])
     {
+        self.temperatureUnit = @"F";
+        
         self.initializing = NO;
         self.authenticating = NO;
+        self.devicesHaveBeenLoaded = NO;
         self.currentAccessPoint = [[VeraAccessPoint alloc] init];
         self.devicePolling = [[DevicePolling alloc] init];
         
@@ -94,6 +100,7 @@ NSString * const RunSceneNotification   = @"RunScene";
         self.devicePolling.createNetwork = ^(NSDictionary * data)
         {
             [thisObject createNewNetworkData:data];
+            thisObject.devicesHaveBeenLoaded = YES;
         };
         
         self.devicePolling.updateNetwork = ^(NSDictionary * data)
@@ -115,12 +122,13 @@ NSString * const RunSceneNotification   = @"RunScene";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetSelectedVeraDevice:) name:SetSelectedVeraDeviceNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStartPolling:) name:StartPollingNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRestartPolling:) name:RestartPollingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRestartPolling:) name:ResumePollingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStopPolling:) name:StopPollingNotification object:nil];
         
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetBinarySwitchValue:) name:SetBinarySwitchValueNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetDimmableSwitchValue:) name:SetDimmableSwitchValueNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetMotionSensorStatus:) name:SetMotionSensorStatusNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRunScene:) name:RunSceneNotification object:nil];
         
         
@@ -201,6 +209,12 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(void) mergeNetworkData:(NSDictionary *) data
 {
+    NSString * tempUnit = data[@"temperature"];
+    if(tempUnit.length > 0)
+    {
+        self.temperatureUnit = tempUnit;
+    }
+    
     NSMutableDictionary * roomLookup = [[NSMutableDictionary alloc] initWithCapacity:self.rooms.count];
     for(Room * room in self.rooms)
     {
@@ -255,6 +269,12 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(void) createNewNetworkData:(NSDictionary *) data
 {
+    NSString * tempUnit = data[@"temperature"];
+    if(tempUnit.length > 0)
+    {
+        self.temperatureUnit = tempUnit;
+    }
+    
     NSArray * roomsSrc = data[@"rooms"];
     NSMutableArray * rooms = [[NSMutableArray alloc] initWithCapacity:roomsSrc.count];
     for(NSDictionary * src in roomsSrc)
@@ -278,6 +298,26 @@ NSString * const RunSceneNotification   = @"RunScene";
         else if(cat == DeviceCategorySwitch)
         {
             clazz = [BinarySwitch class];
+        }
+        else if (cat == DeviceCategorySecuritySensor)
+        {
+            SecuritySensorSubcategory subcategory = [src[@"subcategory"] integerValue];
+            if(subcategory == SecuritySensorSubcategoryMotion)
+            {
+                clazz = [MotionSensor class];
+            }
+        }
+        else if(cat == DeviceCategoryHumiditySensor)
+        {
+            clazz = [HumiditySensor class];
+        }
+        else if(cat == DeviceCategoryTemperatureSensor)
+        {
+            clazz = [TemperatureSensor class];
+        }
+        else if(cat == DeviceCategoryLightSensor)
+        {
+            clazz = [LightSensor class];
         }
         
         if(clazz == nil)
@@ -527,6 +567,11 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(void) handleStartPolling:(NSNotification *) notification
 {
+    if([notification.userInfo[@"resetDeviceNetwork"] boolValue])
+    {
+        self.devices = nil;
+    }
+    
     self.currentAccessPoint.localMode = YES;
     [self.devicePolling startPolling];
 }
@@ -537,7 +582,7 @@ NSString * const RunSceneNotification   = @"RunScene";
 }
 
 
--(void) handleRestartPolling:(NSNotification *) notification
+-(void) handleResumePolling:(NSNotification *) notification
 {
     self.currentAccessPoint.localMode = YES;
     [self.devicePolling resumePolling];
@@ -606,6 +651,41 @@ NSString * const RunSceneNotification   = @"RunScene";
                               }];
 }
 
+-(void) handleSetMotionSensorStatus:(NSNotification *) notification
+{
+    
+    MotionSensor * sensor = notification.object;
+    BOOL            value  = [notification.userInfo[@"armed"] boolValue];
+    
+    sensor.manualOverride = YES;
+    sensor.manualArmed    = value;
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"DeviceNum" : [NSString stringWithFormat:@"%d", (int)sensor.deviceId],
+                              @"serviceId" : SecuritySensorControlService,
+                              @"action"    : @"SetArmed",
+                              @"newArmedValue" : value ? @"1" : @"0",
+                              @"output_format" : @"json"
+                            };
+    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
+                                        params:params
+                                       timeout:kAPIServiceDefaultTimeout
+                                      callback:^(NSData *data, NSError * fault) {
+                                          if(fault == nil)
+                                          {
+                                              sensor.armed = value;
+                                          }
+                                          else
+                                          {
+                                              sensor.manualArmed = sensor.armed;
+                                          }
+                                          
+                                          sensor.manualOverride = NO;
+                                          
+                                      }];
+    
+}
+
 
 -(void) handleRunScene:(NSNotification *) notification
 {
@@ -627,10 +707,11 @@ NSString * const RunSceneNotification   = @"RunScene";
                                        timeout:kAPIServiceDefaultTimeout
                               callback:^(NSData *data, NSError *fault)
                                 {
-                                     if(fault != nil)
+                                     if(fault == nil)
                                      {
                                          scene.manualOverride = NO;
                                      }
+                                    
                                 }];
                                                                                              
 }

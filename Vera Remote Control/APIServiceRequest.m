@@ -19,13 +19,16 @@ static NSString *defaultUserAgent = nil;
 // heavy-lifting to the NSOperationQueue for NSUrlConnection classes
 +(NSOperationQueue *) sharedConnectionDelegateQueue
 {
-    static NSOperationQueue * q = nil;
-    if(q == nil)
+    @synchronized([APIServiceRequest class])
     {
-        q = [[NSOperationQueue alloc] init];
+        static NSOperationQueue * q = nil;
+        if(q == nil)
+        {
+            q = [[NSOperationQueue alloc] init];
+        }
+        
+        return q;
     }
-    
-    return q;
 }
 
 - (id) init

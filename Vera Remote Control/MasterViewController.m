@@ -8,7 +8,7 @@
 
 #import "MasterViewController.h"
 #import "VeraDevicesViewController.h"
-#import "LightsAndSwitchesViewController.h"
+#import "DevicesViewController.h"
 #import "ScenesViewController.h"
 #import "CredentialsViewController.h"
 #import "UIAlertViewWithCallbacks.h"
@@ -22,7 +22,7 @@
 }
 
 @property (nonatomic, strong) VeraDevicesViewController * homeDevicesViewController;
-@property (nonatomic, strong) LightsAndSwitchesViewController * lightsAndSwitchesViewController;
+@property (nonatomic, strong) DevicesViewController * devicesViewController;
 @property (nonatomic, strong) ScenesViewController      * scenesViewController;
 
 @end
@@ -42,10 +42,10 @@
         homeDevicesNavController.tabBarItem.title = @"Home";
         
         
-        self.lightsAndSwitchesViewController = [[LightsAndSwitchesViewController alloc] init];
-        UINavigationController * lightsAndSwitchesNavController = [[UINavigationController alloc] initWithRootViewController:self.lightsAndSwitchesViewController];
+        self.devicesViewController = [[DevicesViewController alloc] init];
+        UINavigationController * devicesNavController = [[UINavigationController alloc] initWithRootViewController:self.devicesViewController];
         
-        lightsAndSwitchesNavController.tabBarItem.title = @"Switches";
+        devicesNavController.tabBarItem.title = @"Devices";
         
         
         self.scenesViewController = [[ScenesViewController alloc] init];
@@ -53,9 +53,9 @@
         scenesNavController.tabBarItem.title = @"Scenes";
         
         self.viewControllers = @[
-                                 homeDevicesNavController,
-                                 lightsAndSwitchesNavController,
-                                 scenesNavController
+                                 devicesNavController,
+                                 scenesNavController,
+                                 homeDevicesNavController
                                 ];
         
         

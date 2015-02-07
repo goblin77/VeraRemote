@@ -107,7 +107,7 @@
         y = (self.contentView.bounds.size.height - self.goButton.bounds.size.height)/2;
         self.goButton.frame = CGRectOffset(self.goButton.bounds, x, y);
         
-        oldSize = self.bounds.size;
+        oldSize = self.contentView.bounds.size;
     }
     
     

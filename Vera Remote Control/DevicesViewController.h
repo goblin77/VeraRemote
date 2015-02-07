@@ -10,7 +10,7 @@
 #import "DeviceManager.h"
 
 
-@interface LightsAndSwitchesViewController : UITableViewController
+@interface DevicesViewController : UITableViewController
 
 @property (nonatomic, strong) DeviceManager * deviceManager;
 
