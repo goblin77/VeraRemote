@@ -122,7 +122,7 @@ NSString * const RunSceneNotification   = @"RunScene";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetSelectedVeraDevice:) name:SetSelectedVeraDeviceNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStartPolling:) name:StartPollingNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRestartPolling:) name:ResumePollingNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleResumePolling:) name:ResumePollingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStopPolling:) name:StopPollingNotification object:nil];
         
         
