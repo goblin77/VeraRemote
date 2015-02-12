@@ -11,6 +11,7 @@
 #import "DevicesViewController.h"
 #import "ScenesViewController.h"
 #import "CredentialsViewController.h"
+#import "SettingsViewController.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
 #import "ObserverUtils.h"
@@ -21,25 +22,26 @@
     BOOL shouldBootstrap;
 }
 
-@property (nonatomic, strong) VeraDevicesViewController * homeDevicesViewController;
 @property (nonatomic, strong) DevicesViewController * devicesViewController;
 @property (nonatomic, strong) ScenesViewController      * scenesViewController;
+@property (nonatomic, strong) SettingsViewController  * settingsViewController;
 
 @end
 
 @implementation MasterViewController
 
 @synthesize deviceManager;
+@synthesize widgetSettingsManager;
 
 -(id) init
 {
     if(self  = [super init])
     {
-        self.homeDevicesViewController = [[VeraDevicesViewController alloc] init];
-        UINavigationController * homeDevicesNavController = [[UINavigationController alloc] initWithRootViewController:self.homeDevicesViewController];
+        self.settingsViewController = [[SettingsViewController alloc] init];
+        UINavigationController * settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
         
         
-        homeDevicesNavController.tabBarItem.title = @"Home";
+        settingsNavController.tabBarItem.title = @"Settings";
         
         
         self.devicesViewController = [[DevicesViewController alloc] init];
@@ -55,7 +57,7 @@
         self.viewControllers = @[
                                  devicesNavController,
                                  scenesNavController,
-                                 homeDevicesNavController
+                                 settingsNavController
                                 ];
         
         
@@ -128,6 +130,26 @@
         if([c respondsToSelector:@selector(setDeviceManager:)])
         {
             [c performSelector:@selector(setDeviceManager:) withObject:deviceManager];
+        }
+    }
+}
+
+
+-(void) setWidgetSettingsManager:(MainAppWidgetSettingsManager *)value
+{
+    widgetSettingsManager = value;
+    UIViewController * c = nil;
+    for(UIViewController * vc in self.viewControllers)
+    {
+        c = vc;
+        if([c isKindOfClass:[UINavigationController class]])
+        {
+            c = [(UINavigationController *)vc topViewController];
+        }
+        
+        if([c respondsToSelector:@selector(setWidgetSettingsManager:)])
+        {
+            [c performSelector:@selector(setWidgetSettingsManager:) withObject:widgetSettingsManager];
         }
     }
 }

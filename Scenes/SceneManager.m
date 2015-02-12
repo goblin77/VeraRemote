@@ -16,13 +16,13 @@
 #import "DevicePolling.h"
 
 
+
 NSString * const StartPollingNotification = @"StartPolling";
 NSString * const StopPollingNotification  = @"StopPolling";
 NSString * const RunSceneNotification     = @"RunScene";
 
 @interface SceneManager ()
 
-@property (nonatomic, strong) NSString * lastVeraSerialNumber;
 @property (nonatomic, strong) VeraAccessPoint * accessPoint;
 @property (nonatomic, strong) DevicePolling * devicePolling;
 
@@ -78,7 +78,6 @@ NSString * const RunSceneNotification     = @"RunScene";
             }
             return YES;
         };
-        
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleStartPolling:)
@@ -137,6 +136,7 @@ NSString * const RunSceneNotification     = @"RunScene";
 -(void) createScenes:(NSDictionary *) data
 {
     NSArray * scenesSrc = data[@"scenes"];
+    
     NSMutableArray * newScenes = [[NSMutableArray alloc] initWithCapacity:scenesSrc.count];
     for(NSDictionary * src in scenesSrc)
     {
@@ -184,6 +184,7 @@ NSString * const RunSceneNotification     = @"RunScene";
     NSUserDefaults * ud = [[NSUserDefaults alloc] initWithSuiteName:AccessConfigGroupId];
     AccessConfig * ac = [[AccessConfig alloc] init];
     [ac populateFromUserDefaults:ud];
+    self.lastVeraSerialNumber = ac.device.serialNumber;
     [ConfigUtils updateVeraAccessPoint:self.accessPoint
                             veraDevice:ac.device
                               username:ac.username

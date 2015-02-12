@@ -16,6 +16,7 @@ extern NSString * const RunSceneNotification;
 
 +(SceneManager *) sharedInstance;
 
+@property (nonatomic, strong) NSString * lastVeraSerialNumber;
 @property (nonatomic, strong) NSArray * scenes;
 @property (nonatomic, assign) BOOL scenesHaveBeenLoaded;
 @property (nonatomic, strong) NSError * sceneLoadingError;

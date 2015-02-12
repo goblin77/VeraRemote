@@ -10,6 +10,7 @@
 #import "MasterViewController.h"
 
 #import "DeviceManager.h"
+#import "MainAppWidgetSettingsManager.h"
 
 
 @implementation AppDelegate
@@ -18,14 +19,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // init the managers
-    [DeviceManager sharedInstance];
+    DeviceManager * deviceManager = [DeviceManager sharedInstance];
+    MainAppWidgetSettingsManager * widgetSettingsManager = [MainAppWidgetSettingsManager sharedInstance];
+    widgetSettingsManager.deviceManager = deviceManager;
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor colorWithRGBHex:0xf0f0f0];
     [self.window makeKeyAndVisible];
     
     self.window.rootViewController = [[MasterViewController alloc] init];
-    ((MasterViewController *)self.window.rootViewController).deviceManager = [DeviceManager sharedInstance];
+    ((MasterViewController *)self.window.rootViewController).deviceManager = deviceManager;
+    ((MasterViewController *)self.window.rootViewController).widgetSettingsManager = widgetSettingsManager;
     
     
     return YES;

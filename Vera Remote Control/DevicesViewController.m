@@ -20,9 +20,10 @@
 
 typedef NS_ENUM(NSInteger, DeviceFilter)
 {
-    DeviceFilterAll = 0,
     DeviceFilterSwitches,
-    DeviceFilterSensors
+    DeviceFilterClimate,
+    DeviceFilterSecurity,
+    DeviceFilterAll
 };
 
 @interface DevicesViewController ()
@@ -69,7 +70,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     [super viewDidLoad];
     
     
-    self.navigationItem.titleView = [[UISegmentedControl alloc] initWithItems:@[@"All",@"Switches",@"Sensors"]];
+    self.navigationItem.titleView = [[UISegmentedControl alloc] initWithItems:@[@"Switches",@"Climate",@"Security"]];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(handleReloadDeviceNetwork:)];
     [(UISegmentedControl *)self.navigationItem.titleView addTarget:self action:@selector(handleFilterChanged:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.title = @"Devices";
@@ -195,10 +196,9 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
         for(ControlledDevice * d in devices)
         {
             BOOL match = NO;
-            if(filter == DeviceFilterSensors)
+            if(filter == DeviceFilterClimate)
             {
-                match = [d isKindOfClass:[MotionSensor class]]
-                        || [d isKindOfClass:[HumiditySensor class]]
+                match = [d isKindOfClass:[HumiditySensor class]]
                         || [d isKindOfClass:[TemperatureSensor class]]
                         || [d isKindOfClass:[LightSensor class]];
                 
@@ -206,6 +206,10 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
             else if(filter == DeviceFilterSwitches)
             {
                 match = [d isKindOfClass:[BinarySwitch class]] || [d isKindOfClass:[DimmableSwitch class]];
+            }
+            else if(filter == DeviceFilterSecurity)
+            {
+                match = [d isKindOfClass:[MotionSensor class]];
             }
             
             if(match)

@@ -9,9 +9,11 @@
 #import "ScenesViewController.h"
 #import "SceneManager.h"
 #import "ObserverUtils.h"
+#import "WidgetSettingsUtils.h"
 #import "SpinningCursorView.h"
 #import "ScenesView.h"
 #import "dispatch_cancelable_block.h"
+
 
 @interface ScenesViewController ()
 {
@@ -20,6 +22,7 @@
 
 @property (nonatomic, strong) SceneManager * sceneManager;
 @property (nonatomic, strong) ScenesView * scenesView;
+@property (nonatomic, strong) UILabel * zeroStateLabel;
 
 @end
 
@@ -40,7 +43,7 @@
 
 -(void) dealloc
 {
-    [ObserverUtils removeObserver:self fromObject:self.sceneManager forKeyPaths:[self observerPaths]];
+    [ObserverUtils removeObserver:self fromObject:self forKeyPaths:[self observerPaths]];
     if(scheduledCommitProperties != nil)
     {
         cancel_block(scheduledCommitProperties);
@@ -63,9 +66,18 @@
     
     [self.view addSubview:self.scenesView];
     
-
+    
+    self.zeroStateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.zeroStateLabel.backgroundColor = [UIColor clearColor];
+    self.zeroStateLabel.textColor = [UIColor whiteColor];
+    self.zeroStateLabel.font = [UIFont systemFontOfSize:14];
+    self.zeroStateLabel.textAlignment = NSTextAlignmentCenter;
+    self.zeroStateLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.zeroStateLabel.numberOfLines = 0;
+    [self.view addSubview:self.zeroStateLabel];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
-    [ObserverUtils addObserver:self toObject:self.sceneManager forKeyPaths:[self observerPaths] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+    [ObserverUtils addObserver:self toObject:self forKeyPaths:[self observerPaths] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 
 }
 
@@ -81,6 +93,7 @@
 -(void) viewDidLayoutSubviews
 {
     self.scenesView.frame = self.view.bounds;
+    self.zeroStateLabel.frame = CGRectInset(self.view.bounds, 10, 5);
 }
 
 #pragma mark -
@@ -115,9 +128,32 @@
 -(void) commitProperties
 {
     CGFloat contentHeight = SceneViewHeight + 2 * 15;
-    
     self.preferredContentSize = CGSizeMake(0, contentHeight);
-    self.scenesView.scenes = self.sceneManager.scenes;
+    
+    
+    NSSet * widgetIds = [WidgetSettingsUtils sceneIdsForVeraSerialNumber:self.sceneManager.lastVeraSerialNumber
+                                                            userDefaults:[WidgetSettingsUtils userDefaultsForScenesWidget]];
+    NSArray * widgetScenes = [WidgetSettingsUtils selectedScenesForScenes:self.sceneManager.scenes
+                                                          withSelectedIds:widgetIds];
+    
+    BOOL zeroState = widgetScenes.count == 0;
+    NSString * zeroStateMessage = @"You have no scenes configured to show up in this widget";
+
+    
+    if(zeroState)
+    {
+        self.scenesView.hidden = YES;
+        self.zeroStateLabel.hidden = NO;
+        self.zeroStateLabel.text = zeroStateMessage;
+    }
+    else
+    {
+        self.scenesView.hidden = NO;
+        self.zeroStateLabel.hidden = YES;
+        self.scenesView.scenes = widgetScenes;
+    }
+    
+    
 }
 
 
@@ -133,10 +169,16 @@
     static NSArray * paths = nil;
     if(paths == nil)
     {
-        paths = @[@"scenes",@"scenesHaveBeenLoaded",@"sceneLoadingError",@"authenticationRequired"];
+        paths = @[@"sceneManager.scenes",
+                  @"sceneManager.scenesHaveBeenLoaded",
+                  @"sceneManager.sceneLoadingError",
+                  @"sceneManager.authenticationRequired"
+                 ];
     }
     
     return paths;
 }
+
+
 
 @end

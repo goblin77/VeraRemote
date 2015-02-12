@@ -23,6 +23,10 @@
 		DB6850CE1A6C6F2A00CE4DAA /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850CD1A6C6F2A00CE4DAA /* DeviceManager.m */; };
 		DB6850D01A6C6F8800CE4DAA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6850CF1A6C6F8800CE4DAA /* Security.framework */; };
 		DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850D21A6C702800CE4DAA /* VeraDevice.m */; };
+		DB6AC0DB1A8C467400AE9607 /* WidgetSettingsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */; };
+		DB6AC0DE1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */; };
+		DB6AC0DF1A8C4CF000AE9607 /* MainAppWidgetSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */; };
+		DB6AC0E01A8C4D2900AE9607 /* WidgetSettingsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */; };
 		DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */; };
 		DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5191A75C64300DBD7AC /* SpinningCursorView.m */; };
 		DB6DE5221A75C6A300DBD7AC /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */; };
@@ -75,6 +79,9 @@
 		DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DFE1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m */; };
 		DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */; };
 		DBEF8B9A1A85AE1400678F6D /* BatteryLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B991A85AE1400678F6D /* BatteryLevelView.m */; };
+		DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */; };
+		DBEF8BA11A8931DA00678F6D /* WidgetSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */; };
+		DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +145,10 @@
 		DB6850D11A6C702800CE4DAA /* VeraDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VeraDevice.h; sourceTree = "<group>"; };
 		DB6850D21A6C702800CE4DAA /* VeraDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VeraDevice.m; sourceTree = "<group>"; };
 		DB6850D41A6C715500CE4DAA /* JSONSerializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONSerializable.h; sourceTree = "<group>"; };
+		DB6AC0D91A8C467400AE9607 /* WidgetSettingsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetSettingsUtils.h; sourceTree = "<group>"; };
+		DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetSettingsUtils.m; sourceTree = "<group>"; };
+		DB6AC0DC1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainAppWidgetSettingsManager.h; sourceTree = "<group>"; };
+		DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainAppWidgetSettingsManager.m; sourceTree = "<group>"; };
 		DB6DE50C1A73477D00DBD7AC /* SceneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneTableViewCell.h; sourceTree = "<group>"; };
 		DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneTableViewCell.m; sourceTree = "<group>"; };
 		DB6DE5181A75C64300DBD7AC /* SpinningCursorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinningCursorView.h; sourceTree = "<group>"; };
@@ -214,6 +225,12 @@
 		DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionSensorTableViewCell.m; sourceTree = "<group>"; };
 		DBEF8B981A85AE1400678F6D /* BatteryLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryLevelView.h; sourceTree = "<group>"; };
 		DBEF8B991A85AE1400678F6D /* BatteryLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatteryLevelView.m; sourceTree = "<group>"; };
+		DBEF8B9C1A85D91F00678F6D /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		DBEF8B9F1A8931DA00678F6D /* WidgetSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetSettingsViewController.h; sourceTree = "<group>"; };
+		DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetSettingsViewController.m; sourceTree = "<group>"; };
+		DBEF8BA51A89324400678F6D /* TableViewCellWithSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellWithSwitch.h; sourceTree = "<group>"; };
+		DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCellWithSwitch.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +333,8 @@
 			children = (
 				DB6850CC1A6C6F2A00CE4DAA /* DeviceManager.h */,
 				DB6850CD1A6C6F2A00CE4DAA /* DeviceManager.m */,
+				DB6AC0DC1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.h */,
+				DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -410,6 +429,7 @@
 		DB8B3D5F1A6CA6FF00EB9A6A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DBEF8B9B1A85D8FE00678F6D /* Settings */,
 				DB8B3DED1A701DBB00EB9A6A /* Devices */,
 				DB8B3D9F1A6EC1C400EB9A6A /* Vera Devices */,
 				DB8B3D831A6CADE700EB9A6A /* Initial Config */,
@@ -443,6 +463,8 @@
 				DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */,
 				DB1D01401A78A3CF005EB05F /* DevicePolling.h */,
 				DB1D01411A78A3CF005EB05F /* DevicePolling.m */,
+				DB6AC0D91A8C467400AE9607 /* WidgetSettingsUtils.h */,
+				DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -450,6 +472,7 @@
 		DB8B3D781A6CAD5A00EB9A6A /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				DBEF8BA91A8936F400678F6D /* Managers */,
 				DB8B3D791A6CAD6100EB9A6A /* Views */,
 			);
 			name = Shared;
@@ -472,6 +495,8 @@
 				DB8B3D8E1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m */,
 				DB8B3D901A6CE39600EB9A6A /* LargeProgressView.h */,
 				DB8B3D911A6CE39600EB9A6A /* LargeProgressView.m */,
+				DBEF8BA51A89324400678F6D /* TableViewCellWithSwitch.h */,
+				DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -545,6 +570,24 @@
 				DB8B3DF11A7023A000EB9A6A /* DevicesTableSection.m */,
 			);
 			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		DBEF8B9B1A85D8FE00678F6D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DBEF8B9C1A85D91F00678F6D /* SettingsViewController.h */,
+				DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */,
+				DBEF8B9F1A8931DA00678F6D /* WidgetSettingsViewController.h */,
+				DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		DBEF8BA91A8936F400678F6D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -694,6 +737,7 @@
 				DB8B3D981A6E1E1700EB9A6A /* VeraDevicesViewController.m in Sources */,
 				DB8B3D891A6CDF4600EB9A6A /* Buttons.m in Sources */,
 				DB8B3D951A6CE73900EB9A6A /* ObserverUtils.m in Sources */,
+				DB6AC0DB1A8C467400AE9607 /* WidgetSettingsUtils.m in Sources */,
 				DB8B3D821A6CAD9700EB9A6A /* DefaultKeyboardAccessoryView.m in Sources */,
 				DB8B3D861A6CAE0700EB9A6A /* CredentialsViewController.m in Sources */,
 				DB6DE5531A75F8F200DBD7AC /* ScenesView.m in Sources */,
@@ -701,12 +745,14 @@
 				DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */,
 				DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */,
 				DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */,
+				DBEF8BA11A8931DA00678F6D /* WidgetSettingsViewController.m in Sources */,
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
 				DB8B3D741A6CAC8400EB9A6A /* StyleUtils.m in Sources */,
 				DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */,
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
 				DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */,
 				DBEF8B9A1A85AE1400678F6D /* BatteryLevelView.m in Sources */,
+				DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */,
 				DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */,
 				DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */,
 				DB8B3D921A6CE39600EB9A6A /* LargeProgressView.m in Sources */,
@@ -727,10 +773,12 @@
 				DB8B3D771A6CACEA00EB9A6A /* UIFont+DefaultSettings.m in Sources */,
 				DB8B3D8C1A6CDF6200EB9A6A /* ImageUtils.m in Sources */,
 				DB8B3D6E1A6CAC2700EB9A6A /* UIFont_Expanded.m in Sources */,
+				DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */,
 				DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */,
 				DB6850A31A6C6D1100CE4DAA /* main.m in Sources */,
 				DB8B3DF21A7023A000EB9A6A /* DevicesTableSection.m in Sources */,
 				DB6DE5571A75F93D00DBD7AC /* SceneView.m in Sources */,
+				DB6AC0DE1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +797,7 @@
 				DB55ADAC1A7615D7004175CF /* UIColor+Expanded.m in Sources */,
 				DB6DE5541A75F92700DBD7AC /* SpinningCursorView.m in Sources */,
 				DB6DE5491A75D88C00DBD7AC /* FaultUtils.m in Sources */,
+				DB6AC0DF1A8C4CF000AE9607 /* MainAppWidgetSettingsManager.m in Sources */,
 				DB6DE53E1A75C79200DBD7AC /* Room.m in Sources */,
 				DB1D01431A78A581005EB05F /* DevicePolling.m in Sources */,
 				DB6DE55B1A76048D00DBD7AC /* UIFont_Expanded.m in Sources */,
@@ -760,6 +809,7 @@
 				DB6DE5481A75D86200DBD7AC /* ObserverUtils.m in Sources */,
 				DB6DE53A1A75C76C00DBD7AC /* ScenesViewController.m in Sources */,
 				DB6DE5581A75F9C700DBD7AC /* CircularShapeView.m in Sources */,
+				DB6AC0E01A8C4D2900AE9607 /* WidgetSettingsUtils.m in Sources */,
 				DB6DE53C1A75C78C00DBD7AC /* ControlledDevice.m in Sources */,
 				DB6DE5471A75D85E00DBD7AC /* VeraDevice.m in Sources */,
 				DB6DE54D1A75DB7A00DBD7AC /* SceneManager.m in Sources */,
