@@ -141,6 +141,33 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 #pragma mark -
 #pragma mark misc functions
+
+-(void) logout
+{
+    [self.devicePolling stopPolling];
+    
+    self.initializing = NO;
+    self.devicesHaveBeenLoaded = NO;
+    self.currentDevice = nil;
+    
+    self.availableVeraDevices = nil;
+    self.availableVeraDevicesLoading = NO;
+    self.availableVeraDevicesHaveBeenLoaded = NO;
+    
+    
+    self.devices = nil;
+    self.rooms = nil;
+    self.scenes= nil;
+    self.deviceNetworkLoading = NO;
+    
+    
+    self.authenticating = NO;
+    password = nil;
+    
+    self.currentAccessPoint = [[VeraAccessPoint alloc] init];
+    [self persistCurrentAuthConfig];
+}
+
 -(void) setCurrentDevice:(VeraDevice *)value
 {
     currentDevice = value;
@@ -472,7 +499,7 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(void) handleLogout:(NSNotification *) notification
 {
-    
+    [self logout];
 }
 
 
@@ -532,12 +559,11 @@ NSString * const RunSceneNotification   = @"RunScene";
                                                                 username:thisObject.username
                                                                 password:thisObject.password];
                                   }
-                                  
-                                  
-                                  thisObject.availableVeraDevices = devices;
-                                  thisObject.availableVeraDevicesHaveBeenLoaded = YES;
                               }
                               
+                              
+                              thisObject.availableVeraDevices = devices;
+                              thisObject.availableVeraDevicesHaveBeenLoaded = YES;
                               thisObject.availableVeraDevicesLoading = NO;
                           }
                       }];
@@ -553,6 +579,9 @@ NSString * const RunSceneNotification   = @"RunScene";
         [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
         
         self.currentDevice = device;
+        self.devices = nil;
+        self.scenes  = nil;
+        self.devicesHaveBeenLoaded = NO;
         
         [self persistCurrentAuthConfig];
         [ConfigUtils updateVeraAccessPoint:self.currentAccessPoint

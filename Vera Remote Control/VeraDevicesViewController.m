@@ -31,6 +31,7 @@ static CGFloat HomeDevicesRowHeight = 60;
 {
     if(self = [super initWithStyle:UITableViewStyleGrouped])
     {
+        self.didSelectDevice = nil;
         scheduledCommitProperties = nil;
     }
     
@@ -55,19 +56,19 @@ static CGFloat HomeDevicesRowHeight = 60;
     self.deviceManager = [DeviceManager sharedInstance];
     
     self.navigationItem.title = @"Vera Devices";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:nil action:nil];
-    self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDevice"] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+    [ObserverUtils addObserver:self toObject:self.deviceManager
+                   forKeyPaths:[self observerKeyPaths]
+                   withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:@[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDevice"]];
+    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:[self observerKeyPaths]];
 }
 
 
@@ -136,7 +137,10 @@ static CGFloat HomeDevicesRowHeight = 60;
     
     
     VeraDevice * device = self.deviceManager.availableVeraDevices[indexPath.row];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SetSelectedVeraDeviceNotification object:device];
+    if(self.didSelectDevice != nil)
+    {
+        self.didSelectDevice(device);
+    }
 }
 
 #pragma mark -
@@ -164,6 +168,11 @@ static CGFloat HomeDevicesRowHeight = 60;
 -(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     [self invalidateProperties];
+}
+
+-(NSArray *) observerKeyPaths
+{
+    return @[@"availableVeraDevices",@"availableVeraDevicesLoading",@"currentDevice"];
 }
 
 

@@ -31,8 +31,23 @@ NSString * const AccessConfigGroupId = @"group.com.goblin77.AccessConfig";
 
 -(void) writeToUserDefaults:(NSUserDefaults *)userDefaults synch:(BOOL)synch
 {
-    [userDefaults setObject:self.username forKey:@"username"];
-    [userDefaults setObject:self.password forKey:@"password"];
+    if(self.username != nil)
+    {
+        [userDefaults setObject:self.username forKey:@"username"];
+    }
+    else
+    {
+        [userDefaults removeObjectForKey:@"username"];
+    }
+    
+    if(self.password != nil)
+    {
+        [userDefaults setObject:self.password forKey:@"password"];
+    }
+    else
+    {
+        [userDefaults removeObjectForKey:@"password"];
+    }
     
     if(self.device == nil)
     {

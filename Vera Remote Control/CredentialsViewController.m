@@ -12,6 +12,7 @@
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
 #import "ObserverUtils.h"
+#import "VeraDevicesViewController.h"
 
 
 @interface CredentialsViewController ()
@@ -40,6 +41,12 @@
     return self;
 }
 
+-(void) dealloc
+{
+    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:[self observerKeyPaths]];
+}
+
+
 
 
 -(void) viewDidLoad
@@ -58,12 +65,12 @@
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"authenticating"]];
+    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:[self observerKeyPaths]];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"authenticating"]];
+    [ObserverUtils removeObserver:self fromObject:self.deviceManager forKeyPaths:[self observerKeyPaths]];
 }
 
 
@@ -258,7 +265,18 @@
 #pragma mark notifications
 -(void) handleAuthenticationSuccess:(NSNotification *) notification
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    __weak CredentialsViewController * thisObject = self;
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    VeraDevicesViewController * vc = [[VeraDevicesViewController alloc] init];
+    vc.deviceManager = self.deviceManager;
+    vc.didSelectDevice = ^(VeraDevice * veraDevice)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SetSelectedVeraDeviceNotification object:veraDevice];
+        [thisObject.navigationController dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 
@@ -293,6 +311,11 @@
     {
         [LargeProgressView hide];
     }
+}
+
+-(NSArray *) observerKeyPaths
+{
+    return @[@"authenticating"];
 }
 
 

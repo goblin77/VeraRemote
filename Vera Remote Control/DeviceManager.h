@@ -35,6 +35,8 @@ extern NSString * const SetMotionSensorStatusNotification;
 extern NSString * const RunSceneNotification;
 
 
+
+
 @interface DeviceManager : NSObject
 
 +(DeviceManager *) sharedInstance;

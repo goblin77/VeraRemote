@@ -12,5 +12,7 @@
 @interface VeraDevicesViewController : UITableViewController
 
 @property (nonatomic, weak) DeviceManager * deviceManager;
+@property (nonatomic, copy) void (^didSelectDevice)(VeraDevice * device);
+
 
 @end

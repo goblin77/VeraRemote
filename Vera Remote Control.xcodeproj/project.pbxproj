@@ -264,8 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				DB6850CF1A6C6F8800CE4DAA /* Security.framework */,
-				DB68509F1A6C6D1100CE4DAA /* Vera Remote Control */,
 				DB6850B91A6C6D1100CE4DAA /* Vera Remote ControlTests */,
+				DB68509F1A6C6D1100CE4DAA /* Vera Remote Control */,
 				DB6DE5231A75C6A300DBD7AC /* Scenes Extension */,
 				DB6DE5201A75C6A300DBD7AC /* Frameworks */,
 				DB68509E1A6C6D1100CE4DAA /* Products */,

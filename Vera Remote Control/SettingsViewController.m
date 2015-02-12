@@ -10,6 +10,8 @@
 #import "WidgetSettingsViewController.h"
 #import "StyleUtils.h"
 #import "MainAppWidgetSettingsManager.h"
+#import "VeraDevicesViewController.h"
+#import "UIAlertViewWithCallbacks.h"
 
 typedef NS_ENUM(NSInteger, SettingsSection)
 {
@@ -58,7 +60,10 @@ typedef NS_ENUM(NSInteger, SupportRow)
     [super viewDidLoad];
     
     self.navigationItem.title = @"Settings";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log out" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log out"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(handleLogoutTapped:)];
 }
 
 
@@ -120,7 +125,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
                 [StyleUtils applyDefaultStyleOnTableTitleLabel:res.textLabel];
                 [StyleUtils applyDefaultStyleOnValueLabelWithTableCell:res.detailTextLabel];
                 res.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                res.textLabel.text = @"Widgets";
+                res.textLabel.text = @"Widget Scenes";
             }
             
             NSString * numSelectedStr = self.widgetSettingsManager.widgetSceneIds.count > 0 ? [NSString stringWithFormat:@"%d", (int)self.widgetSettingsManager.widgetSceneIds.count] : @"none";
@@ -172,12 +177,44 @@ typedef NS_ENUM(NSInteger, SupportRow)
             vc.deviceManager = self.deviceManager;
             [self.navigationController pushViewController:vc animated:YES];
         }
+        else if(indexPath.row == AppSettingsRowHomeDevice)
+        {
+            __weak SettingsViewController * thisObject = self;
+            VeraDevicesViewController * vc = [[VeraDevicesViewController alloc] init];
+            vc.deviceManager = self.deviceManager;
+            vc.didSelectDevice = ^(VeraDevice * device)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:SetSelectedVeraDeviceNotification object:device];
+                [thisObject.navigationController popViewControllerAnimated:YES];
+            };
+            
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 
 
 
-
+#pragma mark -
+#pragma mark events
+-(void) handleLogoutTapped:(id) sender
+{
+    UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
+                                                                               message:@"Are you sure you want to log out?"
+                                                                     cancelButtonTitle:@"Cancel"
+                                                                     otherButtonTitles:@"Log out", nil];
+    
+    alert.alertViewWillDismissWithButtonIndex = ^(UIAlertView * av, NSUInteger buttonIndex)
+    {
+        if(buttonIndex == 1)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:LogoutNotification object:nil];
+        }
+    };
+    
+    [alert show];
+    
+}
 
 
 

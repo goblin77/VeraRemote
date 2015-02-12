@@ -89,7 +89,7 @@
                                                  name:AuthenticationFailedNotification
                                                object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLogout:) name:LogoutNotification object:nil];
     
 }
 
@@ -170,6 +170,12 @@
 #pragma mark events / notifications
 -(void) handleAuthenticationFailed:(NSNotification *) notification
 {
+    [self showLogin];
+}
+
+-(void) handleLogout:(NSNotification *) notification
+{
+    self.selectedIndex = 0; // preselect Devices screen
     [self showLogin];
 }
 
