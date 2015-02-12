@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, AppSettingsRow)
 
 typedef NS_ENUM(NSInteger, SupportRow)
 {
-    SuportRowVersion = 0,
+    SupportRowVersion = 0,
     SupportRowContactSupport,
     SupportRowFAQ
 };
@@ -137,7 +137,22 @@ typedef NS_ENUM(NSInteger, SupportRow)
     }
     else if(indexPath.section == SettingsSectionSupport)
     {
-
+        if(indexPath.row == SupportRowVersion)
+        {
+            static NSString * CellId = @"VersionCell";
+            UITableViewCell * res = [tableView dequeueReusableCellWithIdentifier:CellId];
+            if(res == nil)
+            {
+                res = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellId];
+                [StyleUtils applyDefaultStyleOnTableTitleLabel:res.textLabel];
+                [StyleUtils applyDefaultStyleOnValueLabelWithTableCell:res.detailTextLabel];
+                res.textLabel.text = @"Version";
+                res.detailTextLabel.text = [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"];
+                res.selectionStyle = UITableViewCellSeparatorStyleNone;
+            }
+            
+            return res;
+        }
     }
     
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
