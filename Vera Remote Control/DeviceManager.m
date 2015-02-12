@@ -411,6 +411,18 @@ NSString * const RunSceneNotification   = @"RunScene";
                                   password:self.password];
     }
     
+    if(self.currentDevice == nil)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+        if(password.length > 0)
+        {
+            password = nil;
+            [self persistCurrentAuthConfig];
+        }
+        return;
+    }
+    
+    
     if(self.username.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:LoadVeraDevicesNotification object:nil];
