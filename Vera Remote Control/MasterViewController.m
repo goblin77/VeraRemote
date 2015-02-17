@@ -42,17 +42,20 @@
         
         
         settingsNavController.tabBarItem.title = @"Settings";
+        settingsNavController.tabBarItem.image = [UIImage imageNamed:@"settingsTabBarItem"];
         
         
         self.devicesViewController = [[DevicesViewController alloc] init];
         UINavigationController * devicesNavController = [[UINavigationController alloc] initWithRootViewController:self.devicesViewController];
         
         devicesNavController.tabBarItem.title = @"Devices";
+        devicesNavController.tabBarItem.image = [UIImage imageNamed:@"devicesTabBarItem"];
         
         
         self.scenesViewController = [[ScenesViewController alloc] init];
         UINavigationController * scenesNavController = [[UINavigationController alloc] initWithRootViewController:self.scenesViewController];
         scenesNavController.tabBarItem.title = @"Scenes";
+        scenesNavController.tabBarItem.image = [UIImage imageNamed:@"scenesTabBarItem"];
         
         self.viewControllers = @[
                                  devicesNavController,
