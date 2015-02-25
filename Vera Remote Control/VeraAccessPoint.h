@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VeraAccessPoint : NSObject
+@interface VeraAccessPoint : NSObject <NSCopying>
 
 @property (nonatomic, strong) NSString * localUrl;
 @property (nonatomic, strong) NSString * remoteUrl;

@@ -10,6 +10,13 @@
 
 @implementation VeraAccessPoint
 
-
+- (id)copyWithZone:(NSZone *)zone
+{
+    VeraAccessPoint * res = [[VeraAccessPoint alloc] init];
+    res.localUrl = [self.localUrl copyWithZone:zone];
+    res.remoteUrl= [self.remoteUrl copyWithZone:zone];
+    res.localMode = self.localMode;
+    return res;
+}
 
 @end

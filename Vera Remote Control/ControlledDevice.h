@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
     DeviceCategoryDimmableLight = 2,
     DeviceCategorySwitch=3,
     DeviceCategorySecuritySensor=4,
+    DeviceCategorySecurityCamera=6,
     DeviceCategoryHumiditySensor=16,
     DeviceCategoryTemperatureSensor=17,
     DeviceCategoryLightSensor=18
@@ -39,6 +40,17 @@ typedef NS_ENUM(NSInteger, SecuritySensorSubcategory)
     SecuritySensorSubcategoryGlassBreak =6
     
 };
+    
+    
+typedef NS_ENUM(NSInteger, SecurityCameraPTZAction)
+{
+    SecurityCameraPTZActionMoveLeft,
+    SecurityCameraPTZActionMoveRight,
+    SecurityCameraPTZActionMoveUp,
+    SecurityCameraPTZActionMoveDown,
+    SecurityCameraPTZActionZoomIn,
+    SecurityCameraPTZActionZoomOut
+};
 
 
 
@@ -47,6 +59,7 @@ extern NSString * BinarySwitchControlService;
 extern NSString * DimmableSwitchControlService;
 extern NSString * SceneControlService;
 extern NSString * SecuritySensorControlService;
+extern NSString * PanTiltZoomControlService;
 
 @interface ControlledDevice : NSObject <JSONSerializable>
 
@@ -120,6 +133,10 @@ extern NSString * SecuritySensorControlService;
 
 @end
 
+
+@interface SecurityCamera : ControlledDevice
+
+@end
 
 
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "VeraDevice.h"
+#import "SecurityCameraImagePolling.h"
 
 
 // initialization
@@ -33,7 +34,7 @@ extern NSString * const SetBinarySwitchValueNotification;
 extern NSString * const SetDimmableSwitchValueNotification;
 extern NSString * const SetMotionSensorStatusNotification;
 extern NSString * const RunSceneNotification;
-
+extern NSString * const SecurityCameraPTZActionNotification;
 
 
 
@@ -63,6 +64,8 @@ extern NSString * const RunSceneNotification;
 @property (nonatomic, readonly) NSString * username;
 @property (nonatomic, readonly) NSString * password;
 
+
+-(SecurityCameraImagePolling *) imagePollingForDeviceWithId:(NSInteger) deviceId;
 
 
 @end

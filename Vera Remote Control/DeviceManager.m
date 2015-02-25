@@ -38,8 +38,7 @@ NSString * const SetBinarySwitchValueNotification = @"SetBinarySwitchValue";
 NSString * const SetDimmableSwitchValueNotification = @"SetDimmableSwitchValue";
 NSString * const SetMotionSensorStatusNotification  = @"SetMotionSensorStatus";
 NSString * const RunSceneNotification   = @"RunScene";
-
-
+NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction";
 
 
 
@@ -48,7 +47,7 @@ NSString * const RunSceneNotification   = @"RunScene";
 @interface DeviceManager ()
 
 @property (nonatomic, strong) DevicePolling * devicePolling;
-@property (nonatomic, strong) VeraAccessPoint * currentAccessPoint;
+@property (nonatomic, strong) VeraAccessPoint * accessPoint;
 
 -(void) setCurrentDevice:(VeraDevice *) value;
 
@@ -60,7 +59,7 @@ NSString * const RunSceneNotification   = @"RunScene";
 @synthesize username;
 @synthesize password;
 @synthesize currentDevice;
-@synthesize currentAccessPoint;
+@synthesize accessPoint;
 
 
 
@@ -87,14 +86,14 @@ NSString * const RunSceneNotification   = @"RunScene";
         self.initializing = NO;
         self.authenticating = NO;
         self.devicesHaveBeenLoaded = NO;
-        self.currentAccessPoint = [[VeraAccessPoint alloc] init];
+        self.accessPoint = [[VeraAccessPoint alloc] init];
         self.devicePolling = [[DevicePolling alloc] init];
         
         
         __weak DeviceManager * thisObject = self;
         self.devicePolling.accessPoint = ^VeraAccessPoint *
         {
-            return thisObject.currentAccessPoint;
+            return thisObject.accessPoint;
         };
         
         self.devicePolling.createNetwork = ^(NSDictionary * data)
@@ -129,7 +128,9 @@ NSString * const RunSceneNotification   = @"RunScene";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetBinarySwitchValue:) name:SetBinarySwitchValueNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetDimmableSwitchValue:) name:SetDimmableSwitchValueNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetMotionSensorStatus:) name:SetMotionSensorStatusNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSecurityCameraPTZActionNotification:) name:SecurityCameraPTZActionNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRunScene:) name:RunSceneNotification object:nil];
+        
         
         
     }
@@ -137,6 +138,12 @@ NSString * const RunSceneNotification   = @"RunScene";
     return self;
 }
 
+#pragma mark -
+#pragma mark properties
+-(VeraAccessPoint *) currentAccessPoint
+{
+    return [self.accessPoint copy];
+}
 
 
 #pragma mark -
@@ -164,7 +171,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     self.authenticating = NO;
     password = nil;
     
-    self.currentAccessPoint = [[VeraAccessPoint alloc] init];
+    self.accessPoint = [[VeraAccessPoint alloc] init];
     [self persistCurrentAuthConfig];
 }
 
@@ -346,6 +353,10 @@ NSString * const RunSceneNotification   = @"RunScene";
         {
             clazz = [LightSensor class];
         }
+        else if(cat == DeviceCategorySecurityCamera)
+        {
+            clazz = [SecurityCamera class];
+        }
         
         if(clazz == nil)
         {
@@ -384,6 +395,20 @@ NSString * const RunSceneNotification   = @"RunScene";
 }
 
 
+-(SecurityCameraImagePolling *) imagePollingForDeviceWithId:(NSInteger) deviceId
+{
+    __weak DeviceManager * thisObject = self;
+    SecurityCameraImagePolling * res = [[SecurityCameraImagePolling alloc] init];
+    res.cameraDeviceId = deviceId;
+    res.accessPoint = ^VeraAccessPoint *
+    {
+        return thisObject.accessPoint;
+    };
+    
+    return res;
+}
+
+
 
 #pragma mark -
 #pragma mark notification handlers
@@ -405,7 +430,7 @@ NSString * const RunSceneNotification   = @"RunScene";
         self.availableVeraDevicesHaveBeenLoaded = YES;
         
         
-        [ConfigUtils updateVeraAccessPoint:self.currentAccessPoint
+        [ConfigUtils updateVeraAccessPoint:self.accessPoint
                                 veraDevice:self.currentDevice
                                   username:self.username
                                   password:self.password];
@@ -437,7 +462,7 @@ NSString * const RunSceneNotification   = @"RunScene";
                           callback:^(BOOL success, NSError *fault) {
                               if(success)
                               {
-                                  [ConfigUtils updateVeraAccessPoint:thisObject.currentAccessPoint
+                                  [ConfigUtils updateVeraAccessPoint:thisObject.accessPoint
                                                           veraDevice:thisObject.currentDevice
                                                             username:thisObject.username
                                                             password:thisObject.password];
@@ -566,7 +591,7 @@ NSString * const RunSceneNotification   = @"RunScene";
                                   {
                                       [thisObject.currentDevice updateWithDictionary:deviceSrc];
                                       [thisObject persistCurrentAuthConfig];
-                                      [ConfigUtils updateVeraAccessPoint:thisObject.currentAccessPoint
+                                      [ConfigUtils updateVeraAccessPoint:thisObject.accessPoint
                                                               veraDevice:thisObject.currentDevice
                                                                 username:thisObject.username
                                                                 password:thisObject.password];
@@ -596,7 +621,7 @@ NSString * const RunSceneNotification   = @"RunScene";
         self.devicesHaveBeenLoaded = NO;
         
         [self persistCurrentAuthConfig];
-        [ConfigUtils updateVeraAccessPoint:self.currentAccessPoint
+        [ConfigUtils updateVeraAccessPoint:self.accessPoint
                                 veraDevice:self.currentDevice
                                   username:self.username
                                   password:self.password];
@@ -613,7 +638,7 @@ NSString * const RunSceneNotification   = @"RunScene";
         self.devices = nil;
     }
     
-    self.currentAccessPoint.localMode = YES;
+    self.accessPoint.localMode = YES;
     [self.devicePolling startPolling];
 }
 
@@ -625,7 +650,7 @@ NSString * const RunSceneNotification   = @"RunScene";
 
 -(void) handleResumePolling:(NSNotification *) notification
 {
-    self.currentAccessPoint.localMode = YES;
+    self.accessPoint.localMode = YES;
     [self.devicePolling resumePolling];
 }
 
@@ -647,7 +672,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     device.manualValue = value;
     device.manualOverride = YES;
     
-    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
                                 params:params
                                 timeout:kAPIServiceDefaultTimeout
                               callback:^(NSData *data, NSError *fault) {
@@ -679,7 +704,7 @@ NSString * const RunSceneNotification   = @"RunScene";
     device.manualValue = value;
     device.manualOverride = YES;
     
-    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
                                 params:params
                                 timeout:kAPIServiceDefaultTimeout
                               callback:^(NSData *data, NSError *fault) {
@@ -708,7 +733,7 @@ NSString * const RunSceneNotification   = @"RunScene";
                               @"newArmedValue" : value ? @"1" : @"0",
                               @"output_format" : @"json"
                             };
-    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
                                         params:params
                                        timeout:kAPIServiceDefaultTimeout
                                       callback:^(NSData *data, NSError * fault) {
@@ -743,7 +768,7 @@ NSString * const RunSceneNotification   = @"RunScene";
                             };
     
     
-    [APIService callHttpRequestWithAccessPoint:self.currentAccessPoint
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
                                 params:params
                                        timeout:kAPIServiceDefaultTimeout
                               callback:^(NSData *data, NSError *fault)
@@ -755,6 +780,74 @@ NSString * const RunSceneNotification   = @"RunScene";
                                     
                                 }];
                                                                                              
+}
+
+
+-(void) handleSecurityCameraPTZActionNotification:(NSNotification *) notification
+{
+    SecurityCamera * device = notification.object;
+    
+    NSString * ptzActionStr = nil;
+    SecurityCameraPTZAction action = [notification.userInfo[@"action"] integerValue];
+    if(action == SecurityCameraPTZActionMoveLeft)
+    {
+        ptzActionStr = @"MoveLeft";
+    }
+    else if(action == SecurityCameraPTZActionMoveRight)
+    {
+        ptzActionStr = @"MoveRight";
+    }
+    else if(action == SecurityCameraPTZActionMoveUp)
+    {
+        ptzActionStr = @"MoveUp";
+    }
+    else if(action == SecurityCameraPTZActionMoveDown)
+    {
+        ptzActionStr = @"MoveDown";
+    }
+    else if(action == SecurityCameraPTZActionZoomIn)
+    {
+        ptzActionStr = @"ZoomIn";
+    }
+    else if(action == SecurityCameraPTZActionZoomOut)
+    {
+        ptzActionStr = @"ZoomOut";
+    }
+    
+    if(ptzActionStr == nil)
+    {
+        NSLog(@"Unknown action %ld", action);
+        return;
+    }
+    
+    
+    
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"serviceId" : PanTiltZoomControlService,
+                              @"action" : ptzActionStr,
+                              @"DeviceNum": [NSString stringWithFormat:@"%ld", (long)device.deviceId],
+                              @"output_format" : @"json"
+                            };
+    
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
+                                        params:params
+                                       timeout:kAPIServiceDefaultTimeout
+                                      callback:^(NSData *data, NSError *fault)
+     {
+         NSString * response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+         NSRange r = [response rangeOfString:@"ERROR:"];
+         if(r.length > 0)
+         {
+             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@""
+                                                              message:[response substringFromIndex:r.length]
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"Close"
+                                                    otherButtonTitles:nil];
+             [alert show];
+         }
+         
+     }];
 }
 
 @end

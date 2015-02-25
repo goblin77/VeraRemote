@@ -77,6 +77,10 @@
 		DB8B3DF21A7023A000EB9A6A /* DevicesTableSection.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DF11A7023A000EB9A6A /* DevicesTableSection.m */; };
 		DB8B3DFC1A70A29A00EB9A6A /* CircularShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DFB1A70A29A00EB9A6A /* CircularShapeView.m */; };
 		DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DFE1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m */; };
+		DBE0796B1A9AB49D00C40710 /* SecurityCameraTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */; };
+		DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */; };
+		DBE079711A9ABB5B00C40710 /* SecurityCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */; };
+		DBE079741A9ABE4E00C40710 /* SecurityCameraImagePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */; };
 		DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */; };
 		DBEF8B9A1A85AE1400678F6D /* BatteryLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B991A85AE1400678F6D /* BatteryLevelView.m */; };
 		DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */; };
@@ -221,6 +225,14 @@
 		DB8B3DFB1A70A29A00EB9A6A /* CircularShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularShapeView.m; sourceTree = "<group>"; };
 		DB8B3DFD1A70A5B900EB9A6A /* BinarySwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB8B3DFE1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySwitchTableViewCell.m; sourceTree = "<group>"; };
+		DBE079691A9AB49D00C40710 /* SecurityCameraTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraTableViewCell.h; sourceTree = "<group>"; };
+		DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraTableViewCell.m; sourceTree = "<group>"; };
+		DBE0796C1A9AB64F00C40710 /* PropertyInvalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInvalidator.h; sourceTree = "<group>"; };
+		DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInvalidator.m; sourceTree = "<group>"; };
+		DBE0796F1A9ABB5B00C40710 /* SecurityCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraViewController.h; sourceTree = "<group>"; };
+		DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraViewController.m; sourceTree = "<group>"; };
+		DBE079721A9ABE4E00C40710 /* SecurityCameraImagePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraImagePolling.h; sourceTree = "<group>"; };
+		DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraImagePolling.m; sourceTree = "<group>"; };
 		DBEF8B951A857F2300678F6D /* MotionSensorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionSensorTableViewCell.h; sourceTree = "<group>"; };
 		DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionSensorTableViewCell.m; sourceTree = "<group>"; };
 		DBEF8B981A85AE1400678F6D /* BatteryLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryLevelView.h; sourceTree = "<group>"; };
@@ -465,6 +477,10 @@
 				DB1D01411A78A3CF005EB05F /* DevicePolling.m */,
 				DB6AC0D91A8C467400AE9607 /* WidgetSettingsUtils.h */,
 				DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */,
+				DBE0796C1A9AB64F00C40710 /* PropertyInvalidator.h */,
+				DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */,
+				DBE079721A9ABE4E00C40710 /* SecurityCameraImagePolling.h */,
+				DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -538,6 +554,8 @@
 				DB8B3D9A1A6E200A00EB9A6A /* DevicesViewController.m */,
 				DB50DC0C1A733CB60053110E /* ScenesViewController.h */,
 				DB50DC0D1A733CB60053110E /* ScenesViewController.m */,
+				DBE0796F1A9ABB5B00C40710 /* SecurityCameraViewController.h */,
+				DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */,
 			);
 			name = Devices;
 			sourceTree = "<group>";
@@ -559,6 +577,8 @@
 				DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */,
 				DBEF8B981A85AE1400678F6D /* BatteryLevelView.h */,
 				DBEF8B991A85AE1400678F6D /* BatteryLevelView.m */,
+				DBE079691A9AB49D00C40710 /* SecurityCameraTableViewCell.h */,
+				DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -733,6 +753,7 @@
 			files = (
 				DB8B3D9B1A6E200A00EB9A6A /* DevicesViewController.m in Sources */,
 				DB8B3D5D1A6C80FB00EB9A6A /* APIService.m in Sources */,
+				DBE079711A9ABB5B00C40710 /* SecurityCameraViewController.m in Sources */,
 				DB8B3D7F1A6CAD8100EB9A6A /* TableViewCellWithTextField.m in Sources */,
 				DB8B3D981A6E1E1700EB9A6A /* VeraDevicesViewController.m in Sources */,
 				DB8B3D891A6CDF4600EB9A6A /* Buttons.m in Sources */,
@@ -751,6 +772,7 @@
 				DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */,
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
 				DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */,
+				DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */,
 				DBEF8B9A1A85AE1400678F6D /* BatteryLevelView.m in Sources */,
 				DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */,
 				DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */,
@@ -761,6 +783,7 @@
 				DB50DC021A72F1360053110E /* AccessConfig.m in Sources */,
 				DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */,
 				DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */,
+				DBE079741A9ABE4E00C40710 /* SecurityCameraImagePolling.m in Sources */,
 				DB8B3D711A6CAC6300EB9A6A /* DefaultTextFieldDelegate.m in Sources */,
 				DB6850CE1A6C6F2A00CE4DAA /* DeviceManager.m in Sources */,
 				DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */,
@@ -774,6 +797,7 @@
 				DB8B3D8C1A6CDF6200EB9A6A /* ImageUtils.m in Sources */,
 				DB8B3D6E1A6CAC2700EB9A6A /* UIFont_Expanded.m in Sources */,
 				DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */,
+				DBE0796B1A9AB49D00C40710 /* SecurityCameraTableViewCell.m in Sources */,
 				DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */,
 				DB6850A31A6C6D1100CE4DAA /* main.m in Sources */,
 				DB8B3DF21A7023A000EB9A6A /* DevicesTableSection.m in Sources */,

@@ -15,6 +15,8 @@
 #import "DimmableSwitchTableViewCell.h"
 #import "SensorTableViewCell.h"
 #import "MotionSensorTableViewCell.h"
+#import "SecurityCameraTableViewCell.h"
+#import "SecurityCameraViewController.h"
 #import "UIAlertViewWithCallbacks.h"
 
 
@@ -209,7 +211,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
             }
             else if(filter == DeviceFilterSecurity)
             {
-                match = [d isKindOfClass:[MotionSensor class]];
+                match = [d isKindOfClass:[MotionSensor class]] || [d isKindOfClass:[SecurityCamera class]];
             }
             
             if(match)
@@ -355,7 +357,21 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
         
         return cell;
     }
+    else if([device isKindOfClass:[SecurityCamera class]])
+    {
+        static NSString * CellId = @"SecurityCameraCell";
         
+        SecurityCameraTableViewCell * res = (SecurityCameraTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellId];
+        if(res == nil)
+        {
+            res = [[SecurityCameraTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellId];
+            res.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        res.camera = (SecurityCamera *)device;
+        
+        return res;
+    }
     
     
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -386,6 +402,27 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
 {
     DevicesTableSection * s = self.sections[section];
     return s.title;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(self.sections.count == 0)
+    {
+        return;
+    }
+    
+    RoomTableSection * section = self.sections[indexPath.section];
+    ControlledDevice * device = section.items[indexPath.row];
+    if([device isKindOfClass:[SecurityCamera class]])
+    {
+        SecurityCameraViewController * vc = [[SecurityCameraViewController alloc] init];
+        vc.deviceManager = self.deviceManager;
+        vc.camera = (SecurityCamera *) device;
+        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc]
+                           animated:YES
+                         completion:nil];
+    }
 }
 
 

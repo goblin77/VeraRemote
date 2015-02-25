@@ -13,7 +13,7 @@ NSString * BinarySwitchControlService = @"urn:upnp-org:serviceId:SwitchPower1";
 NSString * DimmableSwitchControlService = @"urn:upnp-org:serviceId:Dimming1";
 NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationGateway1";
 NSString * SecuritySensorControlService = @"urn:micasaverde-com:serviceId:SecuritySensor1";
-
+NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZoom1";
 
 @implementation ControlledDevice
 
@@ -143,5 +143,11 @@ NSString * SecuritySensorControlService = @"urn:micasaverde-com:serviceId:Securi
     [super updateWithDictionary:src];
     self.light = [src[@"light"] intValue];
 }
+
+@end
+
+
+@implementation SecurityCamera
+
 
 @end
