@@ -77,6 +77,9 @@
 		DB8B3DF21A7023A000EB9A6A /* DevicesTableSection.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DF11A7023A000EB9A6A /* DevicesTableSection.m */; };
 		DB8B3DFC1A70A29A00EB9A6A /* CircularShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DFB1A70A29A00EB9A6A /* CircularShapeView.m */; };
 		DB8B3DFF1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DFE1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m */; };
+		DBA6468A1AFFF4390008046D /* RecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA646891AFFF4390008046D /* RecordButton.m */; };
+		DBA6468C1B000EB70008046D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA6468B1B000EB70008046D /* AssetsLibrary.framework */; };
+		DBA6468F1B0023D80008046D /* VideoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA6468E1B0023D80008046D /* VideoRecorder.m */; };
 		DBE0796B1A9AB49D00C40710 /* SecurityCameraTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */; };
 		DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */; };
 		DBE079711A9ABB5B00C40710 /* SecurityCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */; };
@@ -225,6 +228,11 @@
 		DB8B3DFB1A70A29A00EB9A6A /* CircularShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularShapeView.m; sourceTree = "<group>"; };
 		DB8B3DFD1A70A5B900EB9A6A /* BinarySwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB8B3DFE1A70A5B900EB9A6A /* BinarySwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySwitchTableViewCell.m; sourceTree = "<group>"; };
+		DBA646881AFFF4390008046D /* RecordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordButton.h; sourceTree = "<group>"; };
+		DBA646891AFFF4390008046D /* RecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordButton.m; sourceTree = "<group>"; };
+		DBA6468B1B000EB70008046D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		DBA6468D1B0023D80008046D /* VideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoRecorder.h; sourceTree = "<group>"; };
+		DBA6468E1B0023D80008046D /* VideoRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoRecorder.m; sourceTree = "<group>"; };
 		DBE079691A9AB49D00C40710 /* SecurityCameraTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraTableViewCell.h; sourceTree = "<group>"; };
 		DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraTableViewCell.m; sourceTree = "<group>"; };
 		DBE0796C1A9AB64F00C40710 /* PropertyInvalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInvalidator.h; sourceTree = "<group>"; };
@@ -250,6 +258,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBA6468C1B000EB70008046D /* AssetsLibrary.framework in Frameworks */,
 				DB6850D01A6C6F8800CE4DAA /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,6 +392,7 @@
 		DB6DE5201A75C6A300DBD7AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DBA6468B1B000EB70008046D /* AssetsLibrary.framework */,
 				DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
@@ -579,6 +589,8 @@
 				DBEF8B991A85AE1400678F6D /* BatteryLevelView.m */,
 				DBE079691A9AB49D00C40710 /* SecurityCameraTableViewCell.h */,
 				DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */,
+				DBA646881AFFF4390008046D /* RecordButton.h */,
+				DBA646891AFFF4390008046D /* RecordButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -588,6 +600,8 @@
 			children = (
 				DB8B3DF01A7023A000EB9A6A /* DevicesTableSection.h */,
 				DB8B3DF11A7023A000EB9A6A /* DevicesTableSection.m */,
+				DBA6468D1B0023D80008046D /* VideoRecorder.h */,
+				DBA6468E1B0023D80008046D /* VideoRecorder.m */,
 			);
 			name = "Helper Classes";
 			sourceTree = "<group>";
@@ -764,11 +778,13 @@
 				DB6DE5531A75F8F200DBD7AC /* ScenesView.m in Sources */,
 				DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */,
 				DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */,
+				DBA6468F1B0023D80008046D /* VideoRecorder.m in Sources */,
 				DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */,
 				DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */,
 				DBEF8BA11A8931DA00678F6D /* WidgetSettingsViewController.m in Sources */,
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
 				DB8B3D741A6CAC8400EB9A6A /* StyleUtils.m in Sources */,
+				DBA6468A1AFFF4390008046D /* RecordButton.m in Sources */,
 				DB6DE5451A75CC2100DBD7AC /* ConfigUtils.m in Sources */,
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
 				DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */,

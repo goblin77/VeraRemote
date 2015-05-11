@@ -10,14 +10,23 @@
 #import "SecurityCameraImagePolling.h"
 #import "PropertyInvalidator.h"
 #import "ObserverUtils.h"
+#import "RecordButton.h"
+#import "VideoRecorder.h"
 
 
 @interface SecurityCameraViewController () <Invalidatable>
 
 @property (nonatomic, strong) UIImageView * imageView;
+@property (nonatomic, strong) RecordButton * recordButton;
+@property (nonatomic, strong) UILabel      * recordingProgressLabel;
 @property (nonatomic, strong) PropertyInvalidator * propertyInvalidator;
 @property (nonatomic, strong) SecurityCameraImagePolling * imagePolling;
 @property (nonatomic, strong) UILabel * actionHintView;
+
+@property (nonatomic, strong) NSTimer *videoSamplingTimer;
+@property (nonatomic, assign) NSTimeInterval timeElapsed;
+@property (nonatomic, assign) BOOL isRecordingInProgress;
+@property (nonatomic, strong) VideoRecorder *videoRecorder;
 
 @end
 
@@ -34,15 +43,29 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithRGBHex:0xf0f0f0];
-    
+
     self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     self.imageView.userInteractionEnabled = YES;
     [self.view addSubview:self.imageView];
     
+    __weak typeof(self) thisObject = self;
+    self.recordButton = [[RecordButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    self.recordButton.didTap = ^(RecordButton * button)
+    {
+        thisObject.isRecordingInProgress = button.isOn;
+    };
+    
+    [self.view addSubview:self.recordButton];
+    
+    self.recordingProgressLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.recordingProgressLabel.font = [UIFont defaultFontWithSize:17];
+    self.recordingProgressLabel.shadowColor = [UIColor darkGrayColor];
+    self.recordingProgressLabel.shadowOffset= CGSizeMake(0, 1);
+    [self.view addSubview:self.recordingProgressLabel];
     
     self.actionHintView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    self.actionHintView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
+    self.actionHintView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
     self.actionHintView.font = [UIFont defaultBoldFontWithSize:20];
     self.actionHintView.textAlignment = NSTextAlignmentCenter;
     self.actionHintView.textColor = [UIColor blackColor];
@@ -71,40 +94,49 @@
     
     UIPinchGestureRecognizer * gr = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
     [self.imageView addGestureRecognizer:gr];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
 }
 
 -(void) viewDidLayoutSubviews
 {
-    /*
-    BOOL landscapeMode = self.view.bounds.size.width > self.view.bounds.size.height;
-    CGFloat x,y;
-    CGFloat controlHeight, controlWidth;
-    if(landscapeMode)
+    static CGFloat aspectRatio = 640.0f / 480.0f;
+    
+    CGFloat videoWidth,videoHeight;
+    
+    BOOL isLandscape = self.view.bounds.size.width > self.view.bounds.size.height;
+    if (!isLandscape)
     {
-        controlHeight = self.view.bounds.size.height;
-        controlWidth  = 100;
-        x = 0;
-        y = 0;
-        self.imageView.frame = CGRectMake(x, y, self.view.bounds.size.width - controlWidth, self.view.bounds.size.height);
-        x += self.imageView.bounds.size.width;
-        self.controlView.frame = CGRectMake(x, y, controlWidth, self.view.bounds.size.height);
+        videoWidth = self.view.bounds.size.width;
+        videoHeight= videoWidth * aspectRatio;
     }
     else
     {
-        controlHeight = 200;
-        controlWidth  = self.view.bounds.size.width;
-        x = 0;
-        y = 0;
-        self.imageView.frame = CGRectMake(x, y, self.view.bounds.size.width, self.view.bounds.size.height - controlHeight);
-        y += self.imageView.bounds.size.height;
-        self.controlView.frame = CGRectMake(x, y, self.view.bounds.size.width, controlHeight);
-
-    }*/
+        videoHeight = self.view.bounds.size.height;
+        videoWidth  = videoHeight * aspectRatio;
+    }
     
-    self.imageView.frame = self.view.bounds;
+    self.imageView.frame = CGRectMake((self.view.bounds.size.width - videoWidth)/2,
+                                      (self.view.bounds.size.height - videoHeight)/2,
+                                      videoWidth,
+                                      videoHeight);
     self.actionHintView.frame = CGRectOffset(self.actionHintView.bounds,
                                              (self.view.bounds.size.width - self.actionHintView.bounds.size.width)/2,
                                              (self.view.bounds.size.height- self.actionHintView.bounds.size.height)/2);
+    
+    CGFloat x = (self.view.bounds.size.width - self.recordButton.bounds.size.width)/2;
+    self.recordButton.frame = CGRectMake(x,
+                                         self.view.bounds.size.height - self.recordButton.bounds.size.height - 10,
+                                         self.recordButton.bounds.size.width,
+                                         self.recordButton.bounds.size.height);
+
+    self.recordButton.isOn = self.isRecordingInProgress;
+    self.recordingProgressLabel.hidden = !self.recordingProgressLabel;
+    x += self.recordButton.bounds.size.width + 5;
+    self.recordingProgressLabel.frame = CGRectMake(x,
+                                                   self.recordButton.frame.origin.y + (self.recordButton.bounds.size.height - self.recordingProgressLabel.font.lineHeightPx)/2,
+                                                   self.view.bounds.size.width - x - 20, self.recordingProgressLabel.font.lineHeightPx);
+    
 }
 
 
@@ -139,6 +171,7 @@
 -(void) viewWillDisappear:(BOOL)animated
 {
     self.imagePolling = nil;
+    [self.videoRecorder stopRecording];
 }
 
 #pragma mark -
@@ -250,6 +283,11 @@
     [grView performSelector:@selector(addGestureRecognizer:) withObject:gr afterDelay:0.5];
 }
 
+- (void)handleApplicationWillResignActive:(NSNotification *)notification
+{
+    [self.videoRecorder stopRecording];
+}
+
 
 #pragma mark -
 #pragma mark KVO
@@ -264,5 +302,80 @@
     [self.propertyInvalidator invalidateProperties];
 }
 
+
+#pragma mark - Misc functions
+- (void)setIsRecordingInProgress:(BOOL)value
+{
+    if (_isRecordingInProgress != value)
+    {
+        _isRecordingInProgress = value;
+        
+        if (_isRecordingInProgress)
+        {
+            [self startRecording];
+        }
+        else
+        {
+            [self stopRecording];
+        }
+        
+        [self.view setNeedsDisplay];
+    }
+    
+}
+
+- (NSString *)formatTimeElapsed:(NSTimeInterval)time
+{
+    static NSDateFormatter *formatter = nil;
+    if (formatter == nil)
+    {
+        formatter = [NSDateFormatter new];
+        formatter.dateFormat = @"H:mm:ss";
+        formatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    }
+    
+    return [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:time]];
+}
+
+
+
+- (void) startRecording
+{
+    self.recordButton.isOn = YES;
+    
+    __weak typeof(self) thisObject = self;
+    
+    self.videoRecorder = [[VideoRecorder alloc] init];
+    self.videoRecorder.videoSize = self.imageView.image.size;
+    self.videoRecorder.imageRetriever = ^UIImage *
+    {
+        return thisObject.imageView.image;
+    };
+    
+    self.videoRecorder.didProcessFrame = ^(NSInteger frameIndex,NSTimeInterval timeElapsed)
+    {
+        thisObject.recordingProgressLabel.text = [thisObject formatTimeElapsed:timeElapsed];
+    };
+    
+    self.videoRecorder.didFinishVideo = ^(ALAsset *asset, NSError * error)
+    {
+        if (error != nil)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                                message:@"Could not save the video. Please, make sure that access to videos is enabled." delegate:nil
+                                                      cancelButtonTitle:@"Dismiss"
+                                                      otherButtonTitles: nil];
+            [alertView show];
+        }
+    };
+    
+    [self.videoRecorder startRecording];
+}
+
+- (void) stopRecording
+{
+    self.recordButton.isOn = NO;
+    [self.videoRecorder stopRecording];
+}
 
 @end
