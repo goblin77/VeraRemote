@@ -53,6 +53,17 @@
     self.recordButton = [[RecordButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
     self.recordButton.didTap = ^(RecordButton * button)
     {
+        if (button.isOn && thisObject.imageView.image == nil)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Still trying to fetch the feed from your camera. Please, wait for the video to show up and try again."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles: nil];
+            [alertView show];
+            button.isOn = NO;
+            return;
+        }
+        
         thisObject.isRecordingInProgress = button.isOn;
     };
     

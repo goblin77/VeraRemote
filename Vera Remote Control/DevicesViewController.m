@@ -107,7 +107,6 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
 
 -(void) handleReloadDeviceNetwork:(id) sender
 {
-    __weak DevicesViewController * thisObject = self;
     UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
                                                                                message:@"Discard local data and reload your device network?"
                                                                      cancelButtonTitle:@"No"
@@ -116,8 +115,6 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     {
         if(buttonIndex == 1)
         {
-            thisObject.deviceFilter = DeviceFilterAll;
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification
                                                                 object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification
@@ -165,7 +162,6 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
         });
     }
 }
-
 
 -(void) commitProperties
 {

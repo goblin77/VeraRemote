@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>48A683AC-5957-4325-8BF7-D7640A7250CF</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Vera Remote Control</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>60B405F6EE2ADCD6C65FD0A87F2C59EFFDF32F6D</key>
 		<string>https://github.com/goblin77/VeraRemote.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Vera Remote Control.xcodeproj</string>
+	<string>Vera Remote Control.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>60B405F6EE2ADCD6C65FD0A87F2C59EFFDF32F6D</key>

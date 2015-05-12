@@ -16,6 +16,7 @@
 typedef NS_ENUM(NSInteger, SettingsSection)
 {
     SettingsSectionApp,
+    SettingsSectionDonationsJar,
     SettingsSectionSupport
 };
 
@@ -79,12 +80,19 @@ typedef NS_ENUM(NSInteger, SupportRow)
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == SettingsSectionApp ? 2 : 3;
+    switch (section)
+    {
+        case SettingsSectionApp: return 2;
+        case SettingsSectionDonationsJar: return 1;
+        case SettingsSectionSupport: return 2;
+    }
+    
+    return 0;
 }
 
 
@@ -134,6 +142,11 @@ typedef NS_ENUM(NSInteger, SupportRow)
             
             return res;
         }
+    }
+    else if(indexPath.section == SettingsSectionDonationsJar)
+    {
+        static NSString * CellId = @"DonationsJarCell";
+        
     }
     else if(indexPath.section == SettingsSectionSupport)
     {
