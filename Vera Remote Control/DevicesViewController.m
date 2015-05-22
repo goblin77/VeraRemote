@@ -127,8 +127,6 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     [alert show];
 }
 
-
-
 #pragma mark -
 #pragma mark KVO 
 -(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -146,8 +144,6 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     
     return paths;
 }
-
-
 
 #pragma mark -
 #pragma mark invalidation
@@ -230,7 +226,6 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     
     return newSections;
 }
-
 
 #pragma mark - 
 #pragma mark UITableViewDelegate and UITableVIewDataSource methods

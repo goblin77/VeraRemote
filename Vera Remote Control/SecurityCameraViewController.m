@@ -173,7 +173,7 @@
     self.imagePolling = [self.deviceManager imagePollingForDeviceWithId:self.camera.deviceId];
     self.imagePolling.didLoadFrame = ^(UIImage * frame)
     {
-        thisObject.imageView.image = frame;
+        thisObject.imageView.image = [thisObject.class addTimeStampToImage:frame];
     };
     [self.imagePolling startPolling];
 }
@@ -388,5 +388,47 @@
     self.recordButton.isOn = NO;
     [self.videoRecorder stopRecording];
 }
+
++ (UIImage *)addTimeStampToImage:(UIImage *) image
+{
+    static NSDateFormatter *timestampFormatter = nil;
+    if(timestampFormatter == nil)
+    {
+        timestampFormatter = [[NSDateFormatter alloc] init];
+        timestampFormatter.dateFormat = @"hh:mm:ss MM/dd";
+    }
+    
+    NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:[timestampFormatter stringFromDate:[NSDate new]]
+                                                                          attributes:@{
+                                                                                       NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                                       NSFontAttributeName: [UIFont defaultFontWithSize:10]
+                                                                                      }];
+    return [self addText:attributeString toImage:image];
+}
+
++ (UIImage *)addText:(NSAttributedString *)text toImage:(UIImage *)videoFrame
+{
+    UIGraphicsBeginImageContext(videoFrame.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [videoFrame drawInRect:CGRectMake(0,0,videoFrame.size.width,videoFrame.size.height)];
+    
+    [[UIColor blackColor] setFill];
+    CGContextBeginPath(ctx);
+    CGRect textRect = CGRectMake(0, 0, text.size.width, text.size.height);
+    
+    CGContextAddRect(ctx, textRect);
+    CGContextFillPath(ctx);
+    
+    [[UIColor whiteColor] set];
+    
+    // add text onto the image
+    [text drawInRect:CGRectIntegral(textRect)];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 
 @end
