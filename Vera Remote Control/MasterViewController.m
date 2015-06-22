@@ -16,15 +16,19 @@
 #import "LargeProgressView.h"
 #import "ObserverUtils.h"
 
+@import iAd;
+
 @interface MasterViewController ()
 {
     BOOL isFirstViewWillAppear;
     BOOL shouldBootstrap;
 }
 
-@property (nonatomic, strong) DevicesViewController * devicesViewController;
-@property (nonatomic, strong) ScenesViewController      * scenesViewController;
-@property (nonatomic, strong) SettingsViewController  * settingsViewController;
+
+@property (nonatomic) UITabBarController * tabBarController;
+@property (nonatomic) DevicesViewController * devicesViewController;
+@property (nonatomic) ScenesViewController      * scenesViewController;
+@property (nonatomic) SettingsViewController  * settingsViewController;
 
 @end
 
@@ -57,12 +61,13 @@
         scenesNavController.tabBarItem.title = @"Scenes";
         scenesNavController.tabBarItem.image = [UIImage imageNamed:@"scenesTabBarItem"];
         
-        self.viewControllers = @[
+        self.tabBarController = [[UITabBarController alloc] init];
+        
+        self.tabBarController.viewControllers = @[
                                  devicesNavController,
                                  scenesNavController,
                                  settingsNavController
                                 ];
-        
         
         isFirstViewWillAppear = NO;
         shouldBootstrap = YES;
@@ -70,7 +75,6 @@
     
     return self;
 }
-
 
 -(void) dealloc
 {
@@ -81,12 +85,10 @@
 {
     [super viewDidLoad];
     
-    self.tabBar.tintColor = [UIColor blackColor];
+    [self.view addSubview:self.tabBarController.view];
+    [self addChildViewController:self.tabBarController];
+    self.tabBarController.tabBar.tintColor = [UIColor blackColor];
     
-    
-    
-    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"initializing"]];
-        
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthenticationFailed:)
                                                  name:AuthenticationFailedNotification
@@ -96,13 +98,21 @@
     
 }
 
+/*
+- (void) viewWillLayoutSubviews
+{
+    [self.bannerView sizeToFit];
+    self.tabBarController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.bannerView.bounds.size.height);
+    self.bannerView.frame = CGRectOffset(self.bannerView.bounds, 0, self.view.bounds.size.height - self.bannerView.bounds.size.height);
+}*/
+
 
 
 -(void) viewWillAppear:(BOOL)animated
 {
     if(!isFirstViewWillAppear)
     {
-        [self.selectedViewController viewWillAppear:animated];
+        [self.tabBarController.selectedViewController viewWillAppear:animated];
         isFirstViewWillAppear = NO;
     }    
 }
@@ -120,9 +130,9 @@
 -(void) setDeviceManager:(DeviceManager *)value
 {
     deviceManager = value;
-    
+
     UIViewController * c = nil;
-    for(UIViewController * vc in self.viewControllers)
+    for(UIViewController * vc in self.tabBarController.viewControllers)
     {
         c = vc;
         if([c isKindOfClass:[UINavigationController class]])
@@ -135,6 +145,8 @@
             [c performSelector:@selector(setDeviceManager:) withObject:deviceManager];
         }
     }
+    
+    [ObserverUtils addObserver:self toObject:self.deviceManager forKeyPaths:@[@"initializing"]];
 }
 
 
@@ -142,7 +154,7 @@
 {
     widgetSettingsManager = value;
     UIViewController * c = nil;
-    for(UIViewController * vc in self.viewControllers)
+    for(UIViewController * vc in self.tabBarController.viewControllers)
     {
         c = vc;
         if([c isKindOfClass:[UINavigationController class]])
@@ -153,6 +165,26 @@
         if([c respondsToSelector:@selector(setWidgetSettingsManager:)])
         {
             [c performSelector:@selector(setWidgetSettingsManager:) withObject:widgetSettingsManager];
+        }
+    }
+}
+
+- (void)setAppLicenseManager:(AppLicenseManager *)value
+{
+    _appLicenseManager = value;
+    
+    UIViewController * c = nil;
+    for(UIViewController * vc in self.tabBarController.viewControllers)
+    {
+        c = vc;
+        if([c isKindOfClass:[UINavigationController class]])
+        {
+            c = [(UINavigationController *)vc topViewController];
+        }
+        
+        if([c respondsToSelector:@selector(setAppLicenseManager:)])
+        {
+            [c performSelector:@selector(setAppLicenseManager:) withObject:_appLicenseManager];
         }
     }
 }
@@ -178,7 +210,7 @@
 
 -(void) handleLogout:(NSNotification *) notification
 {
-    self.selectedIndex = 0; // preselect Devices screen
+    self.tabBarController.selectedIndex = 0; // preselect Devices screen
     [self showLogin];
 }
 

@@ -9,14 +9,17 @@
 #import "SettingsViewController.h"
 #import "WidgetSettingsViewController.h"
 #import "StyleUtils.h"
+#import "ObserverUtils.h"
 #import "MainAppWidgetSettingsManager.h"
 #import "VeraDevicesViewController.h"
 #import "UIAlertViewWithCallbacks.h"
+#import "TipJarViewControllerTableViewController.h"
+
 
 typedef NS_ENUM(NSInteger, SettingsSection)
 {
     SettingsSectionApp,
-    SettingsSectionDonationsJar,
+    SettingsSectionTipJar,
     SettingsSectionSupport
 };
 
@@ -55,6 +58,11 @@ typedef NS_ENUM(NSInteger, SupportRow)
     return self;
 }
 
+- (void) dealloc
+{
+    [ObserverUtils removeObserver:self fromObject:self forKeyPaths:[self.class licenceObserverKeyPaths]];
+}
+
 
 -(void) viewDidLoad
 {
@@ -88,13 +96,12 @@ typedef NS_ENUM(NSInteger, SupportRow)
     switch (section)
     {
         case SettingsSectionApp: return 2;
-        case SettingsSectionDonationsJar: return 1;
+        case SettingsSectionTipJar: return 1;
         case SettingsSectionSupport: return 2;
     }
     
     return 0;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -143,9 +150,25 @@ typedef NS_ENUM(NSInteger, SupportRow)
             return res;
         }
     }
-    else if(indexPath.section == SettingsSectionDonationsJar)
+    else if(indexPath.section == SettingsSectionTipJar)
     {
-        static NSString * CellId = @"DonationsJarCell";
+        static NSString * CellId = @"TipJar";
+        
+        UITableViewCell * res = [tableView dequeueReusableCellWithIdentifier:CellId];
+        if(res == nil)
+        {
+            res = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellId];
+            [StyleUtils applyDefaultStyleOnTableTitleLabel:res.textLabel];
+            res.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            //res.textLabel.font = [UIFont defaultFontWithSize:12];
+            res.textLabel.numberOfLines = 0;
+            res.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            res.textLabel.text = @"Leave a Tip";
+            res.detailTextLabel.text = @"Any tip given will also remove all advertisements.";
+        }
+        
+        
+        return res;
         
     }
     else if(indexPath.section == SettingsSectionSupport)
@@ -177,14 +200,21 @@ typedef NS_ENUM(NSInteger, SupportRow)
     {
         return @"Application Settings";
     }
+    else if (section == SettingsSectionTipJar)
+    {
+        return @"Tip Jar";
+    }
     
     return @"Support";
 }
 
-
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == SettingsSectionApp && indexPath.row == AppSettingsRowHomeDevice)
+    {
+        return 60;
+    }
+    else if(indexPath.section == SettingsSectionTipJar)
     {
         return 60;
     }
@@ -219,6 +249,12 @@ typedef NS_ENUM(NSInteger, SupportRow)
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+    else if (indexPath.section == SettingsSectionTipJar)
+    {
+        TipJarViewControllerTableViewController *vc = [[TipJarViewControllerTableViewController alloc] init];
+        vc.navigationItem.title = @"Tip Jar";
+        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
+    }
 }
 
 
@@ -245,6 +281,25 @@ typedef NS_ENUM(NSInteger, SupportRow)
 }
 
 
+#pragma mark - misc functions
++ (NSArray *)licenceObserverKeyPaths
+{
+    static NSArray * keyPaths = nil;
+    if (keyPaths == nil)
+    {
+        
+    }
+    
+    return keyPaths;
+}
 
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.appLicenseManager)
+    {
+        
+    }
+}
 
 @end

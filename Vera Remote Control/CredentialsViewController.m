@@ -202,7 +202,7 @@
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Vera Credentials";
+    return @"Vera Credentials (cp.mios.com)";
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

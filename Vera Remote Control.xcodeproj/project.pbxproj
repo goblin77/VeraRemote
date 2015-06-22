@@ -10,6 +10,11 @@
 		DB04DB621A827B090036A873 /* SensorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB04DB611A827B090036A873 /* SensorTableViewCell.m */; };
 		DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
 		DB1D01431A78A581005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
+		DB29E0441B266453002E09DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29E0431B266453002E09DD /* StoreKit.framework */; };
+		DB29E0471B26846F002E09DD /* AppLicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E0461B26846F002E09DD /* AppLicenseManager.m */; };
+		DB29E0491B26929A002E09DD /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29E0481B26929A002E09DD /* iAd.framework */; };
+		DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */; };
+		DB29E0501B26A5FE002E09DD /* TipJarSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E04F1B26A5FE002E09DD /* TipJarSectionHeaderView.m */; };
 		DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */; };
 		DB50DC021A72F1360053110E /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB50DC081A72FC240053110E /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
@@ -127,6 +132,14 @@
 		DB04DB611A827B090036A873 /* SensorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorTableViewCell.m; sourceTree = "<group>"; };
 		DB1D01401A78A3CF005EB05F /* DevicePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePolling.h; sourceTree = "<group>"; };
 		DB1D01411A78A3CF005EB05F /* DevicePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePolling.m; sourceTree = "<group>"; };
+		DB29E0431B266453002E09DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DB29E0451B26846F002E09DD /* AppLicenseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppLicenseManager.h; sourceTree = "<group>"; };
+		DB29E0461B26846F002E09DD /* AppLicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppLicenseManager.m; sourceTree = "<group>"; };
+		DB29E0481B26929A002E09DD /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		DB29E04A1B26A20F002E09DD /* TipJarViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipJarViewControllerTableViewController.h; sourceTree = "<group>"; };
+		DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipJarViewControllerTableViewController.m; sourceTree = "<group>"; };
+		DB29E04E1B26A5FE002E09DD /* TipJarSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipJarSectionHeaderView.h; sourceTree = "<group>"; };
+		DB29E04F1B26A5FE002E09DD /* TipJarSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipJarSectionHeaderView.m; sourceTree = "<group>"; };
 		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchTableViewCell.m; sourceTree = "<group>"; };
 		DB50DC001A72F1360053110E /* AccessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessConfig.h; sourceTree = "<group>"; };
@@ -258,6 +271,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB29E0491B26929A002E09DD /* iAd.framework in Frameworks */,
+				DB29E0441B266453002E09DD /* StoreKit.framework in Frameworks */,
 				DBA6468C1B000EB70008046D /* AssetsLibrary.framework in Frameworks */,
 				DB6850D01A6C6F8800CE4DAA /* Security.framework in Frameworks */,
 			);
@@ -281,6 +296,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB29E04D1B26A5DF002E09DD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB29E04E1B26A5FE002E09DD /* TipJarSectionHeaderView.h */,
+				DB29E04F1B26A5FE002E09DD /* TipJarSectionHeaderView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		DB6850941A6C6D1100CE4DAA = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +380,8 @@
 				DB6850CD1A6C6F2A00CE4DAA /* DeviceManager.m */,
 				DB6AC0DC1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.h */,
 				DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */,
+				DB29E0451B26846F002E09DD /* AppLicenseManager.h */,
+				DB29E0461B26846F002E09DD /* AppLicenseManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -392,6 +418,8 @@
 		DB6DE5201A75C6A300DBD7AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB29E0481B26929A002E09DD /* iAd.framework */,
+				DB29E0431B266453002E09DD /* StoreKit.framework */,
 				DBA6468B1B000EB70008046D /* AssetsLibrary.framework */,
 				DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */,
 			);
@@ -609,10 +637,13 @@
 		DBEF8B9B1A85D8FE00678F6D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				DB29E04D1B26A5DF002E09DD /* Views */,
 				DBEF8B9C1A85D91F00678F6D /* SettingsViewController.h */,
 				DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */,
 				DBEF8B9F1A8931DA00678F6D /* WidgetSettingsViewController.h */,
 				DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */,
+				DB29E04A1B26A20F002E09DD /* TipJarViewControllerTableViewController.h */,
+				DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -697,6 +728,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 						};
 					};
 					DB6850B51A6C6D1100CE4DAA = {
@@ -776,6 +810,7 @@
 				DB8B3D821A6CAD9700EB9A6A /* DefaultKeyboardAccessoryView.m in Sources */,
 				DB8B3D861A6CAE0700EB9A6A /* CredentialsViewController.m in Sources */,
 				DB6DE5531A75F8F200DBD7AC /* ScenesView.m in Sources */,
+				DB29E0501B26A5FE002E09DD /* TipJarSectionHeaderView.m in Sources */,
 				DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */,
 				DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */,
 				DBA6468F1B0023D80008046D /* VideoRecorder.m in Sources */,
@@ -806,8 +841,10 @@
 				DB8B3D691A6CA93C00EB9A6A /* UIColor+Expanded.m in Sources */,
 				DB50DC081A72FC240053110E /* FaultUtils.m in Sources */,
 				DB8B3DE91A6F349A00EB9A6A /* Room.m in Sources */,
+				DB29E0471B26846F002E09DD /* AppLicenseManager.m in Sources */,
 				DB04DB621A827B090036A873 /* SensorTableViewCell.m in Sources */,
 				DB8B3DFC1A70A29A00EB9A6A /* CircularShapeView.m in Sources */,
+				DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */,
 				DB8B3D7C1A6CAD6D00EB9A6A /* AsyncImageView.m in Sources */,
 				DB8B3D771A6CACEA00EB9A6A /* UIFont+DefaultSettings.m in Sources */,
 				DB8B3D8C1A6CDF6200EB9A6A /* ImageUtils.m in Sources */,
