@@ -26,7 +26,8 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
     DeviceCategorySecurityCamera=6,
     DeviceCategoryHumiditySensor=16,
     DeviceCategoryTemperatureSensor=17,
-    DeviceCategoryLightSensor=18
+    DeviceCategoryLightSensor=18,
+    DeviceCategorySiren=24
 };
 
 
@@ -82,6 +83,10 @@ extern NSString * PanTiltZoomControlService;
 
 // transient variables
 @property (nonatomic, assign) BOOL manualValue;
+
+@end
+
+@interface Siren : BinarySwitch
 
 @end
 

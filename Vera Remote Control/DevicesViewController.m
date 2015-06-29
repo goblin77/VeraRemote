@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
             }
             else if(filter == DeviceFilterSecurity)
             {
-                match = [d isKindOfClass:[MotionSensor class]] || [d isKindOfClass:[SecurityCamera class]];
+                match = [d isKindOfClass:[MotionSensor class]] || [d isKindOfClass:[SecurityCamera class]] || [d isKindOfClass:[Siren class]];
             }
             
             if(match)

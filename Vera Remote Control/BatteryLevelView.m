@@ -70,7 +70,7 @@
     
     UIColor * fillColor = self.level <= 10 ? [[UIColor redColor] colorWithAlphaComponent:0.7] : [UIColor colorWithRGBHex:0x85d966 alpha:0.7];
     CGContextSetFillColorWithColor(ctx,fillColor.CGColor);
-    CGContextFillRect(ctx, CGRectMake(1, 1, (self.bounds.size.width - 1)*actualLevel*0.01, self.bounds.size.height - 2));
+    CGContextFillRect(ctx, CGRectMake(1, 1, (self.bounds.size.width - batteryTipWidth - 1)*actualLevel*0.01, self.bounds.size.height - 2));
     
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
     

@@ -357,6 +357,10 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
         {
             clazz = [SecurityCamera class];
         }
+        else if(cat == DeviceCategorySiren)
+        {
+            clazz = [Siren class];
+        }
         
         if(clazz == nil)
         {

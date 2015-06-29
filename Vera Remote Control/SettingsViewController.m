@@ -164,7 +164,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
             res.textLabel.numberOfLines = 0;
             res.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
             res.textLabel.text = @"Leave a Tip";
-            res.detailTextLabel.text = @"Any tip given will also remove all advertisements.";
+            res.detailTextLabel.text = @"Support Vera Remote development.";
         }
         
         

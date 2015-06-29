@@ -61,6 +61,10 @@ NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZo
 
 @end
 
+@implementation Siren
+
+@end
+
 
 @implementation DimmableSwitch
 
