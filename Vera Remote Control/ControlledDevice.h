@@ -31,14 +31,14 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
 };
 
 
-typedef NS_ENUM(NSInteger, SecuritySensorSubcategory)
+typedef NS_ENUM(NSInteger, SecuritySensorType)
 {
-    SecuritySensorSubcategoryDoor=1,
-    SecuritySensorSubcategoryLeak=2,
-    SecuritySensorSubcategoryMotion=3,
-    SecuritySensorSubcategorySmoke=4,
-    SecuritySensorSubcategoryCO=5,
-    SecuritySensorSubcategoryGlassBreak =6
+    SecuritySensorTypeDoor=1,
+    SecuritySensorTypeLeak=2,
+    SecuritySensorTypeMotion=3,
+    SecuritySensorTypeSmoke=4,
+    SecuritySensorTypeCO=5,
+    SecuritySensorTypeGlassBreak =6
     
 };
     
@@ -107,8 +107,9 @@ extern NSString * PanTiltZoomControlService;
 @end
 
 
-@interface MotionSensor : ControlledDevice
+@interface SecuritySensor : ControlledDevice
 
+@property (nonatomic, assign) SecuritySensorType sensorType;
 @property (nonatomic, assign) BOOL tripped;
 @property (nonatomic, strong) NSDate * lastTripped;
 @property (nonatomic, assign) BOOL armed;

@@ -16,6 +16,10 @@
 -(void) updateWithDictionary:(NSDictionary *)src
 {
     self.name = src[@"name"];
+    if ([self.name isEqual:[NSNull null]] || self.name.length == 0)
+    {
+        self.name = @"-- No name --";
+    }
     self.serialNumber = src[@"serialNumber"];
     self.firmwareVersion = src[@"FirmwareVersion"];
     self.ipAddress = src[@"ipAddress"];

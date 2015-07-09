@@ -335,11 +335,7 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
         }
         else if (cat == DeviceCategorySecuritySensor)
         {
-            SecuritySensorSubcategory subcategory = [src[@"subcategory"] integerValue];
-            if(subcategory == SecuritySensorSubcategoryMotion)
-            {
-                clazz = [MotionSensor class];
-            }
+            clazz = [SecuritySensor class];
         }
         else if(cat == DeviceCategoryHumiditySensor)
         {
@@ -448,6 +444,9 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
             password = nil;
             [self persistCurrentAuthConfig];
         }
+        
+        self.initializing = NO;
+        
         return;
     }
     
@@ -724,7 +723,7 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
 -(void) handleSetMotionSensorStatus:(NSNotification *) notification
 {
     
-    MotionSensor * sensor = notification.object;
+    SecuritySensor * sensor = notification.object;
     BOOL            value  = [notification.userInfo[@"armed"] boolValue];
     
     sensor.manualOverride = YES;

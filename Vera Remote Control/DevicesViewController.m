@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
             }
             else if(filter == DeviceFilterSecurity)
             {
-                match = [d isKindOfClass:[MotionSensor class]] || [d isKindOfClass:[SecurityCamera class]] || [d isKindOfClass:[Siren class]];
+                match = [d isKindOfClass:[SecuritySensor class]] || [d isKindOfClass:[SecurityCamera class]] || [d isKindOfClass:[Siren class]];
             }
             
             if(match)
@@ -330,7 +330,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
         
         return cell;
     }
-    else if([device isKindOfClass:[MotionSensor class]])
+    else if([device isKindOfClass:[SecuritySensor class]])
     {
         static NSString * CellId = @"MotionSensorCell";
         
@@ -338,13 +338,13 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
         if(cell == nil)
         {
             cell = [[MotionSensorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellId];
-            cell.didChangeArmedStatus = ^(MotionSensor * sensor, BOOL shouldBeArmed)
+            cell.didChangeArmedStatus = ^(SecuritySensor * sensor, BOOL shouldBeArmed)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:SetMotionSensorStatusNotification object:sensor userInfo:@{@"armed": @(shouldBeArmed)}];
             };
         }
         
-        cell.sensor = (MotionSensor *) device;
+        cell.sensor = (SecuritySensor *) device;
         
         return cell;
     }
@@ -381,7 +381,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     {
         return 90;
     }
-    else if([device isKindOfClass:[MotionSensor class]])
+    else if([device isKindOfClass:[SecuritySensor class]])
     {
         return 75;
     }

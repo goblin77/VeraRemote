@@ -87,11 +87,12 @@ NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZo
 @end
 
 
-@implementation MotionSensor
+@implementation SecuritySensor
 
 -(void) updateWithDictionary:(NSDictionary *)src
 {
     [super updateWithDictionary:src];
+    self.sensorType = [src[@"subcategory"] integerValue];
     self.armed   = [src[@"armed"] boolValue];
     self.tripped = [src[@"tripped"] boolValue];
     NSString * lastTrippedStr = src[@"lasttrip"];

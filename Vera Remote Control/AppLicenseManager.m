@@ -45,10 +45,7 @@
         else
         {
             self.initializing = YES;
-            self.canMakePayments = YES;            
-            self.paymentQueue = [[SKPaymentQueue alloc] init];
-            [self.paymentQueue addTransactionObserver:self];
-            [self.paymentQueue restoreCompletedTransactions];
+            self.canMakePayments = YES;
             [self loadProducts];
         }
     }

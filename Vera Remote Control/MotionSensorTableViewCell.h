@@ -11,7 +11,7 @@
 
 @interface MotionSensorTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) MotionSensor * sensor;
-@property (nonatomic, copy)   void (^didChangeArmedStatus)(MotionSensor * sensor, BOOL armed);
+@property (nonatomic, strong) SecuritySensor * sensor;
+@property (nonatomic, copy)   void (^didChangeArmedStatus)(SecuritySensor * sensor, BOOL armed);
 
 @end
