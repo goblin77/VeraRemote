@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, TipJarRow)
     
     __weak typeof(self) weakSelf = self;
     self.productManagerBinder = [[Binder alloc] initWithObject:self.productManager
-                                                      keyPaths:@[K(initializing),K(availableProducts)]
+                                                      keyPaths:@[K(initializing),K(purchaseInProgress),K(availableProducts)]
                                                       callback:^{
                                                           [weakSelf.invalidator invalidateProperties];
                                                       }];
@@ -106,12 +106,7 @@ typedef NS_ENUM(NSInteger, TipJarRow)
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SKProduct *product = self.productManager.availableProducts[indexPath.row];
-    NSString * productName = product.localizedTitle;
-    NSString * priceString = [NSString stringWithFormat:@"$%@",product.price.stringValue];
-        
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm Your In-App Purchase" message:[NSString stringWithFormat:@"Do you want to buy one %@ for %@?",productName,priceString] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Buy", nil];
-    [alert show];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ProductManagerPurchaseProductNotification object:product];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
@@ -125,7 +120,7 @@ typedef NS_ENUM(NSInteger, TipJarRow)
 #pragma mark - Invalidatable implementation
 - (void)commitProperties
 {
-    if (self.productManager.initializing)
+    if (self.productManager.initializing || self.productManager.purchaseInProgress)
     {
         [LargeProgressView show];
     }
@@ -143,7 +138,6 @@ typedef NS_ENUM(NSInteger, TipJarRow)
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Misc functions
 
 
 

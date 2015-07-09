@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * ProductManagerPurchaseProductNotification;
+extern NSString * ProductManagerPurchaseProductFailedNotification;
+extern NSString * ProductManagerPurchaseProductSuccessNotification;
+
 @interface ProductManager : NSObject
 
 @property (nonatomic) BOOL purchaseInProgress;

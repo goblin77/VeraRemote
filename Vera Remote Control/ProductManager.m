@@ -7,7 +7,16 @@
 //
 
 #import "ProductManager.h"
+#import "UIAlertViewWithCallbacks.h"
 @import StoreKit;
+
+NSString * ProductManagerPurchaseProductNotification = @"PurchaseProduct";
+
+
+@interface ProductManager () <SKPaymentTransactionObserver,SKProductsRequestDelegate>
+@property (nonatomic) SKPaymentQueue *paymentQueue;
+@end
+
 
 @implementation ProductManager
 
@@ -40,12 +49,45 @@
             self.initializing = YES;
             self.canMakePayments = YES;
             [self loadProducts];
+            
+            [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePurchaseProduct:)
+                                                         name:ProductManagerPurchaseProductNotification
+                                                       object:nil];
         }
     }
     
     return self;
 }
 
+#pragma mark - SKPaymentTransactionObserver implementation
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+    BOOL hasBadPayments = NO;
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        if (transaction.transactionState == SKPaymentTransactionStateFailed)
+        {
+            hasBadPayments = transaction.error != nil && transaction.error.code != SKErrorPaymentCancelled;
+            [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        }
+        else if (transaction.transactionState == SKPaymentTransactionStatePurchased)
+        {
+            [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        }
+    }
+    
+    
+    if (hasBadPayments)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Oops!"
+                                    message:@"Your tip did not go through."
+                                   delegate:nil
+                          cancelButtonTitle:@"Ok"
+                          otherButtonTitles: nil] show];
+    }
+}
 
 #pragma mark - SKProductsRequestDelegate implementation
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
@@ -57,6 +99,12 @@
 
 
 #pragma mark - notification handlers
+- (void)handlePurchaseProduct:(NSNotification *)notification
+{
+    SKProduct *product = notification.object;
+    SKPayment *payment = [SKPayment paymentWithProduct:product];
+    [[SKPaymentQueue defaultQueue] addPayment:payment];
+}
 
 
 #pragma mark - misc functions
