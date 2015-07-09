@@ -16,4 +16,6 @@
     #import "UIColor+Expanded.h"
     #import "UIFont_Expanded.h"
     #import "UIFont+DefaultSettings.h"
+
+    #define K(x) @#x
 #endif

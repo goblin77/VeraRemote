@@ -6,10 +6,16 @@
 //  Copyright (c) 2015 Dmitry Miller. All rights reserved.
 //
 
+@import StoreKit;
+
 #import "TipJarViewControllerTableViewController.h"
 #import "StyleUtils.h"
 #import "TipJarSectionHeaderView.h"
 #import "UIAlertViewWithCallbacks.h"
+#import "LargeProgressView.h"
+#import "Binder.h"
+#import "PropertyInvalidator.h"
+
 
 typedef NS_ENUM(NSInteger, TipJarRow)
 {
@@ -19,7 +25,10 @@ typedef NS_ENUM(NSInteger, TipJarRow)
 };
 
 
-@interface TipJarViewControllerTableViewController ()
+@interface TipJarViewControllerTableViewController () <Invalidatable>
+
+@property (nonatomic) Binder *productManagerBinder;
+@property (nonatomic) PropertyInvalidator *invalidator;
 
 @end
 
@@ -36,13 +45,33 @@ typedef NS_ENUM(NSInteger, TipJarRow)
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(handleCancelButtonTapped:)];
+    
+    __weak typeof(self) weakSelf = self;
+    self.productManagerBinder = [[Binder alloc] initWithObject:self.productManager
+                                                      keyPaths:@[K(initializing),K(availableProducts)]
+                                                      callback:^{
+                                                          [weakSelf.invalidator invalidateProperties];
+                                                      }];
+    self.invalidator = [[PropertyInvalidator alloc] initWithHostObject:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.productManagerBinder startObserving];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.productManagerBinder stopObserving];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.productManager.availableProducts.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -58,23 +87,9 @@ typedef NS_ENUM(NSInteger, TipJarRow)
         res.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    switch (indexPath.row)
-    {
-        case TipJarRowGenerousTip:
-            res.textLabel.text = @"Generous Tip";
-            res.detailTextLabel.text = @"$0.99";
-            break;
-            
-        case TipJarRowAwesomeTip:
-            res.textLabel.text = @"Awesome Tip";
-            res.detailTextLabel.text = @"$1.99";
-            break;
-        
-        case TipJarRowAmazingTip:
-            res.textLabel.text = @"Amazing Tip";
-            res.detailTextLabel.text = @"$2.99";
-            break;
-    }
+    SKProduct *product = self.productManager.availableProducts[indexPath.row];
+    res.textLabel.text = product.localizedTitle;
+    res.detailTextLabel.text = [NSString stringWithFormat:@"$%@",product.price.stringValue];
     
     return res;
 }
@@ -90,20 +105,10 @@ typedef NS_ENUM(NSInteger, TipJarRow)
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * productName = @"Generous Tip";
-    NSString * priceString = @"$0.99";
-    
-    if (indexPath.row == 1)
-    {
-        productName = @"Awesome Tip";
-        priceString = @"$1.99";
-    }
-    else if(indexPath.row == 2)
-    {
-        productName = @"Amazing Tip";
-        priceString = @"$2.99";
-    }
-    
+    SKProduct *product = self.productManager.availableProducts[indexPath.row];
+    NSString * productName = product.localizedTitle;
+    NSString * priceString = [NSString stringWithFormat:@"$%@",product.price.stringValue];
+        
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm Your In-App Purchase" message:[NSString stringWithFormat:@"Do you want to buy one %@ for %@?",productName,priceString] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Buy", nil];
     [alert show];
     
@@ -117,12 +122,29 @@ typedef NS_ENUM(NSInteger, TipJarRow)
     return 120;
 }
 
+#pragma mark - Invalidatable implementation
+- (void)commitProperties
+{
+    if (self.productManager.initializing)
+    {
+        [LargeProgressView show];
+    }
+    else
+    {
+        [LargeProgressView hide];
+    }
+    
+    [self.tableView reloadData];
+}
 
 #pragma mark - event handlers
 - (void)handleCancelButtonTapped:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - Misc functions
+
 
 
 @end

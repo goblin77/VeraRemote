@@ -9,13 +9,6 @@
 #import "ProductManager.h"
 @import StoreKit;
 
-@interface ProductManager () <SKPaymentTransactionObserver,SKProductsRequestDelegate>
-
-@property (nonatomic) SKPaymentQueue *paymentQueue;
-
-@end
-
-
 @implementation ProductManager
 
 + (ProductManager *)sharedInstance
@@ -53,21 +46,12 @@
     return self;
 }
 
-#pragma mark - SKPaymentTransactionObserver implementation
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
-{
-}
-
-
-- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
-{
-    NSLog(@"");
-}
 
 #pragma mark - SKProductsRequestDelegate implementation
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
     self.availableProducts = response.products;
+    self.initializing = NO;
 }
 
 

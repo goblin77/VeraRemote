@@ -252,6 +252,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
     else if (indexPath.section == SettingsSectionTipJar)
     {
         TipJarViewControllerTableViewController *vc = [[TipJarViewControllerTableViewController alloc] init];
+        vc.productManager = self.productManager;
         vc.navigationItem.title = @"Tip Jar";
         [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
     }

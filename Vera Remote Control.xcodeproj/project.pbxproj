@@ -94,6 +94,7 @@
 		DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */; };
 		DBEF8BA11A8931DA00678F6D /* WidgetSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */; };
 		DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */; };
+		DBFD455C1B4E3A8B004B90D8 /* Binder.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFD455B1B4E3A8B004B90D8 /* Binder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,6 +265,8 @@
 		DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetSettingsViewController.m; sourceTree = "<group>"; };
 		DBEF8BA51A89324400678F6D /* TableViewCellWithSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellWithSwitch.h; sourceTree = "<group>"; };
 		DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCellWithSwitch.m; sourceTree = "<group>"; };
+		DBFD455A1B4E3A8B004B90D8 /* Binder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Binder.h; sourceTree = "<group>"; };
+		DBFD455B1B4E3A8B004B90D8 /* Binder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Binder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -519,6 +522,8 @@
 				DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */,
 				DBE079721A9ABE4E00C40710 /* SecurityCameraImagePolling.h */,
 				DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */,
+				DBFD455A1B4E3A8B004B90D8 /* Binder.h */,
+				DBFD455B1B4E3A8B004B90D8 /* Binder.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -806,6 +811,7 @@
 				DB8B3D981A6E1E1700EB9A6A /* VeraDevicesViewController.m in Sources */,
 				DB8B3D891A6CDF4600EB9A6A /* Buttons.m in Sources */,
 				DB8B3D951A6CE73900EB9A6A /* ObserverUtils.m in Sources */,
+				DBFD455C1B4E3A8B004B90D8 /* Binder.m in Sources */,
 				DB6AC0DB1A8C467400AE9607 /* WidgetSettingsUtils.m in Sources */,
 				DB8B3D821A6CAD9700EB9A6A /* DefaultKeyboardAccessoryView.m in Sources */,
 				DB8B3D861A6CAE0700EB9A6A /* CredentialsViewController.m in Sources */,

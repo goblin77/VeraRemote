@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProductManager.h"
 
 @interface TipJarViewControllerTableViewController : UITableViewController
+
+@property (nonatomic) ProductManager *productManager;
 
 @end
