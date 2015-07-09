@@ -169,9 +169,9 @@
     }
 }
 
-- (void)setAppLicenseManager:(AppLicenseManager *)value
+- (void)setProductManager:(ProductManager *)value
 {
-    _appLicenseManager = value;
+    _productManager = value;
     
     UIViewController * c = nil;
     for(UIViewController * vc in self.tabBarController.viewControllers)
@@ -182,9 +182,9 @@
             c = [(UINavigationController *)vc topViewController];
         }
         
-        if([c respondsToSelector:@selector(setAppLicenseManager:)])
+        if([c respondsToSelector:@selector(setProductManager:)])
         {
-            [c performSelector:@selector(setAppLicenseManager:) withObject:_appLicenseManager];
+            [c performSelector:@selector(setProductManager:) withObject:_productManager];
         }
     }
 }

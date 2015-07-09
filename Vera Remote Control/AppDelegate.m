@@ -11,7 +11,7 @@
 
 #import "DeviceManager.h"
 #import "MainAppWidgetSettingsManager.h"
-#import "AppLicenseManager.h"
+#import "ProductManager.h"
 
 
 @implementation AppDelegate
@@ -22,7 +22,7 @@
     // init the managers
     DeviceManager * deviceManager = [DeviceManager sharedInstance];
     MainAppWidgetSettingsManager * widgetSettingsManager = [MainAppWidgetSettingsManager sharedInstance];
-    AppLicenseManager * appLicenseManager = [AppLicenseManager sharedInstance];
+    ProductManager * productManager = [ProductManager sharedInstance];
     widgetSettingsManager.deviceManager = deviceManager;
     
     
@@ -33,7 +33,7 @@
     self.window.rootViewController = [[MasterViewController alloc] init];
     ((MasterViewController *)self.window.rootViewController).deviceManager = deviceManager;
     ((MasterViewController *)self.window.rootViewController).widgetSettingsManager = widgetSettingsManager;
-    ((MasterViewController *)self.window.rootViewController).appLicenseManager = appLicenseManager;
+    ((MasterViewController *)self.window.rootViewController).productManager = productManager;
     
     return YES;
 }

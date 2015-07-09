@@ -296,7 +296,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (object == self.appLicenseManager)
+    if (object == self.productManager)
     {
         
     }

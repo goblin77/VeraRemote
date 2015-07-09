@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "DeviceManager.h"
 #import "MainAppWidgetSettingsManager.h"
-#import "AppLicenseManager.h"
+#import "ProductManager.h"
 
 @interface MasterViewController : UIViewController
 
 @property (nonatomic, strong) DeviceManager * deviceManager;
 @property (nonatomic, strong) MainAppWidgetSettingsManager * widgetSettingsManager;
-@property (nonatomic, strong) AppLicenseManager * appLicenseManager;
+@property (nonatomic, strong) ProductManager * productManager;
 
 @end

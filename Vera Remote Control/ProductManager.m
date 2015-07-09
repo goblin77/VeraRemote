@@ -6,26 +6,26 @@
 //  Copyright (c) 2015 Dmitry Miller. All rights reserved.
 //
 
-#import "AppLicenseManager.h"
+#import "ProductManager.h"
 @import StoreKit;
 
-@interface AppLicenseManager () <SKPaymentTransactionObserver,SKProductsRequestDelegate>
+@interface ProductManager () <SKPaymentTransactionObserver,SKProductsRequestDelegate>
 
 @property (nonatomic) SKPaymentQueue *paymentQueue;
 
 @end
 
 
-@implementation AppLicenseManager
+@implementation ProductManager
 
-+ (AppLicenseManager *)sharedInstance
++ (ProductManager *)sharedInstance
 {
     @synchronized(self)
     {
-        static AppLicenseManager *instance = nil;
+        static ProductManager *instance = nil;
         if (instance == nil)
         {
-            instance = [[AppLicenseManager alloc] init];
+            instance = [[ProductManager alloc] init];
         }
         
         return instance;
@@ -78,7 +78,7 @@
 #pragma mark - misc functions
 + (NSArray *)allProductIdentifiers
 {
-    return @[@"com.goblin77.product.tip1",@"com.goblin77.product.tip2",@"com.goblin77.product.tip3"];
+    return @[@"com.goblin77.VeraRemote.product.tip1",@"com.goblin77.VeraRemote.product.tip2",@"com.goblin77.VeraRemote.product.tip3"];
 }
 
 - (void)loadProducts

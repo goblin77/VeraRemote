@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AppLicenseManager : NSObject
+@interface ProductManager : NSObject
 
 @property (nonatomic) BOOL purchaseInProgress;
 @property (nonatomic) BOOL initializing;
 @property (nonatomic) BOOL canMakePayments;
 @property (nonatomic) NSArray * availableProducts;
 
-+ (AppLicenseManager *)sharedInstance;
++ (ProductManager *)sharedInstance;
 
 
 @end

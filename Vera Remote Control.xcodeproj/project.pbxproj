@@ -11,7 +11,7 @@
 		DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
 		DB1D01431A78A581005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
 		DB29E0441B266453002E09DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29E0431B266453002E09DD /* StoreKit.framework */; };
-		DB29E0471B26846F002E09DD /* AppLicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E0461B26846F002E09DD /* AppLicenseManager.m */; };
+		DB29E0471B26846F002E09DD /* ProductManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E0461B26846F002E09DD /* ProductManager.m */; };
 		DB29E0491B26929A002E09DD /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29E0481B26929A002E09DD /* iAd.framework */; };
 		DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */; };
 		DB29E0501B26A5FE002E09DD /* TipJarSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E04F1B26A5FE002E09DD /* TipJarSectionHeaderView.m */; };
@@ -133,8 +133,8 @@
 		DB1D01401A78A3CF005EB05F /* DevicePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePolling.h; sourceTree = "<group>"; };
 		DB1D01411A78A3CF005EB05F /* DevicePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePolling.m; sourceTree = "<group>"; };
 		DB29E0431B266453002E09DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		DB29E0451B26846F002E09DD /* AppLicenseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppLicenseManager.h; sourceTree = "<group>"; };
-		DB29E0461B26846F002E09DD /* AppLicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppLicenseManager.m; sourceTree = "<group>"; };
+		DB29E0451B26846F002E09DD /* ProductManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductManager.h; sourceTree = "<group>"; };
+		DB29E0461B26846F002E09DD /* ProductManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductManager.m; sourceTree = "<group>"; };
 		DB29E0481B26929A002E09DD /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		DB29E04A1B26A20F002E09DD /* TipJarViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipJarViewControllerTableViewController.h; sourceTree = "<group>"; };
 		DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipJarViewControllerTableViewController.m; sourceTree = "<group>"; };
@@ -380,8 +380,8 @@
 				DB6850CD1A6C6F2A00CE4DAA /* DeviceManager.m */,
 				DB6AC0DC1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.h */,
 				DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */,
-				DB29E0451B26846F002E09DD /* AppLicenseManager.h */,
-				DB29E0461B26846F002E09DD /* AppLicenseManager.m */,
+				DB29E0451B26846F002E09DD /* ProductManager.h */,
+				DB29E0461B26846F002E09DD /* ProductManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -841,7 +841,7 @@
 				DB8B3D691A6CA93C00EB9A6A /* UIColor+Expanded.m in Sources */,
 				DB50DC081A72FC240053110E /* FaultUtils.m in Sources */,
 				DB8B3DE91A6F349A00EB9A6A /* Room.m in Sources */,
-				DB29E0471B26846F002E09DD /* AppLicenseManager.m in Sources */,
+				DB29E0471B26846F002E09DD /* ProductManager.m in Sources */,
 				DB04DB621A827B090036A873 /* SensorTableViewCell.m in Sources */,
 				DB8B3DFC1A70A29A00EB9A6A /* CircularShapeView.m in Sources */,
 				DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */,
