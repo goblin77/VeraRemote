@@ -199,7 +199,7 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
             }
             else if(filter == DeviceFilterSwitches)
             {
-                match = [d isKindOfClass:[BinarySwitch class]] || [d isKindOfClass:[DimmableSwitch class]];
+                match = ([d isKindOfClass:[BinarySwitch class]] && ![d isKindOfClass:[Siren class]]) || [d isKindOfClass:[DimmableSwitch class]];                
             }
             else if(filter == DeviceFilterSecurity)
             {
