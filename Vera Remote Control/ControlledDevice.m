@@ -33,7 +33,15 @@ NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZo
     self.deviceId = [src[@"id"] integerValue];
     self.parentDeviceId = [src[@"parent"] integerValue];
     self.roomId = [src[@"room"] integerValue];
-    self.state = [src[@"state"] integerValue];
+    
+    if (src[@"state"] != nil)
+    {
+        self.state = [src[@"state"] integerValue];
+    }
+    else
+    {
+        self.state = DeviceStateSuccess; // test mode support
+    }
     
     NSString * name = src[@"name"];
     if(name != nil)
