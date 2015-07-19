@@ -130,8 +130,6 @@
 {
     BOOL isFull = [data[@"full"] boolValue];
     
-    
-    
     if(isFull)
     {
         if(self.createNetwork!= nil)
