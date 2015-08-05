@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
     DeviceCategoryDimmableLight = 2,
     DeviceCategorySwitch=3,
     DeviceCategorySecuritySensor=4,
+    DeviceCategoryHVAC = 5,
     DeviceCategorySecurityCamera=6,
     DeviceCategoryHumiditySensor=16,
     DeviceCategoryTemperatureSensor=17,
@@ -53,6 +54,28 @@ typedef NS_ENUM(NSInteger, SecurityCameraPTZAction)
     SecurityCameraPTZActionZoomOut
 };
 
+typedef NS_ENUM(NSInteger, HVACState)
+{
+    HVACStateIdle,
+    HVACStateHeating,
+    HVACStateCooling
+};
+
+typedef NS_ENUM(NSInteger, ThermostatFanMode)
+{
+    ThermostatFanModeOff,
+    ThermostatFanModeContinuousOn,
+    ThermostatFanModePeriodicOn
+};
+
+
+typedef NS_ENUM(NSInteger, ThermostatMode)
+{
+    ThermostatModeOff,
+    ThermostatModeAuto,
+    ThermostatModeCool,
+    ThermostatModeHeat,
+};
 
 
 // Services
@@ -61,6 +84,10 @@ extern NSString * DimmableSwitchControlService;
 extern NSString * SceneControlService;
 extern NSString * SecuritySensorControlService;
 extern NSString * PanTiltZoomControlService;
+extern NSString * ThermostatModeService;
+extern NSString * ThermostatSetPointServiceHeat;
+extern NSString * ThermostatSetPointServiceCool;
+
 
 @interface ControlledDevice : NSObject <JSONSerializable>
 
@@ -136,6 +163,19 @@ extern NSString * PanTiltZoomControlService;
 @interface TemperatureSensor : ControlledDevice
 
 @property (nonatomic, assign) int temperature;
+
+@end
+
+@interface Thermostat : ControlledDevice
+
+@property (nonatomic, assign) HVACState hvacState;
+@property (nonatomic, assign) ThermostatFanMode fanMode;
+@property (nonatomic, assign) ThermostatMode mode;
+@property (nonatomic, assign) BOOL fanOn;
+@property (nonatomic, assign) int temperature;
+@property (nonatomic, assign) int targetHeatTemperature;
+@property (nonatomic, assign) int targetCoolTemperature;
+
 
 @end
 

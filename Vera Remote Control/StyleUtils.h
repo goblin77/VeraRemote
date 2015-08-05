@@ -18,6 +18,7 @@
 
 +(void) applyDefaultStyleOnTableTitleLabel:(UILabel *)label;
 +(void) applyStyleOnDescriptiveTextLabel:(UILabel *)label;
++(void) applyStyleOnLargeInfoTextLabel:(UILabel *)label;
 +(UIFont *) fontForNonMissingValues;
 +(UIFont *) fontForCellPrompt;
 

@@ -16,6 +16,7 @@
 #import "SensorTableViewCell.h"
 #import "MotionSensorTableViewCell.h"
 #import "SecurityCameraTableViewCell.h"
+#import "ThermostatTableViewCell.h"
 #import "SecurityCameraViewController.h"
 #import "UIAlertViewWithCallbacks.h"
 
@@ -194,7 +195,8 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
             {
                 match = [d isKindOfClass:[HumiditySensor class]]
                         || [d isKindOfClass:[TemperatureSensor class]]
-                        || [d isKindOfClass:[LightSensor class]];
+                        || [d isKindOfClass:[LightSensor class]]
+                        || [d isKindOfClass:[Thermostat class]];
                 
             }
             else if(filter == DeviceFilterSwitches)
@@ -363,6 +365,20 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
         
         return res;
     }
+    else if ([device isKindOfClass:[Thermostat class]])
+    {
+        static NSString *CellId = @"ThermostatCell";
+        
+        ThermostatTableViewCell * res = (ThermostatTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellId];
+        if (res == nil)
+        {
+            res = [[ThermostatTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellId];
+        }
+        
+        res.thermostat = (Thermostat *)device;
+        
+        return res;
+    }
     
     
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -384,6 +400,10 @@ typedef NS_ENUM(NSInteger, DeviceFilter)
     else if([device isKindOfClass:[SecuritySensor class]])
     {
         return 75;
+    }
+    else if ([device isKindOfClass:[Thermostat class]])
+    {
+        return 110;
     }
     
     return 60;

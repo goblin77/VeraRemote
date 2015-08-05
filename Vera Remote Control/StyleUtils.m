@@ -41,6 +41,14 @@
     label.backgroundColor = [UIColor clearColor];
 }
 
++(void) applyStyleOnLargeInfoTextLabel:(UILabel *)label
+{
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor darkGrayColor];
+    label.textAlignment = NSTextAlignmentRight;
+    label.font = [UIFont defaultBoldFontWithSize:30];
+}
+
 +(void) applyDefaultStyleOnValueLabelWithTableCell:(UILabel *) label
 {
     label.textColor = [UIColor blackColor];

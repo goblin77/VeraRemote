@@ -40,9 +40,8 @@ NSString * const SetMotionSensorStatusNotification  = @"SetMotionSensorStatus";
 NSString * const RunSceneNotification   = @"RunScene";
 NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction";
 
-
-
-
+NSString * const SetThermostatModeActionNotification = @"SetThermostatModeAction";
+NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTargetTemperature";
 
 @interface DeviceManager ()
 
@@ -130,9 +129,9 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetMotionSensorStatus:) name:SetMotionSensorStatusNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSecurityCameraPTZActionNotification:) name:SecurityCameraPTZActionNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRunScene:) name:RunSceneNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetThermostatModeNotification:) name:SetThermostatModeActionNotification object:nil];
         
-        
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetThermostatTargetTemperatureNotification:) name:SetThermostatTargetTemperatureNotification object:nil];
     }
     
     return self;
@@ -356,6 +355,10 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
         else if(cat == DeviceCategorySiren)
         {
             clazz = [Siren class];
+        }
+        else if(cat == DeviceCategoryHVAC)
+        {
+            clazz = [Thermostat class];
         }
         
         if(clazz == nil)
@@ -851,6 +854,99 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
          }
          
      }];
+}
+
+- (void)handleSetThermostatModeNotification:(NSNotification *)notification
+{
+    Thermostat *device = notification.object;
+    
+    ThermostatMode mode = [notification.userInfo[@"mode"] integerValue];
+    NSString *modeStr = nil;
+    if (mode == ThermostatModeAuto)
+    {
+        return;
+    }
+    else if (mode == ThermostatModeOff)
+    {
+        modeStr = @"Off";
+    }
+    else if (mode == ThermostatModeCool)
+    {
+        modeStr = @"CoolOn";
+    }
+    else if (mode == ThermostatModeHeat)
+    {
+        modeStr = @"HeatOn";
+    }
+    
+    
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"serviceId" : ThermostatModeService,
+                              @"action" : @"SetModeTarget",
+                              @"NewModeTarget" : modeStr,
+                              @"DeviceNum": [NSString stringWithFormat:@"%ld", (long)device.deviceId],
+                              @"output_format" : @"json"
+                             };
+    device.mode = mode;
+    device.manualOverride = YES;
+    
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
+                                        params:params
+                                       timeout:kAPIServiceDefaultTimeout
+                                      callback:^(NSData *data, NSError *fault)
+     {
+         if(fault == nil)
+         {
+             device.manualOverride = NO;
+         }
+         
+     }];
+
+}
+
+- (void)handleSetThermostatTargetTemperatureNotification:(NSNotification *)notification
+{
+    Thermostat *device = notification.object;
+    
+    BOOL isSettingHeat = [notification.userInfo[@"heat"] boolValue];
+    int targetTemperature = [notification.userInfo[@"targetTemperature"] intValue];
+    NSString *serviceId = isSettingHeat ? ThermostatSetPointServiceHeat : ThermostatSetPointServiceCool;
+    
+    device.manualOverride = YES;
+    
+    
+    if (isSettingHeat)
+    {
+        device.targetHeatTemperature = targetTemperature;
+    }
+    else
+    {
+        device.targetCoolTemperature = targetTemperature;
+    }
+    
+    
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"serviceId" : serviceId,
+                              @"action" : @"SetCurrentSetpoint",
+                              @"NewCurrentSetpoint" : [NSString stringWithFormat:@"%d",targetTemperature],
+                              @"DeviceNum": [NSString stringWithFormat:@"%ld", (long)device.deviceId],
+                              @"output_format" : @"json"
+                              };
+    
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
+                                        params:params
+                                       timeout:kAPIServiceDefaultTimeout
+                                      callback:^(NSData *data, NSError *fault)
+     {
+         if(fault == nil)
+         {
+             device.manualOverride = NO;
+         }
+         
+     }];
+        
 }
 
 @end

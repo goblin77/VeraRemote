@@ -35,7 +35,8 @@ extern NSString * const SetDimmableSwitchValueNotification;
 extern NSString * const SetMotionSensorStatusNotification;
 extern NSString * const RunSceneNotification;
 extern NSString * const SecurityCameraPTZActionNotification;
-
+extern NSString * const SetThermostatModeActionNotification;
+extern NSString * const SetThermostatTargetTemperatureNotification;
 
 
 @interface DeviceManager : NSObject

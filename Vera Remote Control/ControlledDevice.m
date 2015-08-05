@@ -14,6 +14,9 @@ NSString * DimmableSwitchControlService = @"urn:upnp-org:serviceId:Dimming1";
 NSString * SceneControlService = @"urn:micasaverde-com:serviceId:HomeAutomationGateway1";
 NSString * SecuritySensorControlService = @"urn:micasaverde-com:serviceId:SecuritySensor1";
 NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZoom1";
+NSString * ThermostatModeService = @"urn:upnp-org:serviceId:HVAC_UserOperatingMode1";
+NSString * ThermostatSetPointServiceHeat = @"urn:upnp-org:serviceId:TemperatureSetpoint1_Heat";
+NSString * ThermostatSetPointServiceCool = @"urn:upnp-org:serviceId:TemperatureSetpoint1_Cool";
 
 @implementation ControlledDevice
 
@@ -155,6 +158,66 @@ NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZo
 {
     [super updateWithDictionary:src];
     self.light = [src[@"light"] intValue];
+}
+
+@end
+
+@implementation Thermostat
+
+- (void)updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    
+    NSString *hvacState = src[@"hvacstate"];
+    if ([hvacState compare:@"Heating" options:NSCaseInsensitiveSearch] == NSOrderedSame)
+    {
+        self.hvacState = HVACStateHeating;
+    }
+    else if ([hvacState compare:@"Cooling" options:NSCaseInsensitiveSearch] == NSOrderedSame)
+    {
+        self.hvacState = HVACStateCooling;
+    }
+    else
+    {
+        self.hvacState = HVACStateIdle;
+    }
+    
+    NSString *fanMode = src[@"fanmode"];
+    if ([fanMode compare:@"ContinuousOn" options:NSCaseInsensitiveSearch] == NSOrderedSame)
+    {
+        self.fanMode = ThermostatFanModeContinuousOn;
+    }
+    else if ([fanMode compare:@"PeriodicOn" options:NSCaseInsensitiveSearch] == NSOrderedSame)
+    {
+        self.hvacState = ThermostatFanModePeriodicOn;
+    }
+    else
+    {
+        self.fanMode = ThermostatFanModeOff;
+    }
+    
+    NSString *mode = src[@"mode"];
+    if ([mode isEqualToString:@"CoolOn"])
+    {
+        self.mode = ThermostatModeCool;
+    }
+    else if([mode isEqualToString:@"HeatOn"])
+    {
+        self.mode = ThermostatModeHeat;
+    }
+    else if([mode isEqualToString:@"AutoChangeOver"])
+    {
+        self.mode = ThermostatModeAuto;
+    }
+    else
+    {
+        self.mode = ThermostatModeOff;
+    }
+    
+    self.fanOn = [(NSString *)src[@"fan"] compare:@"On" options:NSCaseInsensitiveSearch] == NSOrderedSame;
+    self.temperature = [src[@"temperature"] intValue];
+    self.targetCoolTemperature = [src[@"coolsp"] intValue];
+    self.targetHeatTemperature = [src[@"heatsp"] intValue];
 }
 
 @end

@@ -15,6 +15,9 @@
 		DB29E0491B26929A002E09DD /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29E0481B26929A002E09DD /* iAd.framework */; };
 		DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */; };
 		DB29E0501B26A5FE002E09DD /* TipJarSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29E04F1B26A5FE002E09DD /* TipJarSectionHeaderView.m */; };
+		DB316C7C1B64301800A0AD58 /* ThermostatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB316C7B1B64301800A0AD58 /* ThermostatTableViewCell.m */; };
+		DB316C7F1B66004400A0AD58 /* ThermostatControlButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DB316C7E1B66004400A0AD58 /* ThermostatControlButton.m */; };
+		DB316C881B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DB316C871B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m */; };
 		DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */; };
 		DB50DC021A72F1360053110E /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB50DC081A72FC240053110E /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
@@ -85,6 +88,7 @@
 		DBA6468A1AFFF4390008046D /* RecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA646891AFFF4390008046D /* RecordButton.m */; };
 		DBA6468C1B000EB70008046D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA6468B1B000EB70008046D /* AssetsLibrary.framework */; };
 		DBA6468F1B0023D80008046D /* VideoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA6468E1B0023D80008046D /* VideoRecorder.m */; };
+		DBD860511B71BBED00F71664 /* ThermostatTempControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD860501B71BBED00F71664 /* ThermostatTempControlView.m */; };
 		DBE0796B1A9AB49D00C40710 /* SecurityCameraTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */; };
 		DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */; };
 		DBE079711A9ABB5B00C40710 /* SecurityCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */; };
@@ -141,6 +145,12 @@
 		DB29E04B1B26A20F002E09DD /* TipJarViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipJarViewControllerTableViewController.m; sourceTree = "<group>"; };
 		DB29E04E1B26A5FE002E09DD /* TipJarSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipJarSectionHeaderView.h; sourceTree = "<group>"; };
 		DB29E04F1B26A5FE002E09DD /* TipJarSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipJarSectionHeaderView.m; sourceTree = "<group>"; };
+		DB316C7A1B64301800A0AD58 /* ThermostatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThermostatTableViewCell.h; sourceTree = "<group>"; };
+		DB316C7B1B64301800A0AD58 /* ThermostatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThermostatTableViewCell.m; sourceTree = "<group>"; };
+		DB316C7D1B66004400A0AD58 /* ThermostatControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThermostatControlButton.h; sourceTree = "<group>"; };
+		DB316C7E1B66004400A0AD58 /* ThermostatControlButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThermostatControlButton.m; sourceTree = "<group>"; };
+		DB316C861B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISegmentedControlWithVerticalLayout.h; sourceTree = "<group>"; };
+		DB316C871B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISegmentedControlWithVerticalLayout.m; sourceTree = "<group>"; };
 		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchTableViewCell.m; sourceTree = "<group>"; };
 		DB50DC001A72F1360053110E /* AccessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessConfig.h; sourceTree = "<group>"; };
@@ -247,6 +257,8 @@
 		DBA6468B1B000EB70008046D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		DBA6468D1B0023D80008046D /* VideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoRecorder.h; sourceTree = "<group>"; };
 		DBA6468E1B0023D80008046D /* VideoRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoRecorder.m; sourceTree = "<group>"; };
+		DBD8604F1B71BBED00F71664 /* ThermostatTempControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThermostatTempControlView.h; sourceTree = "<group>"; };
+		DBD860501B71BBED00F71664 /* ThermostatTempControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThermostatTempControlView.m; sourceTree = "<group>"; };
 		DBE079691A9AB49D00C40710 /* SecurityCameraTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraTableViewCell.h; sourceTree = "<group>"; };
 		DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraTableViewCell.m; sourceTree = "<group>"; };
 		DBE0796C1A9AB64F00C40710 /* PropertyInvalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInvalidator.h; sourceTree = "<group>"; };
@@ -624,6 +636,14 @@
 				DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */,
 				DBA646881AFFF4390008046D /* RecordButton.h */,
 				DBA646891AFFF4390008046D /* RecordButton.m */,
+				DB316C7A1B64301800A0AD58 /* ThermostatTableViewCell.h */,
+				DB316C7B1B64301800A0AD58 /* ThermostatTableViewCell.m */,
+				DB316C7D1B66004400A0AD58 /* ThermostatControlButton.h */,
+				DB316C7E1B66004400A0AD58 /* ThermostatControlButton.m */,
+				DB316C861B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.h */,
+				DB316C871B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m */,
+				DBD8604F1B71BBED00F71664 /* ThermostatTempControlView.h */,
+				DBD860501B71BBED00F71664 /* ThermostatTempControlView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -821,6 +841,7 @@
 				DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */,
 				DBA6468F1B0023D80008046D /* VideoRecorder.m in Sources */,
 				DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */,
+				DB316C881B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m in Sources */,
 				DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */,
 				DBEF8BA11A8931DA00678F6D /* WidgetSettingsViewController.m in Sources */,
 				DB8B3D8F1A6CE23400EB9A6A /* UIAlertViewWithCallbacks.m in Sources */,
@@ -830,6 +851,7 @@
 				DB6850D31A6C702800CE4DAA /* VeraDevice.m in Sources */,
 				DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */,
 				DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */,
+				DB316C7F1B66004400A0AD58 /* ThermostatControlButton.m in Sources */,
 				DBEF8B9A1A85AE1400678F6D /* BatteryLevelView.m in Sources */,
 				DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */,
 				DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */,
@@ -845,10 +867,12 @@
 				DB6850CE1A6C6F2A00CE4DAA /* DeviceManager.m in Sources */,
 				DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */,
 				DB8B3D691A6CA93C00EB9A6A /* UIColor+Expanded.m in Sources */,
+				DBD860511B71BBED00F71664 /* ThermostatTempControlView.m in Sources */,
 				DB50DC081A72FC240053110E /* FaultUtils.m in Sources */,
 				DB8B3DE91A6F349A00EB9A6A /* Room.m in Sources */,
 				DB29E0471B26846F002E09DD /* ProductManager.m in Sources */,
 				DB04DB621A827B090036A873 /* SensorTableViewCell.m in Sources */,
+				DB316C7C1B64301800A0AD58 /* ThermostatTableViewCell.m in Sources */,
 				DB8B3DFC1A70A29A00EB9A6A /* CircularShapeView.m in Sources */,
 				DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */,
 				DB8B3D7C1A6CAD6D00EB9A6A /* AsyncImageView.m in Sources */,
@@ -1017,7 +1041,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VeraRemoteControl-Prefix.pch";
 				INFOPLIST_FILE = "Vera Remote Control/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1034,7 +1058,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VeraRemoteControl-Prefix.pch";
 				INFOPLIST_FILE = "Vera Remote Control/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
