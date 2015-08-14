@@ -138,7 +138,4 @@ typedef NS_ENUM(NSInteger, TipJarRow)
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-
-
 @end

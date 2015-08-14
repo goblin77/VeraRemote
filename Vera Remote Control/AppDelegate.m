@@ -12,6 +12,7 @@
 #import "DeviceManager.h"
 #import "MainAppWidgetSettingsManager.h"
 #import "ProductManager.h"
+#import "AppNavigationManager.h"
 
 
 @implementation AppDelegate
@@ -24,13 +25,14 @@
     MainAppWidgetSettingsManager * widgetSettingsManager = [MainAppWidgetSettingsManager sharedInstance];
     ProductManager * productManager = [ProductManager sharedInstance];
     widgetSettingsManager.deviceManager = deviceManager;
-    
+    AppNavigationManager *appNavigationManager = [AppNavigationManager sharedInstance];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor colorWithRGBHex:0xf0f0f0];
     [self.window makeKeyAndVisible];
     
     self.window.rootViewController = [[MasterViewController alloc] init];
+    ((MasterViewController *)self.window.rootViewController).appNavigationManager = appNavigationManager;
     ((MasterViewController *)self.window.rootViewController).deviceManager = deviceManager;
     ((MasterViewController *)self.window.rootViewController).widgetSettingsManager = widgetSettingsManager;
     ((MasterViewController *)self.window.rootViewController).productManager = productManager;
@@ -38,12 +40,19 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([url.scheme isEqualToString:@"veraremote"])
+    {
+        NSString *appUrl = [[url absoluteString] stringByReplacingOccurrencesOfString:@"veraremote://" withString:@""];
+        [[NSNotificationCenter defaultCenter] postNotificationName:AppNavigationManagerNavigateToAppUrlNotification object:appUrl];
+        return YES;
+    }
+    return NO;
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
-
 
 -(void) applicationWillEnterForeground:(UIApplication *)application
 {

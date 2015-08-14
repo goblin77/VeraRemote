@@ -9,11 +9,12 @@
 #import "SettingsViewController.h"
 #import "WidgetSettingsViewController.h"
 #import "StyleUtils.h"
-#import "ObserverUtils.h"
 #import "MainAppWidgetSettingsManager.h"
 #import "VeraDevicesViewController.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "TipJarViewControllerTableViewController.h"
+#import <MessageUI/MessageUI.h>
+#import "UIViewController+DeepLinking.h"
 
 
 typedef NS_ENUM(NSInteger, SettingsSection)
@@ -40,7 +41,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
 
 
 
-@interface SettingsViewController ()
+@interface SettingsViewController () <MFMailComposeViewControllerDelegate>
 
 
 @end
@@ -58,12 +59,6 @@ typedef NS_ENUM(NSInteger, SupportRow)
     return self;
 }
 
-- (void) dealloc
-{
-    [ObserverUtils removeObserver:self fromObject:self forKeyPaths:[self.class licenceObserverKeyPaths]];
-}
-
-
 -(void) viewDidLoad
 {
     [super viewDidLoad];
@@ -75,14 +70,11 @@ typedef NS_ENUM(NSInteger, SupportRow)
                                                                              action:@selector(handleLogoutTapped:)];
 }
 
-
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 }
-
-
 
 #pragma mark - Table view data source
 
@@ -189,6 +181,24 @@ typedef NS_ENUM(NSInteger, SupportRow)
             
             return res;
         }
+        else if (indexPath.row == SupportRowContactSupport)
+        {
+            static NSString * CellId = @"ContactSupport";
+            
+            UITableViewCell *res = [tableView dequeueReusableCellWithIdentifier:CellId];
+            if (res == nil)
+            {
+                res = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellId];
+                [StyleUtils applyDefaultStyleOnTableTitleLabel:res.textLabel];
+                res.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                res.textLabel.numberOfLines = 0;
+                res.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+                res.textLabel.text = @"Contact Support";
+                res.detailTextLabel.text = @"Your questions and feedback are very welcome.";
+            }
+            
+            return res;
+        }
     }
     
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -256,8 +266,26 @@ typedef NS_ENUM(NSInteger, SupportRow)
         vc.navigationItem.title = @"Tip Jar";
         [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
     }
+    else if (indexPath.section == SettingsSectionSupport)
+    {
+        if (indexPath.row == SupportRowContactSupport)
+        {
+            [self displayEmailControls];
+        }
+    }
 }
 
+#pragma mark -
+#pragma mark Deep linking
+- (void)processURLPathComponents:(NSArray *)pathComponents completion:(void (^)(void))completion
+{
+    if ([pathComponents.firstObject isEqualToString:@"widgets"])
+    {
+        [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:AppSettingsRowWidgets inSection:SettingsSectionApp]];
+    }
+    
+    completion();
+}
 
 
 #pragma mark -
@@ -281,26 +309,32 @@ typedef NS_ENUM(NSInteger, SupportRow)
     
 }
 
-
-#pragma mark - misc functions
-+ (NSArray *)licenceObserverKeyPaths
+#pragma mark - MFMailComposeViewControllerDelegate implementation
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-    static NSArray * keyPaths = nil;
-    if (keyPaths == nil)
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    if (result == MFMailComposeResultSent)
     {
-        
+       [[[UIAlertView alloc] initWithTitle:@""
+                                   message:@"Thank you for your feedback!"
+                                  delegate:nil
+                         cancelButtonTitle:@"Dismiss"
+                         otherButtonTitles: nil] show];
     }
-    
-    return keyPaths;
 }
 
-#pragma mark - KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+#pragma mark -
+#pragma mark misc functions
+- (void) displayEmailControls
 {
-    if (object == self.productManager)
-    {
-        
-    }
+    MFMailComposeViewController *emailVC = [[MFMailComposeViewController alloc] init];
+    [emailVC setSubject:@"RE: Vera Remote"];
+    [emailVC setToRecipients:@[@"dmitry@coldfishinc.com"]];
+    emailVC.mailComposeDelegate = self;
+    
+    NSString *emailBody = [NSString stringWithFormat:@"<br><br><br><hr>App Version : <strong>%@</strong>", [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"]];
+    [emailVC setMessageBody:emailBody isHTML:YES];
+    [self presentViewController:emailVC animated:YES completion:nil];
 }
 
 @end

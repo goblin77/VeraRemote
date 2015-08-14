@@ -35,6 +35,9 @@
 		DB6AC0DE1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */; };
 		DB6AC0DF1A8C4CF000AE9607 /* MainAppWidgetSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */; };
 		DB6AC0E01A8C4D2900AE9607 /* WidgetSettingsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */; };
+		DB6C3E9F1B7E5FA000C23EF0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6C3E9E1B7E5FA000C23EF0 /* MessageUI.framework */; };
+		DB6C3EA71B7E66A500C23EF0 /* AppNavigationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6C3EA61B7E66A500C23EF0 /* AppNavigationManager.m */; };
+		DB6C3EAF1B7E74BB00C23EF0 /* UIViewController+DeepLinking.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6C3EAE1B7E74BB00C23EF0 /* UIViewController+DeepLinking.m */; };
 		DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */; };
 		DB6DE51A1A75C64300DBD7AC /* SpinningCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5191A75C64300DBD7AC /* SpinningCursorView.m */; };
 		DB6DE5221A75C6A300DBD7AC /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6DE5211A75C6A300DBD7AC /* NotificationCenter.framework */; };
@@ -180,6 +183,11 @@
 		DB6AC0DA1A8C467400AE9607 /* WidgetSettingsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetSettingsUtils.m; sourceTree = "<group>"; };
 		DB6AC0DC1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainAppWidgetSettingsManager.h; sourceTree = "<group>"; };
 		DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainAppWidgetSettingsManager.m; sourceTree = "<group>"; };
+		DB6C3E9E1B7E5FA000C23EF0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		DB6C3EA51B7E66A500C23EF0 /* AppNavigationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppNavigationManager.h; sourceTree = "<group>"; };
+		DB6C3EA61B7E66A500C23EF0 /* AppNavigationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppNavigationManager.m; sourceTree = "<group>"; };
+		DB6C3EAD1B7E74BB00C23EF0 /* UIViewController+DeepLinking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DeepLinking.h"; sourceTree = "<group>"; };
+		DB6C3EAE1B7E74BB00C23EF0 /* UIViewController+DeepLinking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DeepLinking.m"; sourceTree = "<group>"; };
 		DB6DE50C1A73477D00DBD7AC /* SceneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneTableViewCell.h; sourceTree = "<group>"; };
 		DB6DE50D1A73477D00DBD7AC /* SceneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneTableViewCell.m; sourceTree = "<group>"; };
 		DB6DE5181A75C64300DBD7AC /* SpinningCursorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinningCursorView.h; sourceTree = "<group>"; };
@@ -286,6 +294,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB6C3E9F1B7E5FA000C23EF0 /* MessageUI.framework in Frameworks */,
 				DB29E0491B26929A002E09DD /* iAd.framework in Frameworks */,
 				DB29E0441B266453002E09DD /* StoreKit.framework in Frameworks */,
 				DBA6468C1B000EB70008046D /* AssetsLibrary.framework in Frameworks */,
@@ -397,6 +406,8 @@
 				DB6AC0DD1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m */,
 				DB29E0451B26846F002E09DD /* ProductManager.h */,
 				DB29E0461B26846F002E09DD /* ProductManager.m */,
+				DB6C3EA51B7E66A500C23EF0 /* AppNavigationManager.h */,
+				DB6C3EA61B7E66A500C23EF0 /* AppNavigationManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -433,6 +444,7 @@
 		DB6DE5201A75C6A300DBD7AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB6C3E9E1B7E5FA000C23EF0 /* MessageUI.framework */,
 				DB29E0481B26929A002E09DD /* iAd.framework */,
 				DB29E0431B266453002E09DD /* StoreKit.framework */,
 				DBA6468B1B000EB70008046D /* AssetsLibrary.framework */,
@@ -545,6 +557,8 @@
 			children = (
 				DBEF8BA91A8936F400678F6D /* Managers */,
 				DB8B3D791A6CAD6100EB9A6A /* Views */,
+				DB6C3EAD1B7E74BB00C23EF0 /* UIViewController+DeepLinking.h */,
+				DB6C3EAE1B7E74BB00C23EF0 /* UIViewController+DeepLinking.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -835,6 +849,7 @@
 				DB6AC0DB1A8C467400AE9607 /* WidgetSettingsUtils.m in Sources */,
 				DB8B3D821A6CAD9700EB9A6A /* DefaultKeyboardAccessoryView.m in Sources */,
 				DB8B3D861A6CAE0700EB9A6A /* CredentialsViewController.m in Sources */,
+				DB6C3EAF1B7E74BB00C23EF0 /* UIViewController+DeepLinking.m in Sources */,
 				DB6DE5531A75F8F200DBD7AC /* ScenesView.m in Sources */,
 				DB29E0501B26A5FE002E09DD /* TipJarSectionHeaderView.m in Sources */,
 				DB8B3DE61A6F344700EB9A6A /* ControlledDevice.m in Sources */,
@@ -877,6 +892,7 @@
 				DB29E04C1B26A20F002E09DD /* TipJarViewControllerTableViewController.m in Sources */,
 				DB8B3D7C1A6CAD6D00EB9A6A /* AsyncImageView.m in Sources */,
 				DB8B3D771A6CACEA00EB9A6A /* UIFont+DefaultSettings.m in Sources */,
+				DB6C3EA71B7E66A500C23EF0 /* AppNavigationManager.m in Sources */,
 				DB8B3D8C1A6CDF6200EB9A6A /* ImageUtils.m in Sources */,
 				DB8B3D6E1A6CAC2700EB9A6A /* UIFont_Expanded.m in Sources */,
 				DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */,

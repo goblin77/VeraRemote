@@ -15,6 +15,8 @@
 #import "UIAlertViewWithCallbacks.h"
 #import "LargeProgressView.h"
 #import "ObserverUtils.h"
+#import "Binder.h"
+#import "UIViewController+DeepLinking.h"
 
 @import iAd;
 
@@ -29,6 +31,8 @@
 @property (nonatomic) DevicesViewController * devicesViewController;
 @property (nonatomic) ScenesViewController      * scenesViewController;
 @property (nonatomic) SettingsViewController  * settingsViewController;
+
+@property (nonatomic) Binder *appUrlBinder;
 
 @end
 
@@ -71,6 +75,18 @@
         
         isFirstViewWillAppear = NO;
         shouldBootstrap = YES;
+        
+        __weak typeof(self) weakSelf = self;
+        self.appUrlBinder = [[Binder alloc] initWithObject:self
+                                                  keyPaths:@[K(appNavigationManager.appUrl)]
+                                                  callback:^{
+                                                      if (weakSelf.appNavigationManager.appUrl != nil)
+                                                      {
+                                                          [weakSelf processNavigation:weakSelf.appNavigationManager.appUrl];
+                                                          [[NSNotificationCenter defaultCenter]postNotificationName:AppNavigationManagerNavigateToAppUrlNotification object:nil];
+                                                      }
+                                                  }];
+        [self.appUrlBinder startObserving];
     }
     
     return self;
@@ -197,9 +213,38 @@
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
 }
 
+- (void)processNavigation:(NSString *)url
+{
+    if (url == nil)
+    {
+        return;
+    }
+    
+    [self processURLPathComponents:url.pathComponents completion:^{}];
+}
 
-
-
+- (void)processURLPathComponents:(NSArray *)pathComponents completion:(void (^)(void))completion
+{
+    if ([pathComponents.firstObject isEqualToString:@"settings"])
+    {
+        self.tabBarController.selectedViewController = self.settingsViewController.navigationController;
+        
+        if (pathComponents.count > 0)
+        {
+            NSMutableArray *remainingComponents = [NSMutableArray arrayWithArray:pathComponents];
+            [remainingComponents removeObjectAtIndex:0];
+            
+            [self.settingsViewController processURLPathComponents:remainingComponents completion:^{
+                completion();
+            }];
+            
+            return;
+        }
+        
+    }
+    
+    completion();
+}
 
 #pragma mark -
 #pragma mark events / notifications
