@@ -74,7 +74,10 @@
     self.zeroStateLabel.textAlignment = NSTextAlignmentCenter;
     self.zeroStateLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.zeroStateLabel.numberOfLines = 0;
+    self.zeroStateLabel.userInteractionEnabled = YES;
     [self.view addSubview:self.zeroStateLabel];
+    
+    [self.zeroStateLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleLabelTap:)]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:StartPollingNotification object:nil];
     [ObserverUtils addObserver:self toObject:self forKeyPaths:[self observerPaths] withOptions:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
@@ -152,8 +155,17 @@
         self.zeroStateLabel.hidden = YES;
         self.scenesView.scenes = widgetScenes;
     }
-    
-    
+}
+
+#pragma mark - events
+- (void)handleLabelTap:(id)sender
+{
+    if (self.scenesView.scenes.count == 0)
+    {
+        [self.extensionContext openURL:[NSURL URLWithString:@"veraremote://settings/widgets"] completionHandler:^(BOOL success) {
+            
+        }];
+    }
 }
 
 
