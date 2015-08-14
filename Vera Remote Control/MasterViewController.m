@@ -228,6 +228,7 @@
     if ([pathComponents.firstObject isEqualToString:@"settings"])
     {
         self.tabBarController.selectedViewController = self.settingsViewController.navigationController;
+        [self.settingsViewController.navigationController popToRootViewControllerAnimated:NO];
         
         if (pathComponents.count > 0)
         {
