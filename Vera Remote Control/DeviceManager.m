@@ -822,7 +822,7 @@ NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTar
     
     if(ptzActionStr == nil)
     {
-        NSLog(@"Unknown action %ld", action);
+        NSLog(@"Unknown action %ld", (long)action);
         return;
     }
     
