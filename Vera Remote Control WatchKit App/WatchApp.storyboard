@@ -15,7 +15,7 @@
                                 <tableRow identifier="BinarySwitchRowController" selectable="NO" id="I5H-Hf-Bzf" customClass="BinarySwitchRowController">
                                     <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="Rp7-1r-VtV">
                                         <items>
-                                            <label alignment="left" text="Label" minimumScaleFactor="0.50000000000000011" id="Ti8-6h-gIc"/>
+                                            <label alignment="left" text="Label" numberOfLines="2" minimumScaleFactor="0.50000000000000011" id="Ti8-6h-gIc"/>
                                             <switch alignment="left" value="YES" id="EGo-F3-W8i">
                                                 <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                                 <connections>
@@ -32,7 +32,7 @@
                                 <tableRow identifier="DimmableSwitchRowController" selectable="NO" id="dMs-bF-zxd" userLabel="DimmableSwitchRowController" customClass="DimmableSwitchRowController">
                                     <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="gVh-7L-61T">
                                         <items>
-                                            <label width="1" alignment="left" text="Label" minimumScaleFactor="0.50000000000000011" id="By0-Tt-YTP"/>
+                                            <label width="1" alignment="left" text="Label" numberOfLines="2" minimumScaleFactor="0.50000000000000011" id="By0-Tt-YTP"/>
                                             <slider width="1" alignment="left" value="1" maximum="5" steps="5" id="Ox8-1j-qZu">
                                                 <connections>
                                                     <action selector="handleSliderTap:" destination="dMs-bF-zxd" id="coe-bp-Ujo"/>

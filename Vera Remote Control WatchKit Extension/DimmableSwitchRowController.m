@@ -10,8 +10,12 @@
 #import "Binder.h"
 #import "PropertyInvalidator.h"
 #import "DeviceManager.h"
+#import "dispatch_cancelable_block.h"
 
 @interface DimmableSwitchRowController ()<Invalidatable>
+{
+    dispatch_cancelable_block_t scheduledUpdateValue;
+}
 
 @property (nonatomic) IBOutlet WKInterfaceLabel *nameLabel;
 @property (nonatomic) IBOutlet WKInterfaceSlider *sliderControl;
@@ -30,7 +34,9 @@
         __weak typeof(self) weakSelf = self;
         self.propertyInvalidator = [[PropertyInvalidator alloc] initWithHostObject:self];
         self.binder = [[Binder alloc] initWithObject:self keyPaths:@[@"dimmableSwitch.name",
-                                                                     @"dimmableSwitch.value"]
+                                                                     @"dimmableSwitch.value",
+                                                                     @"dimmableSwitch.manualOverride",
+                                                                     @"dimmableSwitch.manualValue"]
                                             callback:^{
                                                 [weakSelf.propertyInvalidator invalidateProperties];
                                             }];
@@ -45,15 +51,36 @@
 - (void)commitProperties
 {
     [self.nameLabel setText:self.dimmableSwitch.name];
-    [self.sliderControl setValue:roundf(self.dimmableSwitch.value / 20)];
+    double value = self.dimmableSwitch.manualOverride ? self.dimmableSwitch.manualValue : self.dimmableSwitch.value;
+    [self.sliderControl setValue:roundf(value / 20)];
 }
 
 #pragma mark - Actions
 - (IBAction)handleSliderTap:(float)value {
     double convertedValue = value * 20;
-    [[NSNotificationCenter defaultCenter] postNotificationName:SetDimmableSwitchValueNotification
-                                                        object:self.dimmableSwitch
-                                                      userInfo:@{@"value" : @(convertedValue)}];
+    [self scheduleValueUpdate:convertedValue];
+}
+
+- (void) scheduleValueUpdate:(double)value
+{
+    if (scheduledUpdateValue != nil)
+    {
+        cancel_block(scheduledUpdateValue);
+        scheduledUpdateValue = nil;
+    }
+    
+    self.dimmableSwitch.manualOverride = YES;
+    self.dimmableSwitch.manualValue = value;
+
+    __weak typeof(self) weakSelf = self;
+    scheduledUpdateValue = dispatch_after_delay(0.5, ^{
+        scheduledUpdateValue = nil;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SetDimmableSwitchValueNotification
+                                                            object:weakSelf.dimmableSwitch
+                                                          userInfo:@{@"value" : @(value)}];
+    });
+    
 }
 
 
