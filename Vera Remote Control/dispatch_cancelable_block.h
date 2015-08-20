@@ -11,7 +11,7 @@
 
 typedef void(^dispatch_cancelable_block_t)(BOOL cancel);
 
-static dispatch_cancelable_block_t dispatch_after_delay(CGFloat delayInSeconds, dispatch_block_t block)
+static dispatch_cancelable_block_t dispatch_after_delay(double delayInSeconds, dispatch_block_t block)
 {
     if(block == nil)
     {

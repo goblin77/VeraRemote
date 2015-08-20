@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Vera Remote Control WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Vera Remote Control.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +22,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>DB4F67711B85446F0032C21F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>DB68509C1A6C6D1100CE4DAA</key>
 		<dict>
 			<key>primary</key>

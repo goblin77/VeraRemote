@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DB04DB621A827B090036A873 /* SensorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB04DB611A827B090036A873 /* SensorTableViewCell.m */; };
+		DB1AA3D11B8581CC008B76C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1AA3D01B8581CC008B76C6 /* Images.xcassets */; };
 		DB1D01421A78A3CF005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
 		DB1D01431A78A581005EB05F /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
 		DB29E0441B266453002E09DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29E0431B266453002E09DD /* StoreKit.framework */; };
@@ -18,11 +19,17 @@
 		DB316C7C1B64301800A0AD58 /* ThermostatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB316C7B1B64301800A0AD58 /* ThermostatTableViewCell.m */; };
 		DB316C7F1B66004400A0AD58 /* ThermostatControlButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DB316C7E1B66004400A0AD58 /* ThermostatControlButton.m */; };
 		DB316C881B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DB316C871B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m */; };
+		DB4F676F1B85446F0032C21F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB4F676E1B85446F0032C21F /* Images.xcassets */; };
+		DB4F67731B85446F0032C21F /* Vera Remote Control WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = DB4F67721B85446F0032C21F /* Vera Remote Control WatchKit App.app */; };
+		DB4F67801B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DB4F67671B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DB4F67881B85469C0032C21F /* WatchApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB4F67871B85469C0032C21F /* WatchApp.storyboard */; };
+		DB4F67931B8548AB0032C21F /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB50DBFC1A7176570053110E /* DimmableSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */; };
 		DB50DC021A72F1360053110E /* AccessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC011A72F1360053110E /* AccessConfig.m */; };
 		DB50DC081A72FC240053110E /* FaultUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC071A72FC240053110E /* FaultUtils.m */; };
 		DB50DC0E1A733CB60053110E /* ScenesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50DC0D1A733CB60053110E /* ScenesViewController.m */; };
 		DB55ADAC1A7615D7004175CF /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D681A6CA93C00EB9A6A /* UIColor+Expanded.m */; };
+		DB64BC281B85705E00D9F147 /* DimmableSwitchRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB64BC271B85705E00D9F147 /* DimmableSwitchRowController.m */; };
 		DB6850A31A6C6D1100CE4DAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A21A6C6D1100CE4DAA /* main.m */; };
 		DB6850A61A6C6D1100CE4DAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850A51A6C6D1100CE4DAA /* AppDelegate.m */; };
 		DB6850AE1A6C6D1100CE4DAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB6850AD1A6C6D1100CE4DAA /* Images.xcassets */; };
@@ -101,10 +108,39 @@
 		DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */; };
 		DBEF8BA11A8931DA00678F6D /* WidgetSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */; };
 		DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */; };
+		DBFABFE81B854AA300FF6FE4 /* DevicesInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFABFE71B854AA300FF6FE4 /* DevicesInterfaceController.m */; };
+		DBFABFEC1B854BCE00FF6FE4 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850CD1A6C6F2A00CE4DAA /* DeviceManager.m */; };
+		DBFABFED1B854DB500FF6FE4 /* VeraDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6850D21A6C702800CE4DAA /* VeraDevice.m */; };
+		DBFABFEE1B854DC500FF6FE4 /* ControlledDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE51A6F344700EB9A6A /* ControlledDevice.m */; };
+		DBFABFEF1B854DE200FF6FE4 /* APIService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */; };
+		DBFABFF01B854DEB00FF6FE4 /* APIServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5C1A6C80FB00EB9A6A /* APIServiceRequest.m */; };
+		DBFABFF11B854DF200FF6FE4 /* ConfigUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5441A75CC2100DBD7AC /* ConfigUtils.m */; };
+		DBFABFF21B854E0100FF6FE4 /* DevicePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D01411A78A3CF005EB05F /* DevicePolling.m */; };
+		DBFABFF31B854E1000FF6FE4 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DE81A6F349A00EB9A6A /* Room.m */; };
+		DBFABFF41B854E1A00FF6FE4 /* SecurityCameraImagePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */; };
+		DBFABFF51B854E2100FF6FE4 /* VeraAccessPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3DA91A6EFEA300EB9A6A /* VeraAccessPoint.m */; };
+		DBFABFFD1B8565B400FF6FE4 /* BinarySwitchRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFABFFC1B8565B400FF6FE4 /* BinarySwitchRowController.m */; };
+		DBFABFFE1B85668B00FF6FE4 /* Binder.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFD455B1B4E3A8B004B90D8 /* Binder.m */; };
+		DBFABFFF1B85674E00FF6FE4 /* ObserverUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D941A6CE73900EB9A6A /* ObserverUtils.m */; };
+		DBFAC0001B85698000FF6FE4 /* PropertyInvalidator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */; };
 		DBFD455C1B4E3A8B004B90D8 /* Binder.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFD455B1B4E3A8B004B90D8 /* Binder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DB4F67741B85446F0032C21F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB6850951A6C6D1100CE4DAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB4F67711B85446F0032C21F;
+			remoteInfo = "Vera Remote Control WatchKit App";
+		};
+		DB4F677E1B85446F0032C21F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB6850951A6C6D1100CE4DAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB4F67661B85446F0032C21F;
+			remoteInfo = "Vera Remote Control WatchKit Extension";
+		};
 		DB6850B71A6C6D1100CE4DAA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB6850951A6C6D1100CE4DAA /* Project object */;
@@ -129,6 +165,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				DB6DE52D1A75C6A300DBD7AC /* Scenes.appex in Embed App Extensions */,
+				DB4F67801B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +175,7 @@
 /* Begin PBXFileReference section */
 		DB04DB601A827B090036A873 /* SensorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorTableViewCell.h; sourceTree = "<group>"; };
 		DB04DB611A827B090036A873 /* SensorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorTableViewCell.m; sourceTree = "<group>"; };
+		DB1AA3D01B8581CC008B76C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DB1D01401A78A3CF005EB05F /* DevicePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePolling.h; sourceTree = "<group>"; };
 		DB1D01411A78A3CF005EB05F /* DevicePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePolling.m; sourceTree = "<group>"; };
 		DB29E0431B266453002E09DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -154,6 +192,12 @@
 		DB316C7E1B66004400A0AD58 /* ThermostatControlButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThermostatControlButton.m; sourceTree = "<group>"; };
 		DB316C861B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISegmentedControlWithVerticalLayout.h; sourceTree = "<group>"; };
 		DB316C871B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISegmentedControlWithVerticalLayout.m; sourceTree = "<group>"; };
+		DB4F67671B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Vera Remote Control WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB4F676A1B85446F0032C21F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB4F676E1B85446F0032C21F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DB4F67721B85446F0032C21F /* Vera Remote Control WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vera Remote Control WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB4F67871B85469C0032C21F /* WatchApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WatchApp.storyboard; sourceTree = "<group>"; };
+		DB4F67951B8549140032C21F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB50DBFA1A7176570053110E /* DimmableSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchTableViewCell.h; sourceTree = "<group>"; };
 		DB50DBFB1A7176570053110E /* DimmableSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchTableViewCell.m; sourceTree = "<group>"; };
 		DB50DC001A72F1360053110E /* AccessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessConfig.h; sourceTree = "<group>"; };
@@ -162,6 +206,8 @@
 		DB50DC071A72FC240053110E /* FaultUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaultUtils.m; sourceTree = "<group>"; };
 		DB50DC0C1A733CB60053110E /* ScenesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenesViewController.h; sourceTree = "<group>"; };
 		DB50DC0D1A733CB60053110E /* ScenesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenesViewController.m; sourceTree = "<group>"; };
+		DB64BC261B85705E00D9F147 /* DimmableSwitchRowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchRowController.h; sourceTree = "<group>"; };
+		DB64BC271B85705E00D9F147 /* DimmableSwitchRowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchRowController.m; sourceTree = "<group>"; };
 		DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vera Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6850A11A6C6D1100CE4DAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB6850A21A6C6D1100CE4DAA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -285,11 +331,24 @@
 		DBEF8BA01A8931DA00678F6D /* WidgetSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetSettingsViewController.m; sourceTree = "<group>"; };
 		DBEF8BA51A89324400678F6D /* TableViewCellWithSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellWithSwitch.h; sourceTree = "<group>"; };
 		DBEF8BA61A89324400678F6D /* TableViewCellWithSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCellWithSwitch.m; sourceTree = "<group>"; };
+		DBFABFE61B854AA300FF6FE4 /* DevicesInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicesInterfaceController.h; sourceTree = "<group>"; };
+		DBFABFE71B854AA300FF6FE4 /* DevicesInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicesInterfaceController.m; sourceTree = "<group>"; };
+		DBFABFE91B854B1600FF6FE4 /* DeviceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceFilter.h; sourceTree = "<group>"; };
+		DBFABFF61B855E9800FF6FE4 /* Vera Remote Control WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Vera Remote Control WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		DBFABFFB1B8565B400FF6FE4 /* BinarySwitchRowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySwitchRowController.h; sourceTree = "<group>"; };
+		DBFABFFC1B8565B400FF6FE4 /* BinarySwitchRowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySwitchRowController.m; sourceTree = "<group>"; };
 		DBFD455A1B4E3A8B004B90D8 /* Binder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Binder.h; sourceTree = "<group>"; };
 		DBFD455B1B4E3A8B004B90D8 /* Binder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Binder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DB4F67641B85446F0032C21F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DB68509A1A6C6D1100CE4DAA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -329,6 +388,44 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		DB4F67681B85446F0032C21F /* Vera Remote Control WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DBFABFF81B85610500FF6FE4 /* Managers */,
+				DBFABFF71B8560F500FF6FE4 /* View Controller */,
+				DBFABFF61B855E9800FF6FE4 /* Vera Remote Control WatchKit Extension.entitlements */,
+				DB4F676E1B85446F0032C21F /* Images.xcassets */,
+				DB4F67691B85446F0032C21F /* Supporting Files */,
+			);
+			path = "Vera Remote Control WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		DB4F67691B85446F0032C21F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB4F676A1B85446F0032C21F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB4F67761B85446F0032C21F /* Vera Remote Control WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				DB1AA3D01B8581CC008B76C6 /* Images.xcassets */,
+				DB4F67871B85469C0032C21F /* WatchApp.storyboard */,
+				DB4F67771B85446F0032C21F /* Supporting Files */,
+			);
+			path = "Vera Remote Control WatchKit App";
+			sourceTree = "<group>";
+		};
+		DB4F67771B85446F0032C21F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB4F67951B8549140032C21F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		DB6850941A6C6D1100CE4DAA = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +433,8 @@
 				DB6850B91A6C6D1100CE4DAA /* Vera Remote ControlTests */,
 				DB68509F1A6C6D1100CE4DAA /* Vera Remote Control */,
 				DB6DE5231A75C6A300DBD7AC /* Scenes Extension */,
+				DB4F67681B85446F0032C21F /* Vera Remote Control WatchKit Extension */,
+				DB4F67761B85446F0032C21F /* Vera Remote Control WatchKit App */,
 				DB6DE5201A75C6A300DBD7AC /* Frameworks */,
 				DB68509E1A6C6D1100CE4DAA /* Products */,
 			);
@@ -347,6 +446,8 @@
 				DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */,
 				DB6850B61A6C6D1100CE4DAA /* Vera Remote ControlTests.xctest */,
 				DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */,
+				DB4F67671B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex */,
+				DB4F67721B85446F0032C21F /* Vera Remote Control WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -426,6 +527,7 @@
 				DB8B3DE81A6F349A00EB9A6A /* Room.m */,
 				DB50DC001A72F1360053110E /* AccessConfig.h */,
 				DB50DC011A72F1360053110E /* AccessConfig.m */,
+				DBFABFE91B854B1600FF6FE4 /* DeviceFilter.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -694,9 +796,70 @@
 			name = Managers;
 			sourceTree = "<group>";
 		};
+		DBFABFF71B8560F500FF6FE4 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DBFABFFA1B85659100FF6FE4 /* Row Controllers */,
+				DBFABFE61B854AA300FF6FE4 /* DevicesInterfaceController.h */,
+				DBFABFE71B854AA300FF6FE4 /* DevicesInterfaceController.m */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		DBFABFF81B85610500FF6FE4 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		DBFABFFA1B85659100FF6FE4 /* Row Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DBFABFFB1B8565B400FF6FE4 /* BinarySwitchRowController.h */,
+				DBFABFFC1B8565B400FF6FE4 /* BinarySwitchRowController.m */,
+				DB64BC261B85705E00D9F147 /* DimmableSwitchRowController.h */,
+				DB64BC271B85705E00D9F147 /* DimmableSwitchRowController.m */,
+			);
+			name = "Row Controllers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DB4F67661B85446F0032C21F /* Vera Remote Control WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB4F67841B85446F0032C21F /* Build configuration list for PBXNativeTarget "Vera Remote Control WatchKit Extension" */;
+			buildPhases = (
+				DB4F67631B85446F0032C21F /* Sources */,
+				DB4F67641B85446F0032C21F /* Frameworks */,
+				DB4F67651B85446F0032C21F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB4F67751B85446F0032C21F /* PBXTargetDependency */,
+			);
+			name = "Vera Remote Control WatchKit Extension";
+			productName = "Vera Remote Control WatchKit Extension";
+			productReference = DB4F67671B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit-extension";
+		};
+		DB4F67711B85446F0032C21F /* Vera Remote Control WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB4F67811B85446F0032C21F /* Build configuration list for PBXNativeTarget "Vera Remote Control WatchKit App" */;
+			buildPhases = (
+				DB4F67701B85446F0032C21F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Vera Remote Control WatchKit App";
+			productName = "Vera Remote Control WatchKit App";
+			productReference = DB4F67721B85446F0032C21F /* Vera Remote Control WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp";
+		};
 		DB68509C1A6C6D1100CE4DAA /* Vera Remote Control */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB6850C01A6C6D1100CE4DAA /* Build configuration list for PBXNativeTarget "Vera Remote Control" */;
@@ -710,6 +873,7 @@
 			);
 			dependencies = (
 				DB6DE52C1A75C6A300DBD7AC /* PBXTargetDependency */,
+				DB4F677F1B85446F0032C21F /* PBXTargetDependency */,
 			);
 			name = "Vera Remote Control";
 			productName = "Vera Remote Control";
@@ -757,9 +921,22 @@
 		DB6850951A6C6D1100CE4DAA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Dmitry Miller";
 				TargetAttributes = {
+					DB4F67661B85446F0032C21F = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 8X8RX9P5TW;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					DB4F67711B85446F0032C21F = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 8X8RX9P5TW;
+					};
 					DB68509C1A6C6D1100CE4DAA = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = 8X8RX9P5TW;
@@ -803,11 +980,31 @@
 				DB68509C1A6C6D1100CE4DAA /* Vera Remote Control */,
 				DB6850B51A6C6D1100CE4DAA /* Vera Remote ControlTests */,
 				DB6DE51E1A75C6A300DBD7AC /* Scenes */,
+				DB4F67661B85446F0032C21F /* Vera Remote Control WatchKit Extension */,
+				DB4F67711B85446F0032C21F /* Vera Remote Control WatchKit App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DB4F67651B85446F0032C21F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB4F67731B85446F0032C21F /* Vera Remote Control WatchKit App.app in Resources */,
+				DB4F676F1B85446F0032C21F /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB4F67701B85446F0032C21F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB4F67881B85469C0032C21F /* WatchApp.storyboard in Resources */,
+				DB1AA3D11B8581CC008B76C6 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DB68509B1A6C6D1100CE4DAA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -834,6 +1031,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DB4F67631B85446F0032C21F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBFABFF31B854E1000FF6FE4 /* Room.m in Sources */,
+				DBFABFEF1B854DE200FF6FE4 /* APIService.m in Sources */,
+				DBFAC0001B85698000FF6FE4 /* PropertyInvalidator.m in Sources */,
+				DB4F67931B8548AB0032C21F /* AccessConfig.m in Sources */,
+				DBFABFFD1B8565B400FF6FE4 /* BinarySwitchRowController.m in Sources */,
+				DBFABFF01B854DEB00FF6FE4 /* APIServiceRequest.m in Sources */,
+				DBFABFF41B854E1A00FF6FE4 /* SecurityCameraImagePolling.m in Sources */,
+				DBFABFF21B854E0100FF6FE4 /* DevicePolling.m in Sources */,
+				DBFABFFE1B85668B00FF6FE4 /* Binder.m in Sources */,
+				DBFABFF51B854E2100FF6FE4 /* VeraAccessPoint.m in Sources */,
+				DB64BC281B85705E00D9F147 /* DimmableSwitchRowController.m in Sources */,
+				DBFABFFF1B85674E00FF6FE4 /* ObserverUtils.m in Sources */,
+				DBFABFED1B854DB500FF6FE4 /* VeraDevice.m in Sources */,
+				DBFABFEC1B854BCE00FF6FE4 /* DeviceManager.m in Sources */,
+				DBFABFEE1B854DC500FF6FE4 /* ControlledDevice.m in Sources */,
+				DBFABFE81B854AA300FF6FE4 /* DevicesInterfaceController.m in Sources */,
+				DBFABFF11B854DF200FF6FE4 /* ConfigUtils.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DB6850991A6C6D1100CE4DAA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -944,6 +1165,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DB4F67751B85446F0032C21F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB4F67711B85446F0032C21F /* Vera Remote Control WatchKit App */;
+			targetProxy = DB4F67741B85446F0032C21F /* PBXContainerItemProxy */;
+		};
+		DB4F677F1B85446F0032C21F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB4F67661B85446F0032C21F /* Vera Remote Control WatchKit Extension */;
+			targetProxy = DB4F677E1B85446F0032C21F /* PBXContainerItemProxy */;
+		};
 		DB6850B81A6C6D1100CE4DAA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DB68509C1A6C6D1100CE4DAA /* Vera Remote Control */;
@@ -968,6 +1199,85 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DB4F67821B85446F0032C21F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IBSC_MODULE = Vera_Remote_Control_WatchKit_Extension;
+				INFOPLIST_FILE = "Vera Remote Control WatchKit App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Debug;
+		};
+		DB4F67831B85446F0032C21F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = Vera_Remote_Control_WatchKit_Extension;
+				INFOPLIST_FILE = "Vera Remote Control WatchKit App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Release;
+		};
+		DB4F67851B85446F0032C21F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Vera Remote Control WatchKit Extension/Vera Remote Control WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Vera Remote Control WatchKit Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_CFLAGS = "";
+				"OTHER_CFLAGS[arch=*]" = "-DWATCH=1";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DB4F67861B85446F0032C21F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Vera Remote Control WatchKit Extension/Vera Remote Control WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Vera Remote Control WatchKit Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				"OTHER_CFLAGS[arch=*]" = "-DWATCH=1";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		DB6850BE1A6C6D1100CE4DAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1004,7 +1314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1040,7 +1350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1154,6 +1464,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DB4F67811B85446F0032C21F /* Build configuration list for PBXNativeTarget "Vera Remote Control WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB4F67821B85446F0032C21F /* Debug */,
+				DB4F67831B85446F0032C21F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB4F67841B85446F0032C21F /* Build configuration list for PBXNativeTarget "Vera Remote Control WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB4F67851B85446F0032C21F /* Debug */,
+				DB4F67861B85446F0032C21F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DB6850981A6C6D1100CE4DAA /* Build configuration list for PBXProject "Vera Remote Control" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

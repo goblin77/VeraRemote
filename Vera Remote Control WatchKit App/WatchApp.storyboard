@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Qp9-Jz-rDJ">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
+    </dependencies>
+    <scenes>
+        <!--Switches Scene-->
+        <scene sceneID="5XG-ke-0GP">
+            <objects>
+                <controller id="Qp9-Jz-rDJ" userLabel="Switches Scene" customClass="DevicesInterfaceController">
+                    <items>
+                        <table alignment="left" id="hxH-qP-PlS">
+                            <items>
+                                <tableRow identifier="BinarySwitchRowController" selectable="NO" id="I5H-Hf-Bzf" customClass="BinarySwitchRowController">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="Rp7-1r-VtV">
+                                        <items>
+                                            <label alignment="left" text="Label" minimumScaleFactor="0.50000000000000011" id="Ti8-6h-gIc"/>
+                                            <switch alignment="left" value="YES" id="EGo-F3-W8i">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                                <connections>
+                                                    <action selector="handleSwitchControlTapped:" destination="I5H-Hf-Bzf" id="xTk-tI-vaf"/>
+                                                </connections>
+                                            </switch>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="nameLabel" destination="Ti8-6h-gIc" id="hj4-2P-Ilb"/>
+                                        <outlet property="switchControl" destination="EGo-F3-W8i" id="q2q-AW-eHT"/>
+                                    </connections>
+                                </tableRow>
+                                <tableRow identifier="DimmableSwitchRowController" selectable="NO" id="dMs-bF-zxd" userLabel="DimmableSwitchRowController" customClass="DimmableSwitchRowController">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="gVh-7L-61T">
+                                        <items>
+                                            <label width="1" alignment="left" text="Label" minimumScaleFactor="0.50000000000000011" id="By0-Tt-YTP"/>
+                                            <slider width="1" alignment="left" value="1" maximum="5" steps="5" id="Ox8-1j-qZu">
+                                                <connections>
+                                                    <action selector="handleSliderTap:" destination="dMs-bF-zxd" id="coe-bp-Ujo"/>
+                                                </connections>
+                                            </slider>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="nameLabel" destination="By0-Tt-YTP" id="50M-Ei-gxj"/>
+                                        <outlet property="sliderControl" destination="Ox8-1j-qZu" id="Gnx-bN-scN"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="hxH-qP-PlS" id="uJO-Gm-tEh"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="61" y="-78"/>
+        </scene>
+    </scenes>
+</document>

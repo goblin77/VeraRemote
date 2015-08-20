@@ -12,7 +12,11 @@
 #import "VeraAccessPoint.h"
 #import "Room.h"
 #import "ControlledDevice.h"
+
+#if !WATCH
 #import "UIAlertViewWithCallbacks.h"
+#endif
+
 #import "DevicePolling.h"
 #import "FaultUtils.h"
 #import "ConfigUtils.h"
@@ -59,8 +63,6 @@ NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTar
 @synthesize password;
 @synthesize currentDevice;
 @synthesize accessPoint;
-
-
 
 
 +(DeviceManager *) sharedInstance
@@ -390,11 +392,15 @@ NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTar
 
 -(void) defaultFaultHandler:(NSError *) fault
 {
+#if WATCH
+    
+#else
     UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
                                                                                message:@"Oops! Looks like there was an error processing your operation."
                                                                      cancelButtonTitle:@"Close"
                                                                      otherButtonTitles:nil];
     [alert show];
+#endif
 }
 
 
@@ -845,12 +851,15 @@ NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTar
          NSRange r = [response rangeOfString:@"ERROR:"];
          if(r.length > 0)
          {
+#if WATCH
+#else
              UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@""
                                                               message:[response substringFromIndex:r.length]
                                                              delegate:nil
                                                     cancelButtonTitle:@"Close"
                                                     otherButtonTitles:nil];
              [alert show];
+#endif
          }
          
      }];

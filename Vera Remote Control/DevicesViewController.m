@@ -19,15 +19,7 @@
 #import "ThermostatTableViewCell.h"
 #import "SecurityCameraViewController.h"
 #import "UIAlertViewWithCallbacks.h"
-
-
-typedef NS_ENUM(NSInteger, DeviceFilter)
-{
-    DeviceFilterSwitches,
-    DeviceFilterClimate,
-    DeviceFilterSecurity,
-    DeviceFilterAll
-};
+#import "DeviceFilter.h"
 
 @interface DevicesViewController ()
 {
