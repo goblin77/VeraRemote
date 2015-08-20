@@ -59,7 +59,7 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:SetBinarySwitchValueNotification
                                                         object:self.binarySwitch
-                                                      userInfo:@{@"value" : @(!self.binarySwitch.manualValue)}
+                                                      userInfo:@{@"value" : @(!self.binarySwitch.value)}
      ];
 }
 
