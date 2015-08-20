@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <WatchKit/WatchKit.h>
 #import "ControlledDevice.h"
+#import "Room.h"
 
 @interface BinarySwitchRowController : NSObject
 @property (nonatomic) BinarySwitch *binarySwitch;
+@property (nonatomic) Room *room;
 @end

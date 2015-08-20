@@ -13,36 +13,51 @@
                         <table alignment="left" id="hxH-qP-PlS">
                             <items>
                                 <tableRow identifier="BinarySwitchRowController" selectable="NO" id="I5H-Hf-Bzf" customClass="BinarySwitchRowController">
-                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="Rp7-1r-VtV">
+                                    <group key="rootItem" width="1" height="1" alignment="left" layout="vertical" id="Rp7-1r-VtV">
                                         <items>
                                             <label alignment="left" text="Label" numberOfLines="2" minimumScaleFactor="0.50000000000000011" id="Ti8-6h-gIc"/>
-                                            <switch alignment="left" value="YES" id="EGo-F3-W8i">
+                                            <label width="1" alignment="left" text="Label" minimumScaleFactor="0.50000000000000011" id="EAB-dt-DtO">
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            </label>
+                                            <switch alignment="center" verticalAlignment="center" value="YES" id="EGo-F3-W8i">
                                                 <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                                 <connections>
                                                     <action selector="handleSwitchControlTapped:" destination="I5H-Hf-Bzf" id="xTk-tI-vaf"/>
                                                 </connections>
                                             </switch>
+                                            <group width="1" height="20" alignment="left" id="J2I-wv-tuH"/>
                                         </items>
                                     </group>
                                     <connections>
                                         <outlet property="nameLabel" destination="Ti8-6h-gIc" id="hj4-2P-Ilb"/>
+                                        <outlet property="roomNameLabel" destination="EAB-dt-DtO" id="dxn-2U-sJz"/>
                                         <outlet property="switchControl" destination="EGo-F3-W8i" id="q2q-AW-eHT"/>
                                     </connections>
                                 </tableRow>
                                 <tableRow identifier="DimmableSwitchRowController" selectable="NO" id="dMs-bF-zxd" userLabel="DimmableSwitchRowController" customClass="DimmableSwitchRowController">
-                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="gVh-7L-61T">
+                                    <group key="rootItem" width="1" height="1" alignment="left" layout="vertical" id="gVh-7L-61T">
                                         <items>
                                             <label width="1" alignment="left" text="Label" numberOfLines="2" minimumScaleFactor="0.50000000000000011" id="By0-Tt-YTP"/>
-                                            <slider width="1" alignment="left" value="1" maximum="5" steps="5" id="Ox8-1j-qZu">
+                                            <label width="1" alignment="left" text="Label" minimumScaleFactor="0.50000000000000011" id="03O-af-q3u">
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            </label>
+                                            <slider width="1" alignment="center" verticalAlignment="center" value="1" maximum="5" steps="5" id="Ox8-1j-qZu">
                                                 <connections>
                                                     <action selector="handleSliderTap:" destination="dMs-bF-zxd" id="coe-bp-Ujo"/>
                                                 </connections>
                                             </slider>
+                                            <switch width="1" alignment="left" verticalAlignment="center" value="YES" id="DlZ-bn-7a6">
+                                                <connections>
+                                                    <action selector="handleSwitchControlTap:" destination="dMs-bF-zxd" id="Wsb-hI-LaB"/>
+                                                </connections>
+                                            </switch>
                                         </items>
                                     </group>
                                     <connections>
                                         <outlet property="nameLabel" destination="By0-Tt-YTP" id="50M-Ei-gxj"/>
+                                        <outlet property="roomNameLabel" destination="03O-af-q3u" id="BUg-r9-xyT"/>
                                         <outlet property="sliderControl" destination="Ox8-1j-qZu" id="Gnx-bN-scN"/>
+                                        <outlet property="switchControl" destination="DlZ-bn-7a6" id="liE-IX-bKH"/>
                                     </connections>
                                 </tableRow>
                             </items>

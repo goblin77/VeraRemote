@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <WatchKit/WatchKit.h>
 #import "ControlledDevice.h"
+#import "Room.h"
 
 @interface DimmableSwitchRowController : NSObject
 
 @property (nonatomic) DimmableSwitch *dimmableSwitch;
+@property (nonatomic) Room *room;
 
 - (IBAction)handleSliderTap:(float)value;
 

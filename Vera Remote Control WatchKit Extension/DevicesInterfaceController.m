@@ -12,6 +12,7 @@
 #import "PropertyInvalidator.h"
 #import "BinarySwitchRowController.h"
 #import "DimmableSwitchRowController.h"
+#import "Room.h"
 
 @interface DevicesInterfaceController () <Invalidatable>
 
@@ -40,23 +41,31 @@
         [weakSelf.invalidator invalidateProperties];
     }];
 
-}
-
-- (void)willActivate {
-    [super willActivate];
     [self.binder startObserving];
-    
 }
 
-- (void)didDeactivate {
-    // This method is called when watch view controller is no longer visible
+- (void)willActivate
+{
+    [super willActivate];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ResumePollingNotification object:nil];
+}
+
+- (void)didDeactivate
+{
     [super didDeactivate];
-    [self.binder stopObserving];
+    [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
 }
 
 #pragma mark - Invalidatable implementation
 - (void)commitProperties
 {
+    NSMutableDictionary *rooms = [NSMutableDictionary new];
+    for (Room *room in self.deviceManager.rooms)
+    {
+        rooms[@(room.roomId)] = room;
+    }
+    
+    
     NSMutableArray *filteredDevices = [NSMutableArray new];
     for (ControlledDevice *device in self.deviceManager.devices)
     {
@@ -71,16 +80,10 @@
     }
     
     [filteredDevices sortUsingComparator:^NSComparisonResult(ControlledDevice *d1, ControlledDevice *d2) {
-        if (d1.roomId > d2.roomId)
-        {
-            return NSOrderedAscending;
-        }
-        else if (d1.roomId > d2.roomId)
-        {
-            return NSOrderedDescending;
-        }
+        Room *r1 = rooms[@(d1.roomId)];
+        Room *r2 = rooms[@(d2.roomId)];
         
-        return NSOrderedSame;
+        return [r1.name compare:r2.name options:NSCaseInsensitiveSearch];
     }];
     
     NSMutableArray *rowTypes = [NSMutableArray new];
@@ -104,11 +107,13 @@
         {
             BinarySwitchRowController *c = [self.table rowControllerAtIndex:i];
             c.binarySwitch = (BinarySwitch *)d;
+            c.room = rooms[@(d.roomId)];
         }
         else if([d isKindOfClass:[DimmableSwitch class]])
         {
             DimmableSwitchRowController *c = [self.table rowControllerAtIndex:i];
             c.dimmableSwitch = (DimmableSwitch *)d;
+            c.room = rooms[@(d.roomId)];
         }
     }    
 }

@@ -10,18 +10,18 @@
 #import "Binder.h"
 #import "PropertyInvalidator.h"
 #import "DeviceManager.h"
-#import "dispatch_cancelable_block.h"
 
 @interface DimmableSwitchRowController ()<Invalidatable>
-{
-    dispatch_cancelable_block_t scheduledUpdateValue;
-}
 
 @property (nonatomic) IBOutlet WKInterfaceLabel *nameLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *roomNameLabel;
 @property (nonatomic) IBOutlet WKInterfaceSlider *sliderControl;
+@property (nonatomic) IBOutlet WKInterfaceSwitch *switchControl;
 
-@property (nonatomic) Binder *binder;
+@property (nonatomic) Binder *deviceBinder;
+@property (nonatomic) Binder *roomBinder;
 @property (nonatomic) PropertyInvalidator *propertyInvalidator;
+@property (nonatomic) double scheduledValue;
 
 @end
 
@@ -33,14 +33,18 @@
     {
         __weak typeof(self) weakSelf = self;
         self.propertyInvalidator = [[PropertyInvalidator alloc] initWithHostObject:self];
-        self.binder = [[Binder alloc] initWithObject:self keyPaths:@[@"dimmableSwitch.name",
+        self.deviceBinder = [[Binder alloc] initWithObject:self keyPaths:@[@"dimmableSwitch.name",
                                                                      @"dimmableSwitch.value",
                                                                      @"dimmableSwitch.manualOverride",
                                                                      @"dimmableSwitch.manualValue"]
                                             callback:^{
                                                 [weakSelf.propertyInvalidator invalidateProperties];
                                             }];
-        [self.binder startObserving];
+        self.roomBinder = [[Binder alloc] initWithObject:self keyPaths:@[@"room.name"] callback:^{
+            [weakSelf.propertyInvalidator invalidateProperties];
+        }];
+        
+        [self.deviceBinder startObserving];
     }
     
     
@@ -51,36 +55,40 @@
 - (void)commitProperties
 {
     [self.nameLabel setText:self.dimmableSwitch.name];
+    [self.roomNameLabel setText:self.room.name.length > 0 ? self.room.name : @"No room"];
     double value = self.dimmableSwitch.manualOverride ? self.dimmableSwitch.manualValue : self.dimmableSwitch.value;
     [self.sliderControl setValue:roundf(value / 20)];
+    [self.switchControl setOn:self.dimmableSwitch.value != 0];
 }
 
 #pragma mark - Actions
 - (IBAction)handleSliderTap:(float)value {
-    double convertedValue = value * 20;
-    [self scheduleValueUpdate:convertedValue];
+    self.scheduledValue = value * 20;
+    [self cancelScheduledUpdates];
+    [self performSelector:@selector(updateDimmerValue) withObject:nil afterDelay:0.75];
 }
 
-- (void) scheduleValueUpdate:(double)value
-{
-    if (scheduledUpdateValue != nil)
-    {
-        cancel_block(scheduledUpdateValue);
-        scheduledUpdateValue = nil;
-    }
-    
-    self.dimmableSwitch.manualOverride = YES;
-    self.dimmableSwitch.manualValue = value;
+- (IBAction)handleSwitchControlTap:(BOOL)value {
+    [self cancelScheduledUpdates];
+    BOOL newValue = self.dimmableSwitch.value == 0 ? YES : NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:SetDimmableSwitchValueNotification
+                                                        object:self.dimmableSwitch
+                                                      userInfo:@{@"value" : @(newValue ? 100 : 0)}];
+}
 
-    __weak typeof(self) weakSelf = self;
-    scheduledUpdateValue = dispatch_after_delay(0.5, ^{
-        scheduledUpdateValue = nil;
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:SetDimmableSwitchValueNotification
-                                                            object:weakSelf.dimmableSwitch
-                                                          userInfo:@{@"value" : @(value)}];
-    });
-    
+#pragma mark - misc
+- (void)updateDimmerValue
+
+{
+    [self cancelScheduledUpdates];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SetDimmableSwitchValueNotification
+                                                        object:self.dimmableSwitch
+                                                      userInfo:@{@"value" : @(self.scheduledValue)}];
+}
+
+- (void)cancelScheduledUpdates
+{
+    [self.class cancelPreviousPerformRequestsWithTarget:self];
 }
 
 

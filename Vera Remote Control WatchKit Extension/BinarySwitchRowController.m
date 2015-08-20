@@ -15,8 +15,10 @@
 
 @property (nonatomic) IBOutlet WKInterfaceSwitch *switchControl;
 @property (nonatomic) IBOutlet WKInterfaceLabel *nameLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *roomNameLabel;
 
-@property (nonatomic) Binder *binder;
+@property (nonatomic) Binder *deviceBinder;
+@property (nonatomic) Binder *roomBinder;
 @property (nonatomic) PropertyInvalidator *propertyInvalidator;
 @end
 
@@ -28,14 +30,17 @@
     {
         __weak typeof(self) weakSelf = self;
         self.propertyInvalidator = [[PropertyInvalidator alloc] initWithHostObject:self];
-        self.binder = [[Binder alloc] initWithObject:self
+        self.deviceBinder = [[Binder alloc] initWithObject:self
                                             keyPaths:@[@"binarySwitch.name",
                                                        @"binarySwitch.value",
                                                        @"binarySwitch.manualOverride"]
                                             callback:^{
                                                 [weakSelf.propertyInvalidator invalidateProperties];
                                             }];
-        [self.binder startObserving];
+        self.roomBinder = [[Binder alloc] initWithObject:self keyPaths:@[@"room.name"] callback:^{
+            [weakSelf.propertyInvalidator invalidateProperties];
+        }];
+        [self.deviceBinder startObserving];
     }
     
     return self;
@@ -45,7 +50,7 @@
 - (void)commitProperties
 {
     [self.nameLabel setText:self.binarySwitch.name];
-    
+    [self.roomNameLabel setText:self.room.name.length > 0 ? self.room.name : @"No room"];
     [self.switchControl setOn:self.binarySwitch.manualOverride ? self.binarySwitch.manualValue : self.binarySwitch.value];
 }
 
