@@ -47,6 +47,8 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
 NSString * const SetThermostatModeActionNotification = @"SetThermostatModeAction";
 NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTargetTemperature";
 
+NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
+
 @interface DeviceManager ()
 
 @property (nonatomic, strong) DevicePolling * devicePolling;
@@ -134,6 +136,7 @@ NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTar
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetThermostatModeNotification:) name:SetThermostatModeActionNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetThermostatTargetTemperatureNotification:) name:SetThermostatTargetTemperatureNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleClearManualOverride:) name:ClearManualOverrideNotification object:nil];
     }
     
     return self;
@@ -956,6 +959,19 @@ NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTar
          
      }];
         
+}
+
+- (void)handleClearManualOverride:(NSNotification *)notification
+{
+    for (Scene *scene in self.scenes)
+    {
+        scene.manualOverride = NO;
+    }
+    
+    for (ControlledDevice *device in self.devices)
+    {
+        device.manualOverride = NO;
+    }
 }
 
 @end

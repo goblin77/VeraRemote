@@ -37,6 +37,7 @@ extern NSString * const RunSceneNotification;
 extern NSString * const SecurityCameraPTZActionNotification;
 extern NSString * const SetThermostatModeActionNotification;
 extern NSString * const SetThermostatTargetTemperatureNotification;
+extern NSString * const ClearManualOverrideNotification;
 
 
 @interface DeviceManager : NSObject

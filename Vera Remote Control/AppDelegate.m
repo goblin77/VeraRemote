@@ -66,7 +66,10 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ClearManualOverrideNotification object:nil];
 }
+
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.

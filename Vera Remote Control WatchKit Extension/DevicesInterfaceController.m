@@ -54,6 +54,7 @@
 {
     [super didDeactivate];
     [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ClearManualOverrideNotification object:nil];
 }
 
 #pragma mark - Invalidatable implementation
