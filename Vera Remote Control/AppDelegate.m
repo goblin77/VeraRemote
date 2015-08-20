@@ -66,7 +66,6 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:ClearManualOverrideNotification object:nil];
 }
 
 
