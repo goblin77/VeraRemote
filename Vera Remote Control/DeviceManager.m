@@ -971,6 +971,21 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
     for (ControlledDevice *device in self.devices)
     {
         device.manualOverride = NO;
+        if ([device isKindOfClass:[BinarySwitch class]])
+        {
+            BinarySwitch *binarySwitch = (BinarySwitch *)device;
+            binarySwitch.manualValue = binarySwitch.value;
+        }
+        else if ([device isKindOfClass:[DimmableSwitch class]])
+        {
+            DimmableSwitch *dimmableSwitch = (DimmableSwitch *)device;
+            dimmableSwitch.manualValue = dimmableSwitch.value;
+        }
+        else if ([device isKindOfClass:[SecuritySensor class]])
+        {
+            SecuritySensor *securitySensor = (SecuritySensor *)device;
+            securitySensor.manualArmed = securitySensor.armed;
+        }
     }
 }
 
