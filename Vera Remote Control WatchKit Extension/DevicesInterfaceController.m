@@ -13,6 +13,7 @@
 #import "BinarySwitchRowController.h"
 #import "DimmableSwitchRowController.h"
 #import "Room.h"
+#import "ErrorInterfaceController.h"
 
 @interface DevicesInterfaceController () <Invalidatable>
 
@@ -20,10 +21,15 @@
 @property (nonatomic, weak) DeviceManager *deviceManager;
 @property (nonatomic) Binder *binder;
 @property (nonatomic) PropertyInvalidator *invalidator;
+@property (nonatomic) BOOL shouldResetOnActive;
 
 @end
 
 @implementation DevicesInterfaceController
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
@@ -34,12 +40,16 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:BootstrapNotification object:nil];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDeviceManagerFault:) name:DeviceManagerDidHaveNetworkFaultNotification object:nil];
+    
     __weak typeof(self) weakSelf = self;
     
     self.invalidator = [[PropertyInvalidator alloc] initWithHostObject:self];
     self.binder = [[Binder alloc] initWithObject:self keyPaths:@[@"deviceManager.devices"] callback:^{
         [weakSelf.invalidator invalidateProperties];
     }];
+    
+    [self addMenuItemWithItemIcon:WKMenuItemIconRepeat title:@"Reload Devices" action:@selector(handleReloadNetWorkMenuItemTapped:)];
 
     [self.binder startObserving];
 }
@@ -47,7 +57,13 @@
 - (void)willActivate
 {
     [super willActivate];
-    [[NSNotificationCenter defaultCenter] postNotificationName:ResumePollingNotification object:nil];
+    NSDictionary *userInfo = nil;
+    if (self.shouldResetOnActive) {
+        self.shouldResetOnActive = NO;
+        userInfo = @{@"resetDeviceNetwork" : @(YES)};
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ResumePollingNotification object:userInfo];
 }
 
 - (void)didDeactivate
@@ -65,7 +81,6 @@
     {
         rooms[@(room.roomId)] = room;
     }
-    
     
     NSMutableArray *filteredDevices = [NSMutableArray new];
     for (ControlledDevice *device in self.deviceManager.devices)
@@ -116,7 +131,16 @@
             c.dimmableSwitch = (DimmableSwitch *)d;
             c.room = rooms[@(d.roomId)];
         }
-    }    
+    }
+}
+
+#pragma mark - notification handlers/actions
+- (void)handleDeviceManagerFault:(NSNotification *)notification {
+    [self presentControllerWithName:NSStringFromClass([ErrorInterfaceController class]) context:notification.object];
+}
+
+- (void)handleReloadNetWorkMenuItemTapped:(id)sender {
+    self.shouldResetOnActive = YES;
 }
 
 

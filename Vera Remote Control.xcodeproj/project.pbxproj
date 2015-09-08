@@ -69,6 +69,7 @@
 		DB6DE5591A75FD0D00DBD7AC /* SceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5561A75F93D00DBD7AC /* SceneView.m */; };
 		DB6DE55A1A75FD1000DBD7AC /* ScenesView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6DE5521A75F8F200DBD7AC /* ScenesView.m */; };
 		DB6DE55B1A76048D00DBD7AC /* UIFont_Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D6D1A6CAC2700EB9A6A /* UIFont_Expanded.m */; };
+		DB7AA4291B9E30670020F354 /* ErrorInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7AA4281B9E30670020F354 /* ErrorInterfaceController.m */; };
 		DB8B3D5D1A6C80FB00EB9A6A /* APIService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */; };
 		DB8B3D5E1A6C80FB00EB9A6A /* APIServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D5C1A6C80FB00EB9A6A /* APIServiceRequest.m */; };
 		DB8B3D621A6CA71F00EB9A6A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8B3D611A6CA71F00EB9A6A /* MasterViewController.m */; };
@@ -252,6 +253,8 @@
 		DB6DE5521A75F8F200DBD7AC /* ScenesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenesView.m; sourceTree = "<group>"; };
 		DB6DE5551A75F93D00DBD7AC /* SceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneView.h; sourceTree = "<group>"; };
 		DB6DE5561A75F93D00DBD7AC /* SceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneView.m; sourceTree = "<group>"; };
+		DB7AA4271B9E30670020F354 /* ErrorInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorInterfaceController.h; sourceTree = "<group>"; };
+		DB7AA4281B9E30670020F354 /* ErrorInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorInterfaceController.m; sourceTree = "<group>"; };
 		DB8B3D591A6C80FB00EB9A6A /* APIService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIService.h; sourceTree = "<group>"; };
 		DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIService.m; sourceTree = "<group>"; };
 		DB8B3D5B1A6C80FB00EB9A6A /* APIServiceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServiceRequest.h; sourceTree = "<group>"; };
@@ -802,6 +805,8 @@
 				DBFABFFA1B85659100FF6FE4 /* Row Controllers */,
 				DBFABFE61B854AA300FF6FE4 /* DevicesInterfaceController.h */,
 				DBFABFE71B854AA300FF6FE4 /* DevicesInterfaceController.m */,
+				DB7AA4271B9E30670020F354 /* ErrorInterfaceController.h */,
+				DB7AA4281B9E30670020F354 /* ErrorInterfaceController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -1039,6 +1044,7 @@
 				DBFABFEF1B854DE200FF6FE4 /* APIService.m in Sources */,
 				DBFAC0001B85698000FF6FE4 /* PropertyInvalidator.m in Sources */,
 				DB4F67931B8548AB0032C21F /* AccessConfig.m in Sources */,
+				DB7AA4291B9E30670020F354 /* ErrorInterfaceController.m in Sources */,
 				DBFABFFD1B8565B400FF6FE4 /* BinarySwitchRowController.m in Sources */,
 				DBFABFF01B854DEB00FF6FE4 /* APIServiceRequest.m in Sources */,
 				DBFABFF41B854E1A00FF6FE4 /* SecurityCameraImagePolling.m in Sources */,

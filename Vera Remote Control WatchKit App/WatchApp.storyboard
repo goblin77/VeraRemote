@@ -70,5 +70,26 @@
             </objects>
             <point key="canvasLocation" x="61" y="-78"/>
         </scene>
+        <!--ErrorInterfaceController-->
+        <scene sceneID="XIO-HP-0Y6">
+            <objects>
+                <controller identifier="ErrorInterfaceController" id="tCU-vv-7Gz" customClass="ErrorInterfaceController">
+                    <items>
+                        <group width="1" height="1" alignment="left" layout="vertical" spacing="14" id="JsP-Xf-6SY">
+                            <items>
+                                <label width="1" alignment="left" verticalAlignment="center" text="Ooops! Something went wrong while fetching your data. " textAlignment="center" numberOfLines="0" minimumScaleFactor="0.50000000000000011" id="bSu-g3-x9k"/>
+                                <button width="1" alignment="center" verticalAlignment="center" title="Try Again" id="V6U-pv-D6c">
+                                    <connections>
+                                        <action selector="handleTryAgainButtonTapped" destination="tCU-vv-7Gz" id="Fjz-dO-2Ps"/>
+                                    </connections>
+                                </button>
+                            </items>
+                            <edgeInsets key="margins" left="10" right="10" top="0.0" bottom="0.0"/>
+                        </group>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="262" y="-156"/>
+        </scene>
     </scenes>
 </document>

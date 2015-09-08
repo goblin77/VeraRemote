@@ -23,6 +23,10 @@
 
 NSString * const BootstrapNotification = @"Bootstrap";
 
+#if WATCH
+NSString *DeviceManagerDidHaveNetworkFaultNotification = @"DeviceManagerDidHaveNetworkFault";
+#endif
+
 NSString * const AuthenticateUserNotification      = @"AuthUser";
 NSString * const AuthenticationSuccessNotification = @"AuthSuccess";
 NSString * const AuthenticationFailedNotification  = @"AuthFailed";
@@ -396,7 +400,7 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 -(void) defaultFaultHandler:(NSError *) fault
 {
 #if WATCH
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:DeviceManagerDidHaveNetworkFaultNotification object:fault];
 #else
     UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
                                                                                message:@"Oops! Looks like there was an error processing your operation."
@@ -659,6 +663,11 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 
 -(void) handleStopPolling:(NSNotification *) notification
 {
+    if([notification.userInfo[@"resetDeviceNetwork"] boolValue])
+    {
+        self.devices = nil;
+    }
+
     [self.devicePolling stopPolling];
 }
 

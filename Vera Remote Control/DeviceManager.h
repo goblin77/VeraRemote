@@ -39,6 +39,9 @@ extern NSString * const SetThermostatModeActionNotification;
 extern NSString * const SetThermostatTargetTemperatureNotification;
 extern NSString * const ClearManualOverrideNotification;
 
+#if WATCH
+OBJC_EXTERN NSString *DeviceManagerDidHaveNetworkFaultNotification;
+#endif
 
 @interface DeviceManager : NSObject
 
