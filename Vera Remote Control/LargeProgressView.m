@@ -64,7 +64,14 @@
     CGFloat y = self.progressArea.bounds.size.height / 2;
     if(self.label.text.length > 0)
     {
-        CGFloat textHeight = [self.label.text sizeWithFont:self.label.font constrainedToSize:CGSizeMake(self.progressArea.bounds.size.width - 10, 1000) lineBreakMode:self.label.lineBreakMode].height;
+        CGRect textRect = [self.label.text boundingRectWithSize:(CGSize){self.progressArea.bounds.size.width, CGFLOAT_MAX}
+                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                     attributes:@{NSFontAttributeName : self.label.font}
+                                                        context:nil];
+
+        CGFloat textHeight = textRect.size.height;
+        
+        
         y = (self.progressArea.bounds.size.height - textHeight - 5 - self.spinner.bounds.size.height) / 2;
         self.spinner.frame = CGRectOffset(self.spinner.bounds,(self.progressArea.bounds.size.width - self.spinner.bounds.size.width)/2, y);
         y += self.spinner.bounds.size.height + 5;
