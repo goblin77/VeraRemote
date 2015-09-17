@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
             res.textLabel.numberOfLines = 0;
             res.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
             res.textLabel.text = @"Leave a Tip";
-            res.detailTextLabel.text = @"Support Vera Remote development.";
+            res.detailTextLabel.text = @"Support HomePal development.";
         }
         
         
@@ -328,7 +328,7 @@ typedef NS_ENUM(NSInteger, SupportRow)
 - (void) displayEmailControls
 {
     MFMailComposeViewController *emailVC = [[MFMailComposeViewController alloc] init];
-    [emailVC setSubject:@"RE: Vera Remote"];
+    [emailVC setSubject:@"RE: HomePal"];
     [emailVC setToRecipients:@[@"dmitry@coldfishinc.com"]];
     emailVC.mailComposeDelegate = self;
     

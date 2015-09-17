@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, TipJarRow)
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     TipJarSectionHeaderView *res = [[TipJarSectionHeaderView alloc] initWithFrame:CGRectZero];
-    res.titleLabel.text = @"Vera Remote relies on your support to fund its development. If you find Vera Remote useful and would like to support please, do so by leaving a tip.";
+    res.titleLabel.text = @"HomePal relies on your support to fund its development. If you find HomePal useful and would like to support please, do so by leaving a tip.";
     
     return res;
     
