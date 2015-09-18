@@ -17,9 +17,12 @@
 #import "MotionSensorTableViewCell.h"
 #import "SecurityCameraTableViewCell.h"
 #import "ThermostatTableViewCell.h"
+#import "DoorLockCell.h"
 #import "SecurityCameraViewController.h"
 #import "UIAlertViewWithCallbacks.h"
 #import "DeviceFilter.h"
+
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @interface DevicesViewController ()
 {
@@ -197,7 +200,10 @@
             }
             else if(filter == DeviceFilterSecurity)
             {
-                match = [d isKindOfClass:[SecuritySensor class]] || [d isKindOfClass:[SecurityCamera class]] || [d isKindOfClass:[Siren class]];
+                match = [d isKindOfClass:[SecuritySensor class]]
+                            || [d isKindOfClass:[SecurityCamera class]]
+                            || [d isKindOfClass:[Siren class]]
+                            || [d isKindOfClass:[DoorLock class]];
             }
             
             if(match)
@@ -357,6 +363,24 @@
         
         return res;
     }
+    else if ([device isKindOfClass:[DoorLock class]])
+    {
+        static NSString *CellId = @"DoorLockCell";
+        
+        DoorLockCell *cell = (DoorLockCell *)[tableView dequeueReusableCellWithIdentifier:CellId];
+        if (cell == nil)
+        {
+            cell = [[DoorLockCell alloc] initWithReuseIdentifier:CellId];
+            cell.didCommitValue = ^(BOOL newLockedValue) {
+                DoorLock *doorLock = (DoorLock *)device;
+                [self startUpdateDoorLock:doorLock withValue:newLockedValue];
+            };
+        }
+        
+        cell.doorLock = (DoorLock *)device;
+    
+        return cell;
+    }
     else if ([device isKindOfClass:[Thermostat class]])
     {
         static NSString *CellId = @"ThermostatCell";
@@ -384,6 +408,10 @@
     if([device isKindOfClass:[BinarySwitch class]])
     {
         return 60;
+    }
+    else if ([device isKindOfClass:[DoorLock class]])
+    {
+        return 75;
     }
     else if([device isKindOfClass:[DimmableSwitch class]])
     {
@@ -427,6 +455,69 @@
                          completion:nil];
     }
 }
+
+#pragma mark - Misc functions
+
+- (void)startUpdateDoorLock:(DoorLock *)doorLock withValue:(BOOL)newLockedValue
+{
+    if (doorLock.locked && !newLockedValue)
+    {
+        __weak typeof(self) weakSelf = self;
+        NSString *confirmationMessage = [NSString stringWithFormat:@"Please, confirm that you want to unlock %@", doorLock.name];
+        LAContext *context = [[LAContext alloc] init];
+        if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
+
+            UIAlertViewWithCallbacks *alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@"Confirm Unlock"
+                                                                                      message:confirmationMessage
+                                                                            cancelButtonTitle:@"Cancel"
+                                                                            otherButtonTitles:@"Unlock", nil];
+            alert.cancelButtonIndex = 1;
+            alert.alertViewClickedButtonAtIndex = ^(UIAlertView *alertView, NSUInteger buttonIndex) {
+                if (buttonIndex == 1)
+                {
+                    [weakSelf finishUpdateDoorLock:doorLock withValue:newLockedValue];
+                }
+                else
+                {
+                    doorLock.manualOverride = YES;
+                    doorLock.manualOverride = NO;
+                }
+            };
+            
+            [alert show];
+        }
+        else
+        {
+            [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                    localizedReason:confirmationMessage
+                              reply:^(BOOL success, NSError *error) {
+                                  if (success)
+                                  {
+                                      [weakSelf finishUpdateDoorLock:doorLock withValue:newLockedValue];
+                                  }
+                                  else
+                                  {
+                                      doorLock.manualOverride = YES;
+                                      doorLock.manualOverride = NO;
+
+                                  }
+                              }];
+        }
+    }
+    else
+    {
+        [self finishUpdateDoorLock:doorLock withValue:newLockedValue];
+    }
+}
+
+- (void)finishUpdateDoorLock:(DoorLock *)doorLock withValue:(BOOL)newLockedValue
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:SetDoorLockLockedNotification
+                                                        object:doorLock
+                                                      userInfo:@{@"locked" : @(newLockedValue)}];
+}
+
+
 
 
 @end

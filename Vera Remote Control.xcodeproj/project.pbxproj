@@ -100,6 +100,8 @@
 		DBA6468C1B000EB70008046D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA6468B1B000EB70008046D /* AssetsLibrary.framework */; };
 		DBA6468F1B0023D80008046D /* VideoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA6468E1B0023D80008046D /* VideoRecorder.m */; };
 		DBD860511B71BBED00F71664 /* ThermostatTempControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD860501B71BBED00F71664 /* ThermostatTempControlView.m */; };
+		DBD92B3B1BABB9C000D55A08 /* DoorLockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD92B3A1BABB9C000D55A08 /* DoorLockCell.m */; };
+		DBD92B3D1BABC60B00D55A08 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD92B3C1BABC60B00D55A08 /* LocalAuthentication.framework */; };
 		DBE0796B1A9AB49D00C40710 /* SecurityCameraTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */; };
 		DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */; };
 		DBE079711A9ABB5B00C40710 /* SecurityCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */; };
@@ -316,6 +318,9 @@
 		DBA6468E1B0023D80008046D /* VideoRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoRecorder.m; sourceTree = "<group>"; };
 		DBD8604F1B71BBED00F71664 /* ThermostatTempControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThermostatTempControlView.h; sourceTree = "<group>"; };
 		DBD860501B71BBED00F71664 /* ThermostatTempControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThermostatTempControlView.m; sourceTree = "<group>"; };
+		DBD92B391BABB9C000D55A08 /* DoorLockCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockCell.h; sourceTree = "<group>"; };
+		DBD92B3A1BABB9C000D55A08 /* DoorLockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockCell.m; sourceTree = "<group>"; };
+		DBD92B3C1BABC60B00D55A08 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		DBE079691A9AB49D00C40710 /* SecurityCameraTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraTableViewCell.h; sourceTree = "<group>"; };
 		DBE0796A1A9AB49D00C40710 /* SecurityCameraTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraTableViewCell.m; sourceTree = "<group>"; };
 		DBE0796C1A9AB64F00C40710 /* PropertyInvalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInvalidator.h; sourceTree = "<group>"; };
@@ -356,6 +361,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBD92B3D1BABC60B00D55A08 /* LocalAuthentication.framework in Frameworks */,
 				DB6C3E9F1B7E5FA000C23EF0 /* MessageUI.framework in Frameworks */,
 				DB29E0491B26929A002E09DD /* iAd.framework in Frameworks */,
 				DB29E0441B266453002E09DD /* StoreKit.framework in Frameworks */,
@@ -549,6 +555,7 @@
 		DB6DE5201A75C6A300DBD7AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DBD92B3C1BABC60B00D55A08 /* LocalAuthentication.framework */,
 				DB6C3E9E1B7E5FA000C23EF0 /* MessageUI.framework */,
 				DB29E0481B26929A002E09DD /* iAd.framework */,
 				DB29E0431B266453002E09DD /* StoreKit.framework */,
@@ -763,6 +770,8 @@
 				DB316C871B660E2200A0AD58 /* UISegmentedControlWithVerticalLayout.m */,
 				DBD8604F1B71BBED00F71664 /* ThermostatTempControlView.h */,
 				DBD860501B71BBED00F71664 /* ThermostatTempControlView.m */,
+				DBD92B391BABB9C000D55A08 /* DoorLockCell.h */,
+				DBD92B3A1BABB9C000D55A08 /* DoorLockCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1129,6 +1138,7 @@
 				DB8B3DF21A7023A000EB9A6A /* DevicesTableSection.m in Sources */,
 				DB6DE5571A75F93D00DBD7AC /* SceneView.m in Sources */,
 				DB6AC0DE1A8C4A1700AE9607 /* MainAppWidgetSettingsManager.m in Sources */,
+				DBD92B3B1BABB9C000D55A08 /* DoorLockCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

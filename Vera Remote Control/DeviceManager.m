@@ -51,6 +51,9 @@ NSString * const SecurityCameraPTZActionNotification = @"SecurityCameraPTZAction
 NSString * const SetThermostatModeActionNotification = @"SetThermostatModeAction";
 NSString * const SetThermostatTargetTemperatureNotification = @"SetThermostatTargetTemperature";
 
+NSString * const SetDoorLockLockedNotification = @"SetDoorLockLockedNotification";
+
+
 NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 
 @interface DeviceManager ()
@@ -141,6 +144,10 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSetThermostatTargetTemperatureNotification:) name:SetThermostatTargetTemperatureNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleClearManualOverride:) name:ClearManualOverrideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(handleSetDoorlockLockedNotification:)
+                                                     name:SetDoorLockLockedNotification
+                                                   object:nil];
     }
     
     return self;
@@ -365,6 +372,10 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
         {
             clazz = [Siren class];
         }
+        else if(cat == DeviceCategoryLock)
+        {
+            clazz = [DoorLock class];
+        }
         else if(cat == DeviceCategoryHVAC)
         {
             clazz = [Thermostat class];
@@ -562,7 +573,7 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 //########################## Vera Devices ########################## Vera
 -(void) handleLoadVeraDevices:(NSNotification *) notification
 {
-    static NSString * url = @"http://sta1.mios.com/locator_json.php";
+    static NSString * url = @"https://sta1.mios.com/locator_json.php";
     
     __weak DeviceManager * thisObject = self;
     
@@ -968,6 +979,33 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
          
      }];
         
+}
+
+- (void)handleSetDoorlockLockedNotification:(NSNotification *)notification
+{
+    BOOL newLockedValue = [notification.userInfo[@"locked"] boolValue];
+    DoorLock *doorLock = notification.object;
+    doorLock.manualOverride = YES;
+    doorLock.manualLocked = newLockedValue;
+    
+    NSDictionary * params = @{
+                              @"id" : @"lu_action",
+                              @"DeviceNum" : [NSString stringWithFormat:@"%ld", (long)doorLock.deviceId],
+                              @"serviceId" : DoorLockControlServce,
+                              @"action"    : @"SetTarget",
+                              @"newTargetValue" : newLockedValue ? @"1" : @"0"
+                            };
+    
+    [APIService callHttpRequestWithAccessPoint:self.accessPoint
+                                        params:params
+                                       timeout:kAPIServiceDefaultTimeout
+                                      callback:^(NSData *data, NSError *fault)
+     {
+         if(fault == nil)
+         {
+             doorLock.manualOverride = NO;
+         }
+     }];
 }
 
 - (void)handleClearManualOverride:(NSNotification *)notification

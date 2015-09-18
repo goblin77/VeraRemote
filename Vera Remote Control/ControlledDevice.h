@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger,DeviceCategory)
     DeviceCategorySecuritySensor=4,
     DeviceCategoryHVAC = 5,
     DeviceCategorySecurityCamera=6,
+    DeviceCategoryLock = 7,
     DeviceCategoryHumiditySensor=16,
     DeviceCategoryTemperatureSensor=17,
     DeviceCategoryLightSensor=18,
@@ -79,15 +80,15 @@ typedef NS_ENUM(NSInteger, ThermostatMode)
 
 
 // Services
-extern NSString * BinarySwitchControlService;
-extern NSString * DimmableSwitchControlService;
-extern NSString * SceneControlService;
-extern NSString * SecuritySensorControlService;
-extern NSString * PanTiltZoomControlService;
-extern NSString * ThermostatModeService;
-extern NSString * ThermostatSetPointServiceHeat;
-extern NSString * ThermostatSetPointServiceCool;
-
+extern NSString *BinarySwitchControlService;
+extern NSString *DimmableSwitchControlService;
+extern NSString *SceneControlService;
+extern NSString *SecuritySensorControlService;
+extern NSString *PanTiltZoomControlService;
+extern NSString *ThermostatModeService;
+extern NSString *ThermostatSetPointServiceHeat;
+extern NSString *ThermostatSetPointServiceCool;
+extern NSString *DoorLockControlServce;
 
 @interface ControlledDevice : NSObject <JSONSerializable>
 
@@ -122,6 +123,14 @@ extern NSString * ThermostatSetPointServiceCool;
 
 @property (nonatomic, assign) NSUInteger value;
 @property (nonatomic, assign) NSUInteger manualValue;
+
+@end
+
+@interface DoorLock : ControlledDevice
+@property (nonatomic) BOOL locked;
+
+//transient vars
+@property (nonatomic) BOOL manualLocked;
 
 @end
 

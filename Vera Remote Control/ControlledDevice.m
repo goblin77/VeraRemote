@@ -17,6 +17,7 @@ NSString * PanTiltZoomControlService = @"urn:micasaverde-com:serviceId:PanTiltZo
 NSString * ThermostatModeService = @"urn:upnp-org:serviceId:HVAC_UserOperatingMode1";
 NSString * ThermostatSetPointServiceHeat = @"urn:upnp-org:serviceId:TemperatureSetpoint1_Heat";
 NSString * ThermostatSetPointServiceCool = @"urn:upnp-org:serviceId:TemperatureSetpoint1_Cool";
+NSString * DoorLockControlServce = @"urn:micasaverde-com:serviceId:DoorLock1";
 
 @implementation ControlledDevice
 
@@ -73,6 +74,18 @@ NSString * ThermostatSetPointServiceCool = @"urn:upnp-org:serviceId:TemperatureS
 @end
 
 @implementation Siren
+
+@end
+
+
+@implementation DoorLock
+
+-(void) updateWithDictionary:(NSDictionary *)src
+{
+    [super updateWithDictionary:src];
+    self.locked = [src[@"status"] integerValue] == 1;
+}
+
 
 @end
 

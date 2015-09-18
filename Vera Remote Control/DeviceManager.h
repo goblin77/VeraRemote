@@ -38,6 +38,7 @@ extern NSString * const SecurityCameraPTZActionNotification;
 extern NSString * const SetThermostatModeActionNotification;
 extern NSString * const SetThermostatTargetTemperatureNotification;
 extern NSString * const ClearManualOverrideNotification;
+extern NSString * const SetDoorLockLockedNotification;
 
 #if WATCH
 OBJC_EXTERN NSString *DeviceManagerDidHaveNetworkFaultNotification;
