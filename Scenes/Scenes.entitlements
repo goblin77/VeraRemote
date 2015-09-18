@@ -6,6 +6,7 @@
 	<array>
 		<string>group.com.goblin77.AccessConfig</string>
 		<string>group.com.goblin77.VeraRemote.SceneSettings</string>
+		<string>group.com.goblin77.TestExtensions</string>
 	</array>
 </dict>
 </plist>
