@@ -211,7 +211,7 @@
 		DB50DC0D1A733CB60053110E /* ScenesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenesViewController.m; sourceTree = "<group>"; };
 		DB64BC261B85705E00D9F147 /* DimmableSwitchRowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmableSwitchRowController.h; sourceTree = "<group>"; };
 		DB64BC271B85705E00D9F147 /* DimmableSwitchRowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmableSwitchRowController.m; sourceTree = "<group>"; };
-		DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vera Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB68509D1A6C6D1100CE4DAA /* HomePal - for Vera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HomePal - for Vera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6850A11A6C6D1100CE4DAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB6850A21A6C6D1100CE4DAA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DB6850A41A6C6D1100CE4DAA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -452,7 +452,7 @@
 		DB68509E1A6C6D1100CE4DAA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */,
+				DB68509D1A6C6D1100CE4DAA /* HomePal - for Vera.app */,
 				DB6850B61A6C6D1100CE4DAA /* Vera Remote ControlTests.xctest */,
 				DB6DE51F1A75C6A300DBD7AC /* Scenes.appex */,
 				DB4F67671B85446F0032C21F /* Vera Remote Control WatchKit Extension.appex */,
@@ -891,7 +891,7 @@
 			);
 			name = "Vera Remote Control";
 			productName = "Vera Remote Control";
-			productReference = DB68509D1A6C6D1100CE4DAA /* Vera Remote Control.app */;
+			productReference = DB68509D1A6C6D1100CE4DAA /* HomePal - for Vera.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DB6850B51A6C6D1100CE4DAA /* Vera Remote ControlTests */ = {
@@ -935,7 +935,7 @@
 		DB6850951A6C6D1100CE4DAA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Dmitry Miller";
 				TargetAttributes = {
 					DB4F67661B85446F0032C21F = {
@@ -1229,6 +1229,7 @@
 				IBSC_MODULE = Vera_Remote_Control_WatchKit_Extension;
 				INFOPLIST_FILE = "Vera Remote Control WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.goblin77.VeraRemote.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1246,6 +1247,7 @@
 				IBSC_MODULE = Vera_Remote_Control_WatchKit_Extension;
 				INFOPLIST_FILE = "Vera Remote Control WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.goblin77.VeraRemote.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1270,6 +1272,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-DWATCH=1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goblin77.VeraRemote.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1288,6 +1291,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				"OTHER_CFLAGS[arch=*]" = "-DWATCH=1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goblin77.VeraRemote.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1315,6 +1319,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1385,7 +1390,8 @@
 				INFOPLIST_FILE = "Vera Remote Control/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goblin77.VeraRemote;
+				PRODUCT_NAME = "HomePal - for Vera";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -1402,7 +1408,8 @@
 				INFOPLIST_FILE = "Vera Remote Control/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goblin77.VeraRemote;
+				PRODUCT_NAME = "HomePal - for Vera";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -1420,6 +1427,7 @@
 				);
 				INFOPLIST_FILE = "Vera Remote ControlTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.goblin77.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vera Remote Control.app/Vera Remote Control";
 			};
@@ -1434,6 +1442,7 @@
 				);
 				INFOPLIST_FILE = "Vera Remote ControlTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.goblin77.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vera Remote Control.app/Vera Remote Control";
 			};
@@ -1453,6 +1462,7 @@
 				INFOPLIST_FILE = Scenes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.goblin77.VeraRemote.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1469,6 +1479,7 @@
 				INFOPLIST_FILE = Scenes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.goblin77.VeraRemote.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
