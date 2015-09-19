@@ -1032,6 +1032,10 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
         {
             SecuritySensor *securitySensor = (SecuritySensor *)device;
             securitySensor.manualArmed = securitySensor.armed;
+        } else if ([device isKindOfClass:[DoorLock class]])
+        {
+            DoorLock *doorLock = (DoorLock *)device;
+            doorLock.manualLocked = doorLock.locked;
         }
     }
 }

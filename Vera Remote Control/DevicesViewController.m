@@ -371,12 +371,14 @@
         if (cell == nil)
         {
             cell = [[DoorLockCell alloc] initWithReuseIdentifier:CellId];
-            cell.didCommitValue = ^(BOOL newLockedValue) {
-                DoorLock *doorLock = (DoorLock *)device;
-                [self startUpdateDoorLock:doorLock withValue:newLockedValue];
-            };
         }
         
+        __weak typeof(self)weakSelf = self;
+        cell.didCommitValue = ^(BOOL newLockedValue)
+        {
+            DoorLock *doorLock = (DoorLock *)device;
+            [weakSelf startUpdateDoorLock:doorLock withValue:newLockedValue];
+        };
         cell.doorLock = (DoorLock *)device;
     
         return cell;

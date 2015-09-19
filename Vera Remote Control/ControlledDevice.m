@@ -83,7 +83,7 @@ NSString * DoorLockControlServce = @"urn:micasaverde-com:serviceId:DoorLock1";
 -(void) updateWithDictionary:(NSDictionary *)src
 {
     [super updateWithDictionary:src];
-    self.locked = [src[@"status"] integerValue] == 1;
+    self.locked = [src[@"locked"] integerValue] == 1;
 }
 
 
