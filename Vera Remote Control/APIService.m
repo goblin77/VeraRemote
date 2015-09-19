@@ -207,12 +207,6 @@
 
 /// Processing functions
 
-
-
-
-
-
-
 +(void) processAPIResponseData:(NSData *) responseData callback:(void (^)(NSObject *  data, NSError * fault)) callback
 {
     NSError * parseError = nil;
