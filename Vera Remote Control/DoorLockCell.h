@@ -16,6 +16,6 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier NS_UNAVAILABLE;
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
-@property (nonatomic,copy) void (^didCommitValue)(BOOL value);
+@property (nonatomic,copy) void (^willCommitValue)(BOOL value);
 
 @end

@@ -990,6 +990,7 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 {
     BOOL newLockedValue = [notification.userInfo[@"locked"] boolValue];
     DoorLock *doorLock = notification.object;
+    doorLock.locked = newLockedValue;
     doorLock.manualOverride = YES;
     doorLock.manualLocked = newLockedValue;
     

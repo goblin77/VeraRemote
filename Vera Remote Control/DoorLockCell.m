@@ -106,19 +106,14 @@
     }
 }
 
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    [self.binder stopObserving];
-    self.doorLock = nil;
-}
-
 #pragma mark - Invalidatable implementation
 
 - (void)commitProperties {
     BOOL value = self.doorLock.manualOverride ? self.doorLock.manualLocked : self.doorLock.locked;
     BOOL busy = self.doorLock.manualOverride || self.doorLock.state == DeviceStateBusy;
     
+    
+    self.switchControl.enabled = !busy;
     self.switchControl.selectedSegmentIndex = value ? 0 : 1;
     self.deviceNameLabel.text = self.doorLock.name;
     if(busy)
@@ -142,9 +137,11 @@
 
 
 - (void)handleSegmentedControlValueChange:(UISegmentedControl *)control {
-    if (self.didCommitValue != nil)
+    BOOL newValue = control.selectedSegmentIndex == 0;
+    control.selectedSegmentIndex = newValue ? 1 : 0;
+    if (self.willCommitValue != nil)
     {
-        self.didCommitValue(control.selectedSegmentIndex == 0);
+        self.willCommitValue(newValue);
     }
 }
 

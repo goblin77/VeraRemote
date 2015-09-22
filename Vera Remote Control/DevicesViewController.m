@@ -105,11 +105,11 @@
 {
     UIAlertViewWithCallbacks * alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@""
                                                                                message:@"Discard local data and reload your device network?"
-                                                                     cancelButtonTitle:@"No"
-                                                                     otherButtonTitles:@"Yes",nil];
+                                                                     cancelButtonTitle:@"Reload"
+                                                                     otherButtonTitles:@"Cancel",nil];
     alert.alertViewClickedButtonAtIndex = ^(UIAlertView * av, NSUInteger buttonIndex)
     {
-        if(buttonIndex == 1)
+        if(buttonIndex == 0)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:StopPollingNotification
                                                                 object:nil];
@@ -374,7 +374,7 @@
         }
         
         __weak typeof(self)weakSelf = self;
-        cell.didCommitValue = ^(BOOL newLockedValue)
+        cell.willCommitValue = ^(BOOL newLockedValue)
         {
             DoorLock *doorLock = (DoorLock *)device;
             [weakSelf startUpdateDoorLock:doorLock withValue:newLockedValue];
@@ -466,45 +466,19 @@
     {
         __weak typeof(self) weakSelf = self;
         NSString *confirmationMessage = [NSString stringWithFormat:@"Please, confirm that you want to unlock %@", doorLock.name];
-        LAContext *context = [[LAContext alloc] init];
-        if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
-
-            UIAlertViewWithCallbacks *alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@"Confirm Unlock"
-                                                                                      message:confirmationMessage
-                                                                            cancelButtonTitle:@"Cancel"
-                                                                            otherButtonTitles:@"Unlock", nil];
-            alert.cancelButtonIndex = 1;
-            alert.alertViewClickedButtonAtIndex = ^(UIAlertView *alertView, NSUInteger buttonIndex) {
-                if (buttonIndex == 1)
-                {
-                    [weakSelf finishUpdateDoorLock:doorLock withValue:newLockedValue];
-                }
-                else
-                {
-                    doorLock.manualOverride = YES;
-                    doorLock.manualOverride = NO;
-                }
-            };
-            
-            [alert show];
-        }
-        else
-        {
-            [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                    localizedReason:confirmationMessage
-                              reply:^(BOOL success, NSError *error) {
-                                  if (success)
-                                  {
-                                      [weakSelf finishUpdateDoorLock:doorLock withValue:newLockedValue];
-                                  }
-                                  else
-                                  {
-                                      doorLock.manualOverride = YES;
-                                      doorLock.manualOverride = NO;
-
-                                  }
-                              }];
-        }
+        UIAlertViewWithCallbacks *alert = [[UIAlertViewWithCallbacks alloc] initWithTitle:@"Confirm Unlock"
+                                                                                  message:confirmationMessage
+                                                                        cancelButtonTitle:@"Cancel"
+                                                                        otherButtonTitles:@"Unlock", nil];
+        alert.cancelButtonIndex = 1;
+        alert.alertViewClickedButtonAtIndex = ^(UIAlertView *alertView, NSUInteger buttonIndex) {
+            if (buttonIndex == 1)
+            {
+                [weakSelf finishUpdateDoorLock:doorLock withValue:newLockedValue];
+            }
+        };
+        
+        [alert show];
     }
     else
     {
