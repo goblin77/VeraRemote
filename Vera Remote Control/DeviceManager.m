@@ -223,15 +223,18 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 
 -(void) verifyUserName:(NSString *) uname password:(NSString *) pass callback:(void (^)(BOOL success, NSError * fault)) callback
 {
-    static NSString * url = @"https://sta1.mios.com/VerifyUser.php";
+    static NSString * url1 = @"https://sta1.mios.com/VerifyUser.php";
+    static NSString * url2 = @"https://sta2.mios.com/VerifyUser.php";
+    
     
     
     __weak DeviceManager * thisObject = self;
     
-    [APIService callHttpRequestWithUrl:url
+    [APIService callHttpRequestWithUrl:url1
+                        alternativeUrl:url2
                                 params:@{@"reg_username" : uname,
                                          @"reg_password" : pass}
-                               timeout:kAPIServiceDefaultTimeout
+                               timeout:kAPIServiceQuickTimeout
                               callback:^(NSData * data, NSError * fault)
                                 {
                                   if(fault != nil)
@@ -573,16 +576,18 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 //########################## Vera Devices ########################## Vera
 -(void) handleLoadVeraDevices:(NSNotification *) notification
 {
-    static NSString * url = @"https://sta1.mios.com/locator_json.php";
+    static NSString *url1 = @"https://sta1.mios.com/locator_json.php";
+    static NSString *url2 = @"https://sta2.mios.com/locator_json.php";
     
     __weak DeviceManager * thisObject = self;
     
     self.availableVeraDevicesLoading = YES;
     
     
-    [APIService callApiWithUrl:url
+    [APIService callApiWithUrl:url1 
+                alternativeUrl:url2
                         params:@{@"username": self.username}
-                       timeout:kAPIServiceDefaultTimeout
+                       timeout:kAPIServiceQuickTimeout / 2
                       callback:^(NSObject * data, NSError *fault)
                         {
                           if(fault != nil)

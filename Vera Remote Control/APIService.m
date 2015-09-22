@@ -40,8 +40,6 @@
     return [NSNumber numberWithInteger:requestId];
 }
 
-
-
 +(NSNumber *) callApiWithAccessPoint:(VeraAccessPoint *)accessPoint
                               params:(NSDictionary *)params
                              timeout:(NSTimeInterval)timeout
@@ -113,6 +111,53 @@
     return requestId;
 }
 
++ (NSNumber *)callApiWithUrl:(NSString *)url
+              alternativeUrl:(NSString *)alternativeUrl
+                      params:(NSDictionary *)params
+                     timeout:(NSTimeInterval)timeout
+                    callback:(void (^)(NSObject *, NSError *))callback
+{
+    NSNumber *requestId = [self generateRequestId];
+    
+    [APIService callHttpRequestWithUrl:url
+                             requestId:requestId
+                                params:params
+                               timeout:timeout
+                              callback:^(NSData * responseData, NSError *responseError) {
+                                  if (responseError == nil)
+                                  {
+                                      [APIService processAPIResponseData:responseData
+                                                                callback:^(NSObject *result, NSError *fault) {
+                                           callback(result, fault);
+                                       }];
+                                  }
+                                  else
+                                  {
+                                      [APIService callHttpRequestWithUrl:alternativeUrl
+                                                               requestId:requestId
+                                                                  params:params
+                                                                 timeout:timeout
+                                                                callback:^(NSData *altResponseData, NSError *altResponseError) {
+                                                                    if (altResponseError == nil)
+                                                                    {
+                                                                        [APIService processAPIResponseData:altResponseData
+                                                                                                  callback:^(NSObject *result, NSError *fault) {
+                                                                                                      callback(result, fault);
+                                                                                                  }];
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        callback(nil, altResponseError);
+                                                                    }
+                                                                }];
+                                  }
+                                  
+                              }];
+    
+    return requestId;
+}
+
 
 +(NSNumber *) callApiWithUrl:(NSString *)url
                       params:(NSDictionary *)params
@@ -150,6 +195,38 @@
                                       timeout:timeout
                                      callback:callback];
 }
+
++(NSNumber *) callHttpRequestWithUrl:(NSString *)url
+                      alternativeUrl:(NSString *)alternativeUrl
+                              params:(NSDictionary *)params
+                             timeout:(NSTimeInterval) timeout
+                            callback:(void (^)(NSData *, NSError *))callback
+{
+    NSNumber *requestId = [self generateRequestId];
+    
+    [APIService callHttpRequestWithUrl:url
+                             requestId:requestId
+                                params:params
+                               timeout:timeout
+                              callback:^(NSData * data, NSError *error) {
+                               if (error == nil)
+                               {
+                                   callback(data, error);
+                               }
+                               else
+                               {
+                                   [APIService callHttpRequestWithUrl:alternativeUrl
+                                                            requestId:requestId
+                                                               params:params
+                                                              timeout:timeout
+                                                             callback:^(NSData *altResponseData, NSError *altResponseError) {
+                                                                 callback(altResponseData, altResponseError);
+                                                             }];
+                               }
+                            }];
+    return requestId;
+}
+
 
 
 +(NSNumber *) callHttpRequestWithUrl:(NSString *)url

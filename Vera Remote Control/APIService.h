@@ -12,6 +12,8 @@
 
 
 #define kAPIServiceDefaultTimeout       20
+#define kAPIServiceQuickTimeout         5
+
 #define kAPISERVICE_MAX_ATTEMPTS		5
 
 #define kAPIServiceRequestErrorDomainServerMaintenance	@"ServerMaintenance"
@@ -26,16 +28,30 @@
                              timeout:(NSTimeInterval) timeout
                             callback:(void (^)(NSData *, NSError *))callback;
 
++(NSNumber *) callHttpRequestWithUrl:(NSString *)url
+                      alternativeUrl:(NSString *)alternativeUrl
+                              params:(NSDictionary *)params
+                             timeout:(NSTimeInterval) timeout
+                            callback:(void (^)(NSData *data, NSError *error))callback;
+
 
 +(NSNumber *) callApiWithUrl:(NSString *)url
                       params:(NSDictionary *)params
                      timeout:(NSTimeInterval) timeout
                     callback:(void (^)(NSObject * result, NSError * fault))callback;
 
++(NSNumber *) callApiWithUrl:(NSString *)url
+              alternativeUrl:(NSString *)alternativeUrl
+                      params:(NSDictionary *)params
+                     timeout:(NSTimeInterval) timeout
+                    callback:(void (^)(NSObject * result, NSError * fault))callback;
+
+
 +(NSNumber *) callHttpRequestWithAccessPoint:(VeraAccessPoint *) accessPoint
                                       params:(NSDictionary *) params
                                      timeout:(NSTimeInterval) timeout
                                     callback:(void (^)(NSData * data, NSError * error)) callback;
+
 
 
 +(NSNumber *) callApiWithAccessPoint:(VeraAccessPoint *)accessPoint
