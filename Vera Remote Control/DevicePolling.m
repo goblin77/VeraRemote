@@ -11,6 +11,10 @@
 
 
 #define kPollTimeout    120
+#define kFirstPollTimeout 15
+
+#define kPollTimeoutParam @"60"
+#define kPollFirstTimeoutParam @"10"
 
 
 @interface DevicePolling ()
@@ -19,6 +23,8 @@
     NSTimeInterval lastPollTimeStamp;
     NSNumber * lastPollingRequestId;
 }
+
+@property (nonatomic) BOOL isFirstPoll;
 
 
 @end
@@ -36,6 +42,7 @@
         self.updateNetwork = nil;
         self.shouldResumePollingOnError = nil;
         self.accessPoint = ^VeraAccessPoint * {return nil;};
+        self.isFirstPoll = YES;
         
         dataVersion = 0;
         lastPollTimeStamp = 0;
@@ -50,12 +57,14 @@
 {
     lastPollTimeStamp = 0;
     dataVersion = 0;
+    self.isFirstPoll = YES;
     
     [self resumePolling];
 }
 
 -(void) resumePolling
 {
+    self.isFirstPoll = YES;
     if(!polling)
     {
         polling = YES;
@@ -83,12 +92,15 @@
         lastPollingRequestId = nil;
     }
     
+    NSString *timeoutParamValue = self.isFirstPoll ? kPollFirstTimeoutParam : kPollTimeoutParam;
+    NSTimeInterval httpClientTimeout = self.isFirstPoll ? kFirstPollTimeout : kPollTimeout;
+    
     NSDictionary * params = @{
                               @"id" : @"lu_sdata",
                               @"dataversion" : [NSString stringWithFormat:@"%ld", (unsigned long)dataVersion],
                               @"loadtime" : [NSString stringWithFormat:@"%.0f", lastPollTimeStamp],
                               @"minimumdelay" : @"2",
-                              @"timeout" : @"60",
+                              @"timeout" : timeoutParamValue,
                               @"output_format" : @"json"
                               };
     
@@ -97,7 +109,7 @@
     
     lastPollingRequestId = [APIService callApiWithAccessPoint:self.accessPoint()
                                                        params:params
-                                                      timeout:kPollTimeout
+                                                      timeout:httpClientTimeout
                                                      callback:^(NSObject *data, NSError *fault)
                             {
                                 if(fault != nil)
@@ -120,6 +132,11 @@
                                 }
                                 else
                                 {
+                                    if (thisObject.isFirstPoll)
+                                    {
+                                        thisObject.isFirstPoll = NO;
+                                    }
+                                    
                                     [thisObject completePolling:(NSDictionary *) data];
                                 }
                             }];

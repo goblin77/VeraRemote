@@ -106,6 +106,9 @@
 		DBE0796E1A9AB64F00C40710 /* PropertyInvalidator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE0796D1A9AB64F00C40710 /* PropertyInvalidator.m */; };
 		DBE079711A9ABB5B00C40710 /* SecurityCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */; };
 		DBE079741A9ABE4E00C40710 /* SecurityCameraImagePolling.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */; };
+		DBEA7B8B1BB259D200EEA915 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEA7B8A1BB259D200EEA915 /* Reachability.m */; settings = {ASSET_TAGS = (); }; };
+		DBEA7B8C1BB259E400EEA915 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEA7B8A1BB259D200EEA915 /* Reachability.m */; settings = {ASSET_TAGS = (); }; };
+		DBEA7B8D1BB259E800EEA915 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEA7B8A1BB259D200EEA915 /* Reachability.m */; settings = {ASSET_TAGS = (); }; };
 		DBEF8B971A857F2300678F6D /* MotionSensorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */; };
 		DBEF8B9A1A85AE1400678F6D /* BatteryLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B991A85AE1400678F6D /* BatteryLevelView.m */; };
 		DBEF8B9E1A85D91F00678F6D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEF8B9D1A85D91F00678F6D /* SettingsViewController.m */; };
@@ -181,6 +184,7 @@
 		DB1AA3D01B8581CC008B76C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DB1D01401A78A3CF005EB05F /* DevicePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePolling.h; sourceTree = "<group>"; };
 		DB1D01411A78A3CF005EB05F /* DevicePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePolling.m; sourceTree = "<group>"; };
+		DB219F921BB1D808001EC005 /* VeraErrorDomains.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VeraErrorDomains.h; sourceTree = "<group>"; };
 		DB29E0431B266453002E09DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DB29E0451B26846F002E09DD /* ProductManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductManager.h; sourceTree = "<group>"; };
 		DB29E0461B26846F002E09DD /* ProductManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductManager.m; sourceTree = "<group>"; };
@@ -258,7 +262,7 @@
 		DB7AA4271B9E30670020F354 /* ErrorInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorInterfaceController.h; sourceTree = "<group>"; };
 		DB7AA4281B9E30670020F354 /* ErrorInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorInterfaceController.m; sourceTree = "<group>"; };
 		DB8B3D591A6C80FB00EB9A6A /* APIService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIService.h; sourceTree = "<group>"; };
-		DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIService.m; sourceTree = "<group>"; };
+		DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIService.m; path = "Vera Remote Control/APIService.m"; sourceTree = SOURCE_ROOT; };
 		DB8B3D5B1A6C80FB00EB9A6A /* APIServiceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServiceRequest.h; sourceTree = "<group>"; };
 		DB8B3D5C1A6C80FB00EB9A6A /* APIServiceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServiceRequest.m; sourceTree = "<group>"; };
 		DB8B3D601A6CA71F00EB9A6A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
@@ -329,6 +333,8 @@
 		DBE079701A9ABB5B00C40710 /* SecurityCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraViewController.m; sourceTree = "<group>"; };
 		DBE079721A9ABE4E00C40710 /* SecurityCameraImagePolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityCameraImagePolling.h; sourceTree = "<group>"; };
 		DBE079731A9ABE4E00C40710 /* SecurityCameraImagePolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityCameraImagePolling.m; sourceTree = "<group>"; };
+		DBEA7B891BB259D200EEA915 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = External/Reachability/Reachability.h; sourceTree = "<group>"; };
+		DBEA7B8A1BB259D200EEA915 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = External/Reachability/Reachability.m; sourceTree = SOURCE_ROOT; };
 		DBEF8B951A857F2300678F6D /* MotionSensorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionSensorTableViewCell.h; sourceTree = "<group>"; };
 		DBEF8B961A857F2300678F6D /* MotionSensorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionSensorTableViewCell.m; sourceTree = "<group>"; };
 		DBEF8B981A85AE1400678F6D /* BatteryLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryLevelView.h; sourceTree = "<group>"; };
@@ -438,6 +444,7 @@
 		DB6850941A6C6D1100CE4DAA = {
 			isa = PBXGroup;
 			children = (
+				DBEA7B871BB259B900EEA915 /* External */,
 				DB6850CF1A6C6F8800CE4DAA /* Security.framework */,
 				DB6850B91A6C6D1100CE4DAA /* Vera Remote ControlTests */,
 				DB68509F1A6C6D1100CE4DAA /* Vera Remote Control */,
@@ -548,6 +555,7 @@
 				DB8B3D5A1A6C80FB00EB9A6A /* APIService.m */,
 				DB8B3D5B1A6C80FB00EB9A6A /* APIServiceRequest.h */,
 				DB8B3D5C1A6C80FB00EB9A6A /* APIServiceRequest.m */,
+				DB219F921BB1D808001EC005 /* VeraErrorDomains.h */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -785,6 +793,23 @@
 				DBA6468E1B0023D80008046D /* VideoRecorder.m */,
 			);
 			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		DBEA7B871BB259B900EEA915 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				DBEA7B881BB259C000EEA915 /* Reachability */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		DBEA7B881BB259C000EEA915 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				DBEA7B891BB259D200EEA915 /* Reachability.h */,
+				DBEA7B8A1BB259D200EEA915 /* Reachability.m */,
+			);
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 		DBEF8B9B1A85D8FE00678F6D /* Settings */ = {
@@ -1059,6 +1084,7 @@
 				DBFABFF41B854E1A00FF6FE4 /* SecurityCameraImagePolling.m in Sources */,
 				DBFABFF21B854E0100FF6FE4 /* DevicePolling.m in Sources */,
 				DBFABFFE1B85668B00FF6FE4 /* Binder.m in Sources */,
+				DBEA7B8D1BB259E800EEA915 /* Reachability.m in Sources */,
 				DBFABFF51B854E2100FF6FE4 /* VeraAccessPoint.m in Sources */,
 				DB64BC281B85705E00D9F147 /* DimmableSwitchRowController.m in Sources */,
 				DBFABFFF1B85674E00FF6FE4 /* ObserverUtils.m in Sources */,
@@ -1132,6 +1158,7 @@
 				DB8B3D8C1A6CDF6200EB9A6A /* ImageUtils.m in Sources */,
 				DB8B3D6E1A6CAC2700EB9A6A /* UIFont_Expanded.m in Sources */,
 				DBEF8BA71A89324400678F6D /* TableViewCellWithSwitch.m in Sources */,
+				DBEA7B8B1BB259D200EEA915 /* Reachability.m in Sources */,
 				DBE0796B1A9AB49D00C40710 /* SecurityCameraTableViewCell.m in Sources */,
 				DB6DE50E1A73477D00DBD7AC /* SceneTableViewCell.m in Sources */,
 				DB6850A31A6C6D1100CE4DAA /* main.m in Sources */,
@@ -1168,6 +1195,7 @@
 				DB6DE53B1A75C78800DBD7AC /* VeraAccessPoint.m in Sources */,
 				DB6DE5481A75D86200DBD7AC /* ObserverUtils.m in Sources */,
 				DB6DE53A1A75C76C00DBD7AC /* ScenesViewController.m in Sources */,
+				DBEA7B8C1BB259E400EEA915 /* Reachability.m in Sources */,
 				DB6DE5581A75F9C700DBD7AC /* CircularShapeView.m in Sources */,
 				DB6AC0E01A8C4D2900AE9607 /* WidgetSettingsUtils.m in Sources */,
 				DB6DE53C1A75C78C00DBD7AC /* ControlledDevice.m in Sources */,

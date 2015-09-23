@@ -8,9 +8,9 @@
 
 #import "APIService.h"
 #import "APIServiceRequest.h"
+#import "VeraErrorDomains.h"
 
 @implementation APIService
-
 
 +(NSOperationQueue *) sharedQueue
 {
@@ -72,7 +72,6 @@
 {
     BOOL isLocal = accessPoint.localMode;
     
-    
     // 1-st attempt
     NSNumber * requestId = [APIService generateRequestId];
     
@@ -90,7 +89,7 @@
                                                         else
                                                         {
                                                             if(isLocal &&
-                                                               [fault.domain isEqualToString:NSURLErrorDomain] &&
+                                                               [APIService isInternetFault:fault] &&
                                                                accessPoint.remoteUrl != nil)
                                                             {
                                                                 accessPoint.localMode = NO;
@@ -109,6 +108,11 @@
     
     
     return requestId;
+}
+
++ (BOOL)isInternetFault:(NSError *)fault
+{
+    return [fault.domain isEqualToString:NSURLErrorDomain] || [fault.domain isEqualToString:kAPIServiceRequestErrorDomainInternetError];
 }
 
 + (NSNumber *)callApiWithUrl:(NSString *)url
@@ -295,7 +299,13 @@
     // JSON parsing failed, it's a fault
     if(parseError != nil)
     {
-        callback(nil, parseError);
+        NSError *fault = parseError;
+        if ([responseString rangeOfString:@"Invalid user/pass"].length > 0)
+        {
+            fault = [NSError errorWithDomain:NSErrorDomainVeraAuth code:0 userInfo:@{@"cause" : parseError}];
+        }
+        
+        callback(nil, fault);
         return;
     }
     

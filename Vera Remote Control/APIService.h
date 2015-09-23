@@ -20,6 +20,7 @@
 #define kAPIServiceRequestErrorDomainInternetError		@"InternetError"
 #define kAPIServiceRequestErrorDomainAPIError			@"APIError"
 
+
 @interface APIService : NSObject 
 
 

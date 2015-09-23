@@ -12,6 +12,7 @@
 #import "VeraAccessPoint.h"
 #import "Room.h"
 #import "ControlledDevice.h"
+#import "VeraErrorDomains.h"
 
 #if !WATCH
 #import "UIAlertViewWithCallbacks.h"
@@ -99,7 +100,6 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
         self.accessPoint = [[VeraAccessPoint alloc] init];
         self.devicePolling = [[DevicePolling alloc] init];
         
-        
         __weak DeviceManager * thisObject = self;
         self.devicePolling.accessPoint = ^VeraAccessPoint *
         {
@@ -115,6 +115,16 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
         self.devicePolling.updateNetwork = ^(NSDictionary * data)
         {
             [thisObject mergeNetworkData:data];
+        };
+        
+        self.devicePolling.shouldResumePollingOnError = ^BOOL(NSError * error) {
+            if ([error.domain isEqualToString:NSErrorDomainVeraAuth])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:AuthenticationFailedNotification object:nil];
+                return NO;
+            }
+            
+            return YES;
         };
         
         
