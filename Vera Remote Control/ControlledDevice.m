@@ -84,6 +84,17 @@ NSString * DoorLockControlServce = @"urn:micasaverde-com:serviceId:DoorLock1";
 {
     [super updateWithDictionary:src];
     self.locked = [src[@"locked"] integerValue] == 1;
+    
+    NSString *batteryLevel = src[@"batterylevel"];
+    self.batteryLevel = batteryLevel != nil ? batteryLevel.intValue : -1;
+    
+    if (self.manualOverride)
+    {
+        if (self.locked == self.manualLocked)
+        {
+            self.manualOverride = NO;
+        }
+    }
 }
 
 

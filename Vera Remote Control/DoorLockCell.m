@@ -10,6 +10,7 @@
 #import "Binder.h"
 #import "PropertyInvalidator.h"
 #import "CircularShapeView.h"
+#import "BatteryLevelView.h"
 #import "StyleUtils.h"
 
 @interface DoorLockCell () <Invalidatable>
@@ -18,6 +19,7 @@
 @property (nonatomic) UISegmentedControl *switchControl;
 @property (nonatomic) CircularShapeView *statusView;
 @property (nonatomic) UIActivityIndicatorView *progressView;
+@property (nonatomic) BatteryLevelView *batteryLevelView;
 
 @property (nonatomic) Binder *binder;
 @property (nonatomic) PropertyInvalidator *propertyInvalidator;
@@ -53,11 +55,20 @@
         
         [self.switchControl addTarget:self action:@selector(handleSegmentedControlValueChange:) forControlEvents:UIControlEventValueChanged];
         
+        self.batteryLevelView = [[BatteryLevelView alloc] initWithFrame:CGRectZero];
+        [self.batteryLevelView sizeToFit];
+        [self.contentView addSubview:self.batteryLevelView];
+        
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         __weak typeof(self)weakSelf = self;
         self.binder = [[Binder alloc] initWithObject:self
-                                            keyPaths:@[K(doorLock.name),K(doorLock.state),K(doorLock.locked),K(doorLock.manualLocked),K(doorLock.manualOverride)]
+                                            keyPaths:@[K(doorLock.name),
+                                                       K(doorLock.state),
+                                                       K(doorLock.locked),
+                                                       K(doorLock.batteryLevel),
+                                                       K(doorLock.manualLocked),
+                                                       K(doorLock.manualOverride)]
                                             callback:^{
                                                 [weakSelf.propertyInvalidator invalidateProperties];
                                             }];
@@ -102,6 +113,12 @@
         x = self.contentView.bounds.size.width - self.switchControl.bounds.size.width - marginSide;
         self.switchControl.frame = CGRectMake(x, y, self.switchControl.bounds.size.width, self.switchControl.bounds.size.height);
         
+        // battery level
+        x = self.deviceNameLabel.frame.origin.x;
+        y = self.switchControl.frame.origin.y + self.switchControl.bounds.size.height - self.batteryLevelView.bounds.size.height;
+        
+        self.batteryLevelView.frame = CGRectOffset(self.batteryLevelView.bounds, x, y);
+        
         self.oldSize = self.contentView.bounds.size;
     }
 }
@@ -110,11 +127,11 @@
 
 - (void)commitProperties {
     BOOL value = self.doorLock.manualOverride ? self.doorLock.manualLocked : self.doorLock.locked;
-    BOOL busy = self.doorLock.manualOverride || self.doorLock.state == DeviceStateBusy;
-    
+    BOOL busy = self.doorLock.manualOverride; // || self.doorLock.state == DeviceStateBusy;
     
     self.switchControl.enabled = !busy;
     self.switchControl.selectedSegmentIndex = value ? 0 : 1;
+    
     self.deviceNameLabel.text = self.doorLock.name;
     if(busy)
     {
@@ -129,6 +146,12 @@
         [self.progressView stopAnimating];
         
         self.statusView.hidden = self.doorLock.state != DeviceStateError;
+    }
+    
+    self.batteryLevelView.hidden = self.doorLock.batteryLevel == -1;
+    if (self.doorLock.batteryLevel >= 0)
+    {
+        self.batteryLevelView.level = self.doorLock.batteryLevel;
     }
 }
 

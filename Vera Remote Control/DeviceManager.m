@@ -13,6 +13,7 @@
 #import "Room.h"
 #import "ControlledDevice.h"
 #import "VeraErrorDomains.h"
+#import "Binder.h"
 
 #if !WATCH
 #import "UIAlertViewWithCallbacks.h"
@@ -59,8 +60,8 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 
 @interface DeviceManager ()
 
-@property (nonatomic, strong) DevicePolling * devicePolling;
-@property (nonatomic, strong) VeraAccessPoint * accessPoint;
+@property (nonatomic) DevicePolling * devicePolling;
+@property (nonatomic) VeraAccessPoint * accessPoint;
 
 -(void) setCurrentDevice:(VeraDevice *) value;
 
@@ -85,8 +86,6 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
     
     return instance;
 }
-
-
 
 -(id) init
 {
@@ -998,31 +997,30 @@ NSString * const ClearManualOverrideNotification = @"ClearManualOverride";
 
 - (void)handleSetDoorlockLockedNotification:(NSNotification *)notification
 {
+    
     BOOL newLockedValue = [notification.userInfo[@"locked"] boolValue];
     DoorLock *doorLock = notification.object;
-    doorLock.locked = newLockedValue;
     doorLock.manualOverride = YES;
     doorLock.manualLocked = newLockedValue;
+    
     
     NSDictionary * params = @{
                               @"id" : @"lu_action",
                               @"DeviceNum" : [NSString stringWithFormat:@"%ld", (long)doorLock.deviceId],
                               @"serviceId" : DoorLockControlServce,
                               @"action"    : @"SetTarget",
-                              @"newTargetValue" : newLockedValue ? @"1" : @"0"
+                              @"newTargetValue" : (newLockedValue ? @"1" : @"0"),
+                              @"output_format" : @"json",
                             };
     
-    [APIService callHttpRequestWithAccessPoint:self.accessPoint
-                                        params:params
-                                       timeout:kAPIServiceDefaultTimeout
-                                      callback:^(NSData *data, NSError *fault)
-     {
-         if(fault == nil)
-         {
-             doorLock.manualOverride = NO;
-         }
-     }];
+    [APIService callApiWithAccessPoint:self.accessPoint
+                                params:params
+                               timeout:kAPIServiceDefaultTimeout
+                              callback:^(NSObject *data, NSError *fault) {
+
+                              }];
 }
+
 
 - (void)handleClearManualOverride:(NSNotification *)notification
 {

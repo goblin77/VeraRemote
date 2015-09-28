@@ -128,6 +128,7 @@ extern NSString *DoorLockControlServce;
 
 @interface DoorLock : ControlledDevice
 @property (nonatomic) BOOL locked;
+@property (nonatomic) int batteryLevel;
 
 //transient vars
 @property (nonatomic) BOOL manualLocked;
