@@ -20,6 +20,9 @@
 @property (nonatomic) CircularShapeView *statusView;
 @property (nonatomic) UIActivityIndicatorView *progressView;
 @property (nonatomic) BatteryLevelView *batteryLevelView;
+@property (nonatomic) CircularShapeView *lockStatusView;
+@property (nonatomic) UIImageView *lockStatusImageView;
+
 
 @property (nonatomic) Binder *binder;
 @property (nonatomic) PropertyInvalidator *propertyInvalidator;
@@ -35,6 +38,15 @@
         self.deviceNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [StyleUtils applyDefaultStyleOnTableTitleLabel:self.deviceNameLabel];
         [self.contentView addSubview:self.deviceNameLabel];
+        
+        
+        self.lockStatusView = [[CircularShapeView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        self.lockStatusView.strokeColor = [UIColor blackColor];
+        [self.contentView addSubview:self.lockStatusView];
+        
+        self.lockStatusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 12)];
+        self.lockStatusImageView.center = CGPointMake(self.lockStatusView.bounds.size.width / 2, self.lockStatusView.bounds.size.height / 2 - 1);
+        [self.lockStatusView addSubview:self.lockStatusImageView];
         
         
         self.statusView = [[CircularShapeView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
@@ -85,15 +97,12 @@
     if(self.oldSize.width != self.bounds.size.width || self.oldSize.height != self.bounds.size.height)
     {
         static CGFloat marginSide = 5;
-        
-        CGFloat contentWidth = self.contentView.bounds.size.width;
         static CGFloat columnGap = 3;
         static CGFloat rowGap = 5;
         
         // status and progress column
         CGFloat columnWidth  = 26;
         CGFloat x = (columnWidth - self.statusView.bounds.size.width) / 2;
-        //CGFloat y = (self.contentView.bounds.size.height - self.statusView.bounds.size.height) / 2;
         CGFloat y = (self.contentView.bounds.size.height - self.deviceNameLabel.font.lineHeightPx - self.switchControl.bounds.size.height - rowGap)/2;
         CGFloat dY = (self.deviceNameLabel.font.lineHeightPx - self.statusView.bounds.size.height)/2;
         
@@ -107,8 +116,15 @@
         // device name
         x = columnWidth + columnGap;
         y = (self.contentView.bounds.size.height - self.deviceNameLabel.font.lineHeightPx - self.switchControl.bounds.size.height)/2;
-        self.deviceNameLabel.frame = CGRectMake(x, y, contentWidth, self.deviceNameLabel.font.lineHeightPx);
+        CGFloat deviceNameWidth = self.contentView.bounds.size.width - columnWidth - columnGap - self.lockStatusView.bounds.size.width - marginSide;
+        self.deviceNameLabel.frame = CGRectMake(x, y, deviceNameWidth, self.deviceNameLabel.font.lineHeightPx);
         
+        // lock status view
+        x = self.contentView.bounds.size.width - marginSide - self.lockStatusView.bounds.size.width;
+        dY = (self.deviceNameLabel.font.lineHeightPx - self.lockStatusView.bounds.size.height)/2;
+        self.lockStatusView.frame = CGRectOffset(self.lockStatusView.bounds, x, y + dY);
+        
+        // switch control
         y += self.deviceNameLabel.bounds.size.height + rowGap;
         x = self.contentView.bounds.size.width - self.switchControl.bounds.size.width - marginSide;
         self.switchControl.frame = CGRectMake(x, y, self.switchControl.bounds.size.width, self.switchControl.bounds.size.height);
@@ -131,6 +147,9 @@
     
     self.switchControl.enabled = !busy;
     self.switchControl.selectedSegmentIndex = value ? 0 : 1;
+    self.lockStatusView.fillColor = value ? [UIColor lightGrayColor] :[UIColor colorWithRGBHex:0x85d966];
+    self.lockStatusImageView.image = [UIImage imageNamed:(value ? @"lockedIcon" : @"unlockedIcon")];
+    
     
     self.deviceNameLabel.text = self.doorLock.name;
     if(busy)
