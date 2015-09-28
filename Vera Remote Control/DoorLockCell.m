@@ -45,7 +45,7 @@
         [self.contentView addSubview:self.lockStatusView];
         
         self.lockStatusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 12)];
-        self.lockStatusImageView.center = CGPointMake(self.lockStatusView.bounds.size.width / 2, self.lockStatusView.bounds.size.height / 2 - 1);
+        self.lockStatusImageView.center = CGPointMake(self.lockStatusView.bounds.size.width / 2, self.lockStatusView.bounds.size.height / 2);
         [self.lockStatusView addSubview:self.lockStatusImageView];
         
         
